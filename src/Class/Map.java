@@ -1,7 +1,7 @@
 package Class;
 public class Map {
     Weather weather;
-    Tile [][] map = new Tile[7][7];
+    Tile [][] map;
 
     public Map(Weather weather, Tile [][] map) {
         this.weather = weather;
@@ -39,12 +39,37 @@ public class Map {
                 if (tile.GetTile(tile) == "End")
                     System.out.print("▣ ");
                 if (tile.GetTile(tile) == "Position")
-                    System.out.print("▪ ");
+                    System.out.print("Ω ");
             }
             System.out.println("");
             }
 
         }
+
+    public int[] PosTile(Map map,Tile tile) {
+        int [] pos = new int[2];
+        int length = map.GetMap(map).length;
+        String category = tile.GetTile(tile);
+        for (int y = 0; y < length;y++) {
+            for (int x = 0; x < length; x++) {
+                Tile tileseek = map.GetTileMap(map,x,y);
+                if (tileseek.GetTile(tileseek) == category) {
+                    pos[0] = x;
+                    pos[1] = y;
+                    return pos;
+                }
+
+
+            }
+        }
+    return null;
     }
+
+    public void ChangeTile(Map map,int pos[],Tile tile){
+        Tile[][] actualmap;
+        actualmap = map.GetMap(map);
+        actualmap[pos[0]][pos[1]] = tile;
+    }
+}
 
 

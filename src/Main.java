@@ -1,4 +1,7 @@
 import Class.*;
+
+import static Class.Hero.SpawnHero;
+
 public class Main {
 
 
@@ -22,8 +25,8 @@ public class Main {
                 intro[x][y] = Wall;
             }
         }
-        intro[0][0] = Spawn ;
-        intro[1][0] = Empty ;
+        intro[0][0] = Empty ;
+        intro[1][0] = Spawn ;
         intro[2][0] = Empty ;
         intro[3][0] = Enemy ;
         intro[4][0] = Empty ;
@@ -44,6 +47,13 @@ public class Main {
         System.out.println(tile1.GetTile(tile1));
         //On montre la carte
         map1.ShowMap(map1);
+
+        //Spawn Hero
+        int [] posHero;
+        Hero character = new Hero("Blanc-Louis",SpawnHero(map1));
+        map1.ChangeTile(map1,character.GetPos(character),Empty);
+        map1.ShowMap(map1);
+
 
     }
 
