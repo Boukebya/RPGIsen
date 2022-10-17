@@ -1,4 +1,7 @@
 package Class;
+
+import java.util.Objects;
+
 public class Map {
     Weather weather;
     Tile [][] map;
@@ -25,20 +28,21 @@ public class Map {
         int length = map.GetMap(map).length;
         for (int y = 0; y < length;y++) {
             for (int x = 0; x < length; x++) {
-                Tile tile = map.GetTileMap(map,x,y);
-                if (tile.GetTile(tile) == "Wall")
+                Tile tile = (map.GetTileMap(map,x,y));
+
+                if (tile.GetTile() == "Wall")
                     System.out.print("■ ");
-                if (tile.GetTile(tile) == "Empty")
+                if (tile.GetTile() == "Empty")
                     System.out.print("□ ");
-                if (tile.GetTile(tile) == "Enemy")
+                if (tile.GetTile() == "Enemy")
                     System.out.print("* ");
-                if (tile.GetTile(tile) == "Chest")
+                if (tile.GetTile() == "Chest")
                     System.out.print("▴ ");
-                if (tile.GetTile(tile) == "Spawn")
+                if (tile.GetTile() == "Spawn")
                     System.out.print("▦ ");
-                if (tile.GetTile(tile) == "End")
+                if (tile.GetTile() == "End")
                     System.out.print("▣ ");
-                if (tile.GetTile(tile) == "Position")
+                if (tile.GetTile() == "Position")
                     System.out.print("Ω ");
             }
             System.out.println("");
@@ -49,17 +53,16 @@ public class Map {
     public int[] PosTile(Map map,Tile tile) {
         int [] pos = new int[2];
         int length = map.GetMap(map).length;
-        String category = tile.GetTile(tile);
+        String category = tile.GetTile();
         for (int y = 0; y < length;y++) {
             for (int x = 0; x < length; x++) {
-                Tile tileseek = map.GetTileMap(map,x,y);
-                if (tileseek.GetTile(tileseek) == category) {
+                Tile TileSeek = map.GetTileMap(map,x,y);
+                String categorySeek = TileSeek.GetTile();
+                if (Objects.equals(categorySeek, category)) {
                     pos[0] = x;
                     pos[1] = y;
                     return pos;
                 }
-
-
             }
         }
     return null;
