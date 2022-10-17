@@ -1,10 +1,10 @@
-package Class;
+package Class.World;
 
 import java.util.Objects;
 
 public class Map {
     Weather weather;
-    Tile [][] map;
+    Tile[][] map;
 
     public Map(Weather weather, Tile [][] map) {
         this.weather = weather;
@@ -20,8 +20,7 @@ public class Map {
 
 
     public Tile GetTileMap(Map map,int x, int y){
-        Tile tile = map.map[x][y];
-        return tile;
+        return map.map[x][y];
     }
 
     public void ShowMap(Map map){
@@ -29,25 +28,19 @@ public class Map {
         for (int y = 0; y < length;y++) {
             for (int x = 0; x < length; x++) {
                 Tile tile = (map.GetTileMap(map,x,y));
-
-                if (tile.GetTile() == "Wall")
-                    System.out.print("■ ");
-                if (tile.GetTile() == "Empty")
-                    System.out.print("□ ");
-                if (tile.GetTile() == "Enemy")
-                    System.out.print("* ");
-                if (tile.GetTile() == "Chest")
-                    System.out.print("▴ ");
-                if (tile.GetTile() == "Spawn")
-                    System.out.print("▦ ");
-                if (tile.GetTile() == "End")
-                    System.out.print("▣ ");
-                if (tile.GetTile() == "Position")
-                    System.out.print("Ω ");
+                //Create a switch for every tiles
+                switch (tile.GetTile()) {
+                    case "Empty" -> System.out.print("□ ");
+                    case "Wall" -> System.out.print("■ ");
+                    case "Spawn", "Position" -> System.out.print("& ");
+                    case "End" -> System.out.print("o ");
+                    case "Chest" -> System.out.print("▴ ");
+                    case "Enemy" -> System.out.print("* ");
+                    default -> System.out.print("? ");
+                }
             }
-            System.out.println("");
+            System.out.println();
             }
-
         }
 
     public int[] PosTile(Map map,Tile tile) {
@@ -68,10 +61,10 @@ public class Map {
     return null;
     }
 
-    public void ChangeTile(Map map,int pos[],Tile tile){
-        Tile[][] actualmap;
-        actualmap = map.GetMap(map);
-        actualmap[pos[0]][pos[1]] = tile;
+    public void ChangeTile(Map map, int[] pos, Tile tile){
+        Tile[][] actualMap;
+        actualMap = map.GetMap(map);
+        actualMap[pos[0]][pos[1]] = tile;
     }
 }
 

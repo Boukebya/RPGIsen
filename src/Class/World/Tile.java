@@ -1,4 +1,4 @@
-package Class;
+package Class.World;
 
 public enum Tile {
 
@@ -8,11 +8,14 @@ public enum Tile {
     Chest ("Chest"),
     Spawn ("Spawn"),
     End ("End"),
-    Position ("Position");
+    Position ("Position"),
+    Unknown ("Unknown");
 
-    private String Category;
 
-    private Tile(String Category_Tile){
+
+    private final String Category;
+
+    Tile(String Category_Tile){
         Category = Category_Tile;
     }
     public String GetTile(){

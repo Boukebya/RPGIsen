@@ -1,4 +1,4 @@
-package Class;
+package Class.World;
 
 public enum Weather {
     RAINY (0.8f),
