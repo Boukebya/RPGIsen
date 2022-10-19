@@ -37,9 +37,17 @@ public class Main {
         intro[8][8] = End;
         //Create chest
         intro[1][8] = Chest;
+        intro[8][6] = Chest;
+        intro[5][8] = Chest;
         //Create enemy
         intro[1][7] = Enemy;
-        intro[8][1] = Enemy;
+        intro[6][2] = Enemy;
+        intro[2][6] = Enemy;
+        intro[5][1] = Enemy;
+        intro[4][5] = Enemy;
+        intro[8][4] = Enemy;
+        intro[7][7] = Enemy;
+        intro[7][5] = Enemy;
         //Create path
         intro[2][2] = Wall;
         intro[2][3] = Wall;
@@ -50,9 +58,25 @@ public class Main {
         intro[3][2] = Wall;
         intro[4][2] = Wall;
         intro[5][2] = Wall;
+        intro[7][2] = Wall;
+        intro[8][2] = Wall;
+        intro[8][5] = Wall;
+        intro[7][4] = Wall;
+        intro[6][4] = Wall;
+        intro[5][4] = Wall;
+        intro[4][4] = Wall;
+        intro[4][6] = Wall;
+        intro[4][7] = Wall;
+        intro[4][8] = Wall;
+        intro[6][6] = Wall;
+        intro[7][6] = Wall;
+        intro[6][8] = Wall;
+        intro[7][8] = Wall;
         //Create unknown
         intro[3][3] = Unknown;
         intro[5][5] = Unknown;
+        intro[3][1] = Unknown;
+        intro[8][1] = Unknown;
 
 
         //Create Map object, with its weather and its tiles
