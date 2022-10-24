@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package wildLife;
+package Class.wildLife;
 
 import aroundLife.Equipement;
 
@@ -13,8 +13,8 @@ import aroundLife.Equipement;
 public class Enemie extends Entity{
     int dropChance;// on a range 0 to 10    
     
-    public Enemie(String name,int strenght){
-        super(name, strenght);
+    public Enemie(String name,int strength){
+        super(name, strength);
     }
     
     public Equipement dropItem(){
