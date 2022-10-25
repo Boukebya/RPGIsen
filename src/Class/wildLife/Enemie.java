@@ -4,7 +4,7 @@
  */
 package Class.wildLife;
 
-import aroundLife.Equipement;
+import Class.aroundLife.Equipment;
 
 /**
  *
@@ -13,17 +13,17 @@ import aroundLife.Equipement;
 public class Enemie extends Entity{
     int dropChance;// on a range 0 to 10    
     
-    public Enemie(String name,int strength){
-        super(name, strength);
+    public Enemie(String name,int strenght){
+        super(name, strenght);
     }
     
-    public Equipement dropItem(){
+    public Equipment dropItem(){
         /*
         Drop an Item based on Enemie's level 
         */
         int rarity = this.stat.level;
         rarity/=5;
         if(rarity==0){rarity=1;}
-        return Equipement.dropEquipement(rarity);
+        return Equipment.dropEquipment(rarity);
     }
 }
