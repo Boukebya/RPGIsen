@@ -27,7 +27,7 @@ public class Hero extends Entity {
         super(name, strength);
         //inventory[0] = new Equipment("Sword", 1, 1, 1);
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
-        inventory[0] = new Weapon(2,2,2,"Sword","Sword of the Hero");
+        inventory[0] = new Weapon(2,2,2,"Sword","Sword of the YNAKS");
         inventory[1] = new Weapon(4,2,2,"Bow","Bow of the Hero");
         this.pos=pos;
         System.out.println("A hero named " + name + " Appeared !");
