@@ -1,8 +1,8 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
-import Class.aroundLife.Fight;
+import Class.aroundLife.Armor;
+import Class.aroundLife.Equipment;
 import Class.aroundLife.Weapon;
-import Class.wildLife.Enemie;
 import Class.wildLife.Hero;
 import java.util.Objects;
 
@@ -96,19 +96,19 @@ public class Main {
         Type_Events Chest_Event = new Type_Events("Chest",1);
 
         //We create a wooden chest
-        Chest wooden_Chest = new Chest(Chest_Event,"Wooden chest","You enter a small cave, it seems that somebody left quickly..\nAfter some research, you find something interesting..",new String[]{"Open it","Leave it"},new String[]{"You found a sword !","You left it"});
+        Chest wooden_Chest = new Chest(Chest_Event,"Wooden chest", new int[]{75, 10, 10, 5, 0},"You enter a small cave, it seems that somebody left quickly..\nAfter some research, you find something interesting..",new String[]{"Open it","Leave it"},new String[]{"You found an item !","You left it"});
         chests[0] = wooden_Chest;
         //modify rarity
         chests[0].modifyRarity(50);
 
         //We create a bloody chest
-        Chest bloody_Chest = new Chest(Chest_Event,"bloody chest","Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Bring your hand closer","Leave fast!"},new String[]{"The chest opens by itself and bites you, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
+        Chest bloody_Chest = new Chest(Chest_Event,"bloody chest",new int[]{20, 30, 30, 15, 5},"Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Bring your hand closer","Leave fast!"},new String[]{"The chest opens by itself and bites you, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
         chests[1] = bloody_Chest;
         //modify rarity
         chests[1].modifyRarity(20);
 
         //We create a golden chest
-        Chest golden_Chest = new Chest(Chest_Event,"golden chest",".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found a sword !","You left it"});
+        Chest golden_Chest = new Chest(Chest_Event,"golden chest",new int[]{40, 30, 25, 5, 0},".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
         chests[2] = golden_Chest;
         //modify rarity
         chests[2].modifyRarity(30);
@@ -143,13 +143,28 @@ public class Main {
         return merchants;
     }
     //Function to initialize weapons
-    public static Weapon[] InitWeapons(){
+    public static Equipment[] InitEquipments(){
         //Create array of weapons
-        Weapon[] weapons = new Weapon[2];
+        Equipment[] equipment = new Equipment[10];
         //We create a new type of event
-        weapons[0] = new Weapon(2,10,2,"Sword","Wooden sword");
-        weapons[1] = new Weapon(2,10,5,"Club","Wooden club");
-        return weapons;
+        equipment[0] = new Weapon(1,5,1,"Club","Broken stick");
+        equipment[1] = new Weapon(2,10,2,"Club","Common stick");
+        equipment[2] = new Weapon(3,15,3,"Club","Rare stick");
+        equipment[3] = new Weapon(4,20,4,"Club","Mythic stick");
+        equipment[4] = new Weapon(5,30,5,"Club","Legendary stick");
+
+        equipment[5] = new Armor(5,"Leather armor");
+        equipment[5].setRarity(1);
+        equipment[6] = new Armor(10,"Iron armor");
+        equipment[6].setRarity(2);
+        equipment[7] = new Armor(20,"plate armor");
+        equipment[7].setRarity(3);
+        equipment[8] = new Armor(40,"Dragon slayer armor");
+        equipment[8].setRarity(4);
+        equipment[9] = new Armor(90,"Araqiel's armor");
+        equipment[9].setRarity(5);
+
+        return equipment;
     }
     //Function to get an event from rarity
     public static Type_Events GetEventFromRarity(Type_Events[] events) {
@@ -160,32 +175,32 @@ public class Main {
         //for every elements, get rarity of events and add it to randoms
         for (int i = 0; i < events.length; i++) {
             randoms[i] = (int) events[i].getRarity();
-            System.out.println(randoms[i]);
+            //System.out.println(randoms[i]);
             limit+= randoms[i];
         }
-        System.out.println("limit = " + limit);
+        //System.out.println("limit = " + limit);
 
         //Create random number between 0 and limit
         int random_number = (int) (Math.random() * limit);
-        System.out.println("random = "+random_number);
+        //System.out.println("random = "+random_number);
 
         int count = 0;
         //for every elements, if random is smaller than the rarity, return the event
         for (int i = 0; i < events.length; i++) {
             count +=  (int) events[i].getRarity();
             if (random_number < count) {
-                System.out.println("event " + i + " selected");
+                //System.out.println("event " + i + " selected");
                 return events[i];
             }
         }
 
-        System.out.println("default event");
+        //System.out.println("default event");
         return events[0];
     }
 
 
     //Test it
-    public static void Test(Map map, Chest[] chests, Enemy_Fight[] enemies, Unknown[] unknowns, Merchant[] merchants, Weapon[] weapons){
+    public static void Test(Map map, Chest[] chests, Enemy_Fight[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons){
         //Spawn Hero
         Hero character = new Hero("Blanc-Louis",3,SpawnHero(map));
         //Show Map
@@ -202,7 +217,7 @@ public class Main {
               //Get random chest with function
                 Chest actualChest = (Chest) GetEventFromRarity(chests);
                 //Interact with chest
-                actualChest.Interact(character);
+                actualChest.Interact(character,weapons);
 
             }
             //Else If new location is an enemy
@@ -226,14 +241,9 @@ public class Main {
         System.out.println("End of map !");
     }
 
-    public static void testClovisFight(){
-        Hero player = new Hero("Hero",3,new int[]{0,0});
-        Enemie dragon = new Enemie("Dragon",1);
-        Fight fight = new Fight(player, dragon);
-    }
+
     public static void main(String[] args) {
         System.out.println("Begin");
-        //Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitWeapons());
-        testClovisFight();
+        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitEquipments());
     }
 }

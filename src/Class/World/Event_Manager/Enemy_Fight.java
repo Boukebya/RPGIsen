@@ -1,7 +1,8 @@
 package Class.World.Event_Manager;
 
+import Class.aroundLife.Equipment;
 import Class.wildLife.Hero;
-
+import Class.aroundLife.Weapon;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class Enemy_Fight extends Type_Events {
     }
 
     @Override
-    public void Interact(Hero hero) {
+    public void Interact(Hero hero, Equipment[] weapons) {
         //Print that we find a chest named name_object
         System.out.println(description);
         System.out.println("name_Object" + "wants to fight !");

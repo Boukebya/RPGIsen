@@ -36,4 +36,7 @@ public class Equipment {
         System.out.println("Name: " + this.name);
     }
 
+    public void setRarity(int i) {
+        this.rarity = i;
+    }
 }

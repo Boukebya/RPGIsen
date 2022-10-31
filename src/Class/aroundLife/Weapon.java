@@ -12,11 +12,16 @@ public class Weapon extends Equipment {
         this.rarity = rarity;
         this.type = type;
         this.setName(name);
-
     }
 
     public Weapon() {
 
+    }
+
+
+    //get rarity
+    public int getRarity() {
+        return rarity;
     }
 
     public int useWeapon(){
@@ -36,15 +41,6 @@ public class Weapon extends Equipment {
         item.damage += Math.pow(1.5, rarity); // Damage increase with the rarity
         item.criticChance += rarity*0.05; // Critic chance increase with the rarity
         return item;
+    }
 
-    }
-    @Override
-    public String getType(){
-        return this.type;
-    }
-    public void getStat(){
-        System.out.print("Name: " + this.name);
-        System.out.print("Damage: " + this.damage);
-        System.out.println("Critic Chance: " + this.criticChance);
-    }
 }

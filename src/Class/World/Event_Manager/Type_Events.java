@@ -1,4 +1,6 @@
 package Class.World.Event_Manager;
+import Class.aroundLife.Equipment;
+import Class.aroundLife.Weapon;
 import Class.wildLife.Hero;
 
 //Mother's class for every event
@@ -24,7 +26,7 @@ public class Type_Events {
     }
 
     //By default, just show description
-    public void Interact(Hero hero) {
+    public void Interact(Hero hero, Equipment[] weapons) {
         System.out.println("description");
     }
 
