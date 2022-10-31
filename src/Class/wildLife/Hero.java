@@ -253,7 +253,7 @@ public class Hero extends Entity {
         // Check if the hero has armor
         if(inventory[2]!=null){
             // Use the armor
-            damage-=((Armor)inventory[2]).getDefence();
+            damage-=((Armor)inventory[2]).getDefense();
             if(damage<0){
                 damage=0;
             }

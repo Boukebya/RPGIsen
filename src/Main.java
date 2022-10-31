@@ -1,5 +1,6 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
+import Class.aroundLife.Armor;
 import Class.aroundLife.Equipment;
 import Class.aroundLife.Weapon;
 import Class.wildLife.Hero;
@@ -142,9 +143,9 @@ public class Main {
         return merchants;
     }
     //Function to initialize weapons
-    public static Equipment[] InitWeapons(){
+    public static Equipment[] InitEquipments(){
         //Create array of weapons
-        Equipment[] equipment = new Weapon[10];
+        Equipment[] equipment = new Equipment[10];
         //We create a new type of event
         equipment[0] = new Weapon(1,5,1,"Club","Broken stick");
         equipment[1] = new Weapon(2,10,2,"Club","Common stick");
@@ -152,11 +153,17 @@ public class Main {
         equipment[3] = new Weapon(4,20,4,"Club","Mythic stick");
         equipment[4] = new Weapon(5,30,5,"Club","Legendary stick");
 
-        equipment[5] = new Weapon(1,5,1,"Club","Broken stick");
-        equipment[6] = new Weapon(2,10,2,"Club","Common stick");
-        equipment[7] = new Weapon(3,15,3,"Club","Rare stick");
-        equipment[8] = new Weapon(4,20,4,"Club","Mythic stick");
-        equipment[9] = new Weapon(5,30,5,"Club","Legendary stick");
+        equipment[5] = new Armor(5,"Leather armor");
+        equipment[5].setRarity(1);
+        equipment[6] = new Armor(10,"Iron armor");
+        equipment[6].setRarity(2);
+        equipment[7] = new Armor(20,"plate armor");
+        equipment[7].setRarity(3);
+        equipment[8] = new Armor(40,"Dragon slayer armor");
+        equipment[8].setRarity(4);
+        equipment[9] = new Armor(90,"Araqiel's armor");
+        equipment[9].setRarity(5);
+
         return equipment;
     }
     //Function to get an event from rarity
@@ -237,6 +244,6 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Begin");
-        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitWeapons());
+        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitEquipments());
     }
 }
