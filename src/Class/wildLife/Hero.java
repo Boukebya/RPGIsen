@@ -4,6 +4,7 @@ import java.util.*;
 
 import Class.World.Map;
 import Class.World.Tile;
+import Class.aroundLife.Armor;
 import Class.aroundLife.Equipment;
 import Class.aroundLife.Weapon;
 
@@ -11,12 +12,11 @@ public class Hero extends Entity {
     //Hero's position
     private int [] pos;
     int experience;
-    private final int maxSlot = 4; // Max number of slot for the inventory
+    private final int maxSlot = 3; // Max number of slot for the inventory
     // Inventory of the hero:
     // - 0 slot for the sword
     // - 1 slot for the bow
-    // - 2 slot for the chest-plate
-    // - 3 slot for the helmet
+    // - 2 slot for the armor
 
     List<Spell> listOfSpell = new ArrayList<Spell>();
     Equipment[] inventory = new Equipment[maxSlot];
@@ -29,6 +29,7 @@ public class Hero extends Entity {
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
         inventory[0] = new Weapon(2,2,2,"Sword","Sword of the YNAKS");
         inventory[1] = new Weapon(4,2,2,"Bow","Bow of the Hero");
+        inventory[2] = new Armor(5,"Armor of the Hero");
         this.pos=pos;
         System.out.println("A hero named " + name + " Appeared !");
     }
@@ -245,6 +246,27 @@ public class Hero extends Entity {
         */
         this.useEquipment(target);
     }
+    public void getAttack(float damage){
+        /*
+        The Hero has been attack, but he could have armor to protect him
+        */
+        // Check if the hero has armor
+        if(inventory[2]!=null){
+            // Use the armor
+            damage-=((Armor)inventory[2]).getDefence();
+            if(damage<0){
+                damage=0;
+            }
+        }
+
+        if (this.stat.health - damage <= 0) {
+            this.killed();
+        } else {
+            this.stat.health -= damage;
+            System.out.println(this.stat.name + "'s HP = " + this.stat.health);
+        }
+    }
+
     /*public void Attack(Entity target) {
 
         // Check if the hero has a bow
