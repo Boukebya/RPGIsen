@@ -17,6 +17,10 @@ public class Weapon extends Equipment {
 
     }
 
+    public Weapon() {
+
+    }
+
     public int useWeapon(){
         /*
         Return the weapon damage and the critical hit chance
