@@ -5,8 +5,7 @@ import java.util.*;
 import Class.World.Map;
 import Class.World.Tile;
 import Class.aroundLife.Equipment;
-import Class.aroundLife.Weapon.Bow;
-import Class.aroundLife.Weapon.Sword;
+import Class.aroundLife.Weapon;
 
 public class Hero extends Entity {
     //Hero's position
@@ -28,8 +27,8 @@ public class Hero extends Entity {
         super(name, strength);
         //inventory[0] = new Equipment("Sword", 1, 1, 1);
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
-        inventory[0] = new Sword("Sword of the Hero", 2);
-        inventory[1] = new Bow("Bow of the Hero", 4, 2);
+        inventory[0] = new Weapon(2,2,2,"Sword","Sword of the Hero");
+        inventory[1] = new Weapon(4,2,2,"Bow","Bow of the Hero");
         this.pos=pos;
         System.out.println("A hero named " + name + " Appeared !");
     }
@@ -112,7 +111,7 @@ public class Hero extends Entity {
         for(int i=0;i<maxSlot;i++){
             if(this.inventory[i]!=null){
                 System.out.println("Slot "+i+":");
-                this.inventory[i].getStat();
+                this.inventory[i].getName();
             }
             else {
                 System.out.println("Slot "+i+": Empty");
@@ -202,13 +201,13 @@ public class Hero extends Entity {
         }
         return null;
     }
-    public void longAttack(Entity target, Bow bow){
+    public void longAttack(Entity target, Weapon bow){
         /*
         Use a long attack on an Entity
         */
         target.getAttack(bow.getWeaponDamage()+this.getDexterity());
     }
-    public void shortAttack(Entity target, Sword sword){
+    public void shortAttack(Entity target, Weapon sword){
         /*
         Use a short attack on an Entity
         */
@@ -227,11 +226,11 @@ public class Hero extends Entity {
         */
         Equipment equipment = this.chooseEquipment(); // Choose the equipment to use
         // Check type of the equipment
-        if(equipment.getClass().equals(Bow.class)){
-            this.longAttack(target, (Bow) equipment);
+        if(equipment.getType().equals("Bow")){
+            this.longAttack(target, (Weapon) equipment);
         }
-        else if(equipment.getClass().equals(Sword.class)){
-            this.shortAttack(target, (Sword) equipment);
+        else if(equipment.getType().equals("Sword")){
+            this.shortAttack(target, (Weapon) equipment);
         }
         else{
             System.out.println("God is pleased to know that you are using your hands");

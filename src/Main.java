@@ -1,7 +1,6 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
-import Class.aroundLife.Weapon.Sword;
-import Class.aroundLife.Weapon.Weapon;
+import Class.aroundLife.Weapon;
 import Class.wildLife.Hero;
 import java.util.Objects;
 

@@ -54,8 +54,6 @@ public class Fight {
         for(int i=0;i<4;i++){line[i]=null;}
         line[0]=hero;
         line[3]=enemies;
-        // Display the lines
-        displayField();
     }
     private void displayField() {
         /*
@@ -91,7 +89,7 @@ public class Fight {
         Manage the new turn
          */
         turn++;
-        displayField();
+        //displayField();
         System.out.println("Turn "+turn);
     }
 
@@ -103,7 +101,7 @@ public class Fight {
         boolean correctInput=false;
         Equipment item =enemies.dropItem();
         System.out.println("You found an Item!");
-        item.getStat();
+        item.getName();
         System.out.println("Do you want to keep it? (y/n)");
         while(!correctInput) {
             try {
@@ -146,13 +144,13 @@ public class Fight {
         System.out.println("1. Attack with your weapon");
         System.out.println("2. Use a spell");
         System.out.println("3. Attack with your hands");
-        System.out.println("4. Change position");
+        //System.out.println("4. Change position");
         String answer = hero.catchAnswer();
         int answerInt=0;
         while (!correctInput){
             try {
                 answerInt = Integer.parseInt(answer);
-                if (answerInt>= 1 && answerInt<=4) {
+                if (answerInt>= 1 && answerInt<=3) {
                     correctInput = true;
                 }
             } catch (Exception e) {
@@ -169,9 +167,11 @@ public class Fight {
         else if (answerInt==3){
             hero.handAttack(enemies);
         }
+        /*
         else if (answerInt==4){
             changePosition(hero);
         }
+        */
     }
 
     // Method to move entities in the line

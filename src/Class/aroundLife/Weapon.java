@@ -1,4 +1,4 @@
-package Class.aroundLife.Weapon;
+package Class.aroundLife;
 
 import Class.aroundLife.Equipment;
 

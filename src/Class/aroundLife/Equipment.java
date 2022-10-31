@@ -51,8 +51,7 @@ public class Equipment {
 
     public void getStat(){
         System.out.println("Name: " + this.name);
-        System.out.println("Rarity: " + this.rarity);
-        System.out.println("Damage: " + this.damage);
+        System.out.print("Damage: " + this.damage);
         System.out.println("Defence: " + this.defence);
         System.out.println("Critical Hit Chance: " + this.criticalHitChance);
     }
