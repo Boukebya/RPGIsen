@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import Class.aroundLife.Equipment;
 
+//ohfezufhziufhzeifu
 public class Hero extends Entity {
 
     int experience;
