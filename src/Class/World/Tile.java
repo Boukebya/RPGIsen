@@ -1,5 +1,6 @@
 package Class.World;
 
+//Tile enum
 public enum Tile {
 
     Wall ("Wall"),
@@ -10,8 +11,6 @@ public enum Tile {
     End ("End"),
     Position ("Position"),
     Unknown ("Unknown");
-
-
 
     private final String Category;
 

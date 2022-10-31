@@ -1,4 +1,4 @@
-package Class.Event_Manager;
+package Class.World.Event_Manager;
 
 import Class.World.Hero;
 
@@ -13,7 +13,7 @@ public class Enemy_Fight extends Type_Events {
 
     //Constructor
     public Enemy_Fight(Type_Events type_Event, String name_Object,String description,int rarity,String[] choices) {
-        super(type_Event.name);
+        super(type_Event.name, type_Event.rarity);
         this.name_Object= name_Object;
         this.description = description;
         this.rarity = rarity;
@@ -28,8 +28,8 @@ public class Enemy_Fight extends Type_Events {
         //print different choices
         System.out.println("What do you want to do ?");
         System.out.println("Type your choice to proceed:");
-        for (int i = 0; i < choices.length; i++) {
-            System.out.println(": "+choices[i]);
+        for (String s : choices) {
+            System.out.println(": " + s);
         }
 
 
@@ -38,8 +38,8 @@ public class Enemy_Fight extends Type_Events {
             //scanner to know what the player want to do
             Scanner sc = new Scanner(System.in);
             String choice = sc.nextLine();
-            for (int i = 0; i < choices.length; i++) {
-                if (Objects.equals(choice, choices[i])) {
+            for (String s : choices) {
+                if (Objects.equals(choice, s)) {
                     System.out.println("Need to implement fight manager...");
                     return;
                 }
