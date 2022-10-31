@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package wildLife;
+package Class.wildLife;
 
-import aroundLife.Equipement;
+import Class.aroundLife.Equipment;
 
 /**
  *
@@ -12,14 +12,15 @@ import aroundLife.Equipement;
  */
 public class Entity {
     
-    Stat stat = new Stat(); 
-    Equipement weapon; // on peut faire un tableau si on ajoute des protection
+    public Stat stat = new Stat();
+    Equipment weapon; // on peut faire un tableau si on ajoute des protection
     int[][] position;
+
     
-    public Entity(String name,int strenght){
+    public Entity(String name,int strength){
         stat.health = 10;
         this.stat.name = name;
-        this.stat.strength = strenght;
+        this.stat.strength = strength;
     }
     
     public void getAttack(float damage){
@@ -27,7 +28,7 @@ public class Entity {
         The entity has been attack
         */
         if(this.stat.health-damage<=0){
-            this.getKilled();
+            this.killed();
         }
         else{
             this.stat.health-=damage;
@@ -37,12 +38,12 @@ public class Entity {
     
     public void Attack(Entity target){
         /*
-        The entity atteck another one
+        The entity attack another one
        */
         target.getAttack(this.stat.strength);
     }
     
-    public void getKilled(){
+    public void killed(){
         /*
         The entity is dead
         */
@@ -53,5 +54,16 @@ public class Entity {
     public void increaseStrength(int increase){
         this.stat.strength+=increase;
     }
-    
+
+    public int getLevel(){return this.stat.level;}
+
+    public float getHP(){return this.stat.health;}
+
+    public void addHP(float newAmount){
+        this.stat.health+=newAmount;
+        if (this.stat.health>this.stat.maxHealth){
+            this.stat.health=this.stat.maxHealth;
+        }
+    }
+
 }
