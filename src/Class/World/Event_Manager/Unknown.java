@@ -1,5 +1,7 @@
 package Class.World.Event_Manager;
 
+import Class.aroundLife.Equipment;
+import Class.aroundLife.Weapon;
 import Class.wildLife.Hero;
 
 public class Unknown extends Type_Events {
@@ -11,7 +13,7 @@ public class Unknown extends Type_Events {
     }
 
     @Override
-    public void Interact(Hero hero) {
+    public void Interact(Hero hero, Equipment[] weapons) {
         System.out.println("You find a " + name_Object + " !");
         System.out.println("Need to implement unknown manager...");
     }
