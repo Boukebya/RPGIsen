@@ -1,4 +1,4 @@
-package Class.World;
+package Trash;
 
 public class Heros {
     /*

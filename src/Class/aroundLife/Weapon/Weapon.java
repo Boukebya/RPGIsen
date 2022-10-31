@@ -7,8 +7,14 @@ public class Weapon extends Equipment {
     int damage;
     int rarity;
     String type; // bow, sword
-    public Weapon(){
+    public Weapon(int damage, int criticChance, int rarity, String type, String name){
         super();
+        this.damage = damage;
+        this.criticChance = criticChance;
+        this.rarity = rarity;
+        this.type = type;
+        this.setName(name);
+
     }
 
     public int useWeapon(){

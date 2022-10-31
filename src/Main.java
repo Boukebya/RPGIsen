@@ -1,5 +1,7 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
+import Class.aroundLife.Weapon.Sword;
+import Class.aroundLife.Weapon.Weapon;
 import Class.wildLife.Hero;
 import java.util.Objects;
 
@@ -133,6 +135,15 @@ public class Main {
 
         return merchants;
     }
+    //Function to initialize weapons
+    public static Weapon[] InitWeapons(){
+        //Create array of weapons
+        Weapon[] weapons = new Weapon[2];
+        //We create a new type of event
+        weapons[0] = new Weapon(2,10,5,"Sword","Wooden sword");
+        weapons[1] = new Weapon(2,10,5,"Club","Wooden club");
+        return weapons;
+    }
     //Function to get an event from rarity
     public static Type_Events GetEventFromRarity(Type_Events[] events) {
         //Create new random array with same size as events
@@ -167,7 +178,7 @@ public class Main {
 
 
     //Test it
-    public static void Test(Map map, Chest[] chests, Enemy_Fight[] enemies, Unknown[] unknowns, Merchant[] merchants){
+    public static void Test(Map map, Chest[] chests, Enemy_Fight[] enemies, Unknown[] unknowns, Merchant[] merchants, Weapon[] weapons){
         //Spawn Hero
         Hero character = new Hero("Blanc-Louis",3,SpawnHero(map));
         //Show Map
@@ -211,6 +222,6 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Begin");
-        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants());
+        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitWeapons());
     }
 }
