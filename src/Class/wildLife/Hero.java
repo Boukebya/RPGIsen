@@ -68,7 +68,7 @@ public class Hero extends Entity {
                 break;
             case "Armor":
                 System.out.println("Armor's stats: ");
-                System.out.println("Defence: " + ((Armor)inventory[0]).getDefence());
+                System.out.println("Defence: " + ((Armor)inventory[0]).getDefense());
                 break;
             default:
                 System.out.println("You don't have this type of item");
