@@ -45,10 +45,10 @@ public class Fight {
         The fight begin
         */
         System.out.println("\nYou are going to fight this monster:");
-        enemies.stat.getStatus();
+        enemies.stat.introduce();
         System.out.println("\nYou are at this point: ");
-        hero.stat.getStatus();
-        System.out.println("good luck!\n");
+        hero.stat.introduce();
+        System.out.println("\nGood luck!\n");
 
         // init the lines
         for(int i=0;i<4;i++){line[i]=null;}

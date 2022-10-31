@@ -37,6 +37,65 @@ public class Hero extends Entity {
     public int getStrength() {return this.stat.getStrength();}
     public int getDexterity() {return this.stat.getDexterity();}
 
+    public void changeItem(Equipment item){
+        /*
+        Add an item to the inventory if player want
+        */
+        System.out.println("You found a " + item.getName() + " !");
+        System.out.println("It can be replace by your " + item.getType() + " !");
+        if(chooseToKeepItem(item)){
+            for(int i=0;i<inventory.length;i++){
+                if(inventory[i].getType().equals(item.getType())){
+                    inventory[i]=item;
+                    break;
+                }
+            }
+        }
+
+    }
+    public void getItemStats(String type){
+        /*
+        Display the stats of the item
+         */
+        switch (type){
+            case "Sword":
+                System.out.println("Sword's stats: ");
+                System.out.print("Damage: " + ((Weapon)inventory[0]).getDamage() + "Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
+                break;
+            case "Bow":
+                System.out.println("Bow's stats: ");
+                System.out.print("Damage: " + ((Weapon)inventory[0]).getDamage() + "Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
+                break;
+            case "Armor":
+                System.out.println("Armor's stats: ");
+                System.out.println("Defence: " + ((Armor)inventory[0]).getDefence());
+                break;
+            default:
+                System.out.println("You don't have this type of item");
+        }
+    }
+
+    public boolean chooseToKeepItem(Equipment item){
+        /*
+        Choose to keep the item or not
+         */
+        System.out.println("In your inventory, you have :");
+        getItemStats(item.getType());
+        System.out.println("Do you want to change it ? (Y/N)");
+        try {
+            Scanner sc = new Scanner(System.in);
+            String answer = sc.nextLine();
+            if (answer.equals("Y")) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (Exception e){
+            System.out.println("You will not change your item");
+            return false;
+        }
+    }
+
     // Setters
     public void setExperience(int xp){
         /*
@@ -91,6 +150,23 @@ public class Hero extends Entity {
         this.listOfSpell.add(spell);
     }
     // Methods for the inventory
+
+    public void getItem(Equipment item){
+        /*
+        Get a weapon in the inventory
+        */
+        if(item.getType().equals("Sword")){
+            this.inventory[0]=item;
+        }
+        else if(item.getType().equals("Bow")){
+            this.inventory[1]=item;
+        }
+        else if(item.getType().equals("Armor")){
+            this.inventory[2]=item;
+        }
+        this.inventory[0]=item;
+    }
+
     public void addEquipment(Equipment equipment, int slot) {
         /*
         Add equipment to the inventory

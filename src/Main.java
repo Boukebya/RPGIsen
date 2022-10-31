@@ -1,6 +1,8 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
+import Class.aroundLife.Fight;
 import Class.aroundLife.Weapon;
+import Class.wildLife.Enemie;
 import Class.wildLife.Hero;
 import java.util.Objects;
 
@@ -224,9 +226,14 @@ public class Main {
         System.out.println("End of map !");
     }
 
-
+    public static void testClovisFight(){
+        Hero player = new Hero("Hero",3,new int[]{0,0});
+        Enemie dragon = new Enemie("Dragon",1);
+        Fight fight = new Fight(player, dragon);
+    }
     public static void main(String[] args) {
         System.out.println("Begin");
-        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitWeapons());
+        //Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitWeapons());
+        testClovisFight();
     }
 }

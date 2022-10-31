@@ -38,4 +38,13 @@ public class Weapon extends Equipment {
         return item;
 
     }
+    @Override
+    public String getType(){
+        return this.type;
+    }
+    public void getStat(){
+        System.out.print("Name: " + this.name);
+        System.out.print("Damage: " + this.damage);
+        System.out.println("Critic Chance: " + this.criticChance);
+    }
 }

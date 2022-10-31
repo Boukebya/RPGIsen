@@ -43,6 +43,9 @@ public class Stat {
         System.out.println("Dexterity: " + this.dexterity);
     }
 
+    public void introduce(){
+        System.out.println(this.name + " lvl : " + this.level + "\nHP : " + this.health + "/" + (int)this.maxHealth + " Mana : " + this.mana + "/" + this.maxMana);
+    }
     // Setters
     public void setDexterity(int dexterity) {this.dexterity = dexterity;}
     public void setStrength(int strength) {this.strength = strength;}

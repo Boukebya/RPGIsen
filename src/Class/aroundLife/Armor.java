@@ -23,4 +23,13 @@ public class Armor extends Equipment {
         return item;
     }
 
+    @Override
+    public String getType(){
+        return this.type;
+    }
+
+    public void getStat(){
+        System.out.print("Name: " + this.name);
+        System.out.println("Defence: " + this.defence);
+    }
 }
