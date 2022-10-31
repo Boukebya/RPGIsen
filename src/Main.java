@@ -97,13 +97,19 @@ public class Main {
         Chest wooden_Chest = new Chest(Chest_Event,"Wooden chest","You enter a small cave, it seems that somebody left quickly..\nAfter some research, you find something interesting..",new String[]{"Open it","Leave it"},new String[]{"You found a sword !","You left it"});
         chests[0] = wooden_Chest;
         //modify rarity
-        chests[0].modifyRarity(3);
+        chests[0].modifyRarity(50);
+
         //We create a bloody chest
         Chest bloody_Chest = new Chest(Chest_Event,"bloody chest","Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Bring your hand closer","Leave fast!"},new String[]{"The chest opens by itself and bites you, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
         chests[1] = bloody_Chest;
+        //modify rarity
+        chests[1].modifyRarity(20);
+
         //We create a golden chest
-        Chest golden_Chest = new Chest(Chest_Event,"golden chest",".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"The chest opens by itself and bites you, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
-        chests[2] = bloody_Chest;
+        Chest golden_Chest = new Chest(Chest_Event,"golden chest",".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found a sword !","You left it"});
+        chests[2] = golden_Chest;
+        //modify rarity
+        chests[2].modifyRarity(30);
 
         return chests;
     }
@@ -139,7 +145,7 @@ public class Main {
         //Create array of weapons
         Weapon[] weapons = new Weapon[2];
         //We create a new type of event
-        weapons[0] = new Weapon(2,10,5,"Sword","Wooden sword");
+        weapons[0] = new Weapon(2,10,2,"Sword","Wooden sword");
         weapons[1] = new Weapon(2,10,5,"Club","Wooden club");
         return weapons;
     }
@@ -156,17 +162,17 @@ public class Main {
             limit+= randoms[i];
         }
         System.out.println("limit = " + limit);
+
         //Create random number between 0 and limit
-        int random = (int) (Math.random() * limit);
-        System.out.println("random = "+random);
+        int random_number = (int) (Math.random() * limit);
+        System.out.println("random = "+random_number);
 
-        random = 1;
-
-        //For every elements,
-
-        //If random is between the last element of randoms and the following one, return this element
-        for (int i = 0; i < randoms.length; i++) {
-            if (random >= randoms[i] && random < randoms[i + 1]) {
+        int count = 0;
+        //for every elements, if random is smaller than the rarity, return the event
+        for (int i = 0; i < events.length; i++) {
+            count +=  (int) events[i].getRarity();
+            if (random_number < count) {
+                System.out.println("event " + i + " selected");
                 return events[i];
             }
         }
