@@ -5,6 +5,7 @@
 package Class.wildLife;
 
 import Class.aroundLife.Equipment;
+import Class.aroundLife.Weapon;
 
 /**
  *
@@ -24,6 +25,6 @@ public class Enemie extends Entity{
         int rarity = this.stat.level;
         rarity/=5;
         if(rarity==0){rarity=1;}
-        return Equipment.dropEquipment(rarity);
+        return Weapon.dropWeapon(rarity);
     }
 }

@@ -205,13 +205,13 @@ public class Hero extends Entity {
         /*
         Use a long attack on an Entity
         */
-        target.getAttack(bow.getWeaponDamage()+this.getDexterity());
+        target.getAttack(bow.getDamage()+this.getDexterity());
     }
     public void shortAttack(Entity target, Weapon sword){
         /*
         Use a short attack on an Entity
         */
-        target.getAttack(sword.getWeaponDamage()+this.getStrength());
+        target.getAttack(sword.getDamage()+this.getStrength());
     }
     public void handAttack(Entity target){
         /*
