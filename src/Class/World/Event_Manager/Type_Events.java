@@ -1,5 +1,5 @@
 package Class.World.Event_Manager;
-import Class.World.Hero;
+import Class.wildLife.Hero;
 
 //Mother's class for every event
 public class Type_Events {

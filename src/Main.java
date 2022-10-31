@@ -1,7 +1,9 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
+import Class.wildLife.Hero;
 import java.util.Objects;
-import static Class.World.Hero.SpawnHero;
+
+import static Class.wildLife.Hero.SpawnHero;
 
 
 public class Main {
@@ -167,7 +169,7 @@ public class Main {
     //Test it
     public static void Test(Map map, Chest[] chests, Enemy_Fight[] enemies, Unknown[] unknowns, Merchant[] merchants){
         //Spawn Hero
-        Hero character = new Hero("Blanc-Louis",SpawnHero(map));
+        Hero character = new Hero("Blanc-Louis",3,SpawnHero(map));
         //Show Map
         map.ShowMap(map);
 

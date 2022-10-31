@@ -1,13 +1,9 @@
 package Class.World;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
-
-public class Hero {
+public class Heros {
+    /*
     //Hero's position
     private int [] pos;
-    //Hero's name
 
     //Constructor
     public Hero (String name,int[]pos){
@@ -91,4 +87,6 @@ public class Hero {
         //else return tile
         return tile;
     }
+
+     */
 }

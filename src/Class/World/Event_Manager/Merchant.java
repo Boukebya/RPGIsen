@@ -1,6 +1,5 @@
 package Class.World.Event_Manager;
-
-import Class.World.Hero;
+import Class.wildLife.Hero;
 
 public class Merchant extends Type_Events {
     String name_Object;
