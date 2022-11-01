@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class.wildLife;
 
 /**
@@ -9,15 +5,11 @@ package Class.wildLife;
  * @author theap
  */
 public class Stat {
-    /*
-    All statistic of an Entity
-    */
+    //All statistic of an Entity
     int dexterity =1;   // stat for bow
     int strength=1;     // stat for sword
-
     int maxMana = 10;   // stat for magic
     float mana=10;
-
     float maxHealth = 10F;
     float health=10F;
     int level=1;
@@ -34,7 +26,6 @@ public class Stat {
         this.level = level;
         this.name = name;
     }
-
     public Stat() {
     }
 
@@ -49,19 +40,6 @@ public class Stat {
     public int getLevel() {return this.level;}
     public String getName() {return this.name;}
 
-    public void getStatus(){
-        System.out.println("Name: " + this.name);
-        System.out.println("Level: " + this.level);
-        System.out.println("Health: " + this.health + "/" + this.maxHealth);
-        System.out.println("Mana: " + this.mana + "/" + this.maxMana);
-        // peut être enlever ces deux lignes d'infos juste en bas
-        System.out.println("Strength: " + this.strength);
-        System.out.println("Dexterity: " + this.dexterity);
-    }
-
-    public void introduce(){
-        System.out.println(this.name + " lvl : " + this.level + "\nHP : " + this.health + "/" + (int)this.maxHealth + " Mana : " + this.mana + "/" + this.maxMana);
-    }
     // Setters
     public void setDexterity(int dexterity) {this.dexterity = dexterity;}
     public void setStrength(int strength) {this.strength = strength;}
@@ -73,6 +51,18 @@ public class Stat {
     public void setName(String name) {this.name = name;}
 
     // Methods
+    public void getStatus(){
+        System.out.println("Name: " + this.name);
+        System.out.println("Level: " + this.level);
+        System.out.println("Health: " + this.health + "/" + this.maxHealth);
+        System.out.println("Mana: " + this.mana + "/" + this.maxMana);
+        // peut être enlever ces deux lignes d'infos juste en bas
+        System.out.println("Strength: " + this.strength);
+        System.out.println("Dexterity: " + this.dexterity);
+    }
+    public void introduce(){
+        System.out.println(this.name + " lvl : " + this.level + "\nHP : " + this.health + "/" + (int)this.maxHealth + " Mana : " + this.mana + "/" + this.maxMana);
+    }
     public void increaseDexterity(int increase) {this.dexterity+=increase;}
     public void increaseStrength(int increase) {this.strength+=increase;}
     public void increaseMaxMana(int increase) {this.maxMana+=increase;}

@@ -5,7 +5,6 @@ import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
 import Class.gameMechanics.Fight;
 import Class.wildLife.Enemy;
-import Class.wildLife.Entity;
 import Class.wildLife.Hero;
 import Class.wildLife.Stat;
 
@@ -105,19 +104,19 @@ public class Main {
         Chest wooden_Chest = new Chest(Chest_Event,"Wooden chest", new int[]{75, 10, 10, 5, 0},"You enter a small cave, it seems that somebody left quickly..\nAfter some research, you find something interesting..",new String[]{"Open it","Leave it"},new String[]{"You found an item !","You left it"});
         chests[0] = wooden_Chest;
         //modify rarity
-        chests[0].modifyRarity(50);
+        chests[0].setRarity(50);
 
         //We create a bloody chest
         Chest bloody_Chest = new Chest(Chest_Event,"bloody chest",new int[]{20, 30, 30, 15, 5},"Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Bring your hand closer","Leave fast!"},new String[]{"The chest opens by itself and bites you, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
         chests[1] = bloody_Chest;
         //modify rarity
-        chests[1].modifyRarity(20);
+        chests[1].setRarity(20);
 
         //We create a golden chest
         Chest golden_Chest = new Chest(Chest_Event,"golden chest",new int[]{40, 30, 25, 5, 0},".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
         chests[2] = golden_Chest;
         //modify rarity
-        chests[2].modifyRarity(30);
+        chests[2].setRarity(30);
 
         return chests;
     }

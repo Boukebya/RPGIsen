@@ -1,29 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class.wildLife;
-
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
 
-/**
- *
- * @author theap
- */
 public class Enemy extends Entity{
     int dropChance;// on a range 0 to 10    
     String name;
+    //constructor
     public Enemy(Stat stat,String name) {
         super(stat);
         this.name = name;
     }
 
-    //get name
-    public String getName(){
-        return this.name;
+    //Getters
+    public int getDropChance() {
+        return dropChance;
     }
-    
+    public String getName() {
+        return name;
+    }
+
+    //Setters
+    public void setDropChance(int dropChance) {
+        this.dropChance = dropChance;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //Methods
     public Equipment dropItem(){
         /*
         Drop an Item based on Enemy level
@@ -34,8 +38,6 @@ public class Enemy extends Entity{
         if(rarity>5){rarity=5;}
         return Weapon.dropWeapon(rarity);
     }
-
-
     public static Enemy GetEnemy(Enemy[] enemies,int level) {
 
         while (true) {

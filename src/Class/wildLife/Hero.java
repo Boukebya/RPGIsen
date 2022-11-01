@@ -1,7 +1,5 @@
 package Class.wildLife;
-
 import java.util.*;
-
 import Class.World.Map;
 import Class.World.Tile;
 import Class.Equipments.Armor;
@@ -17,7 +15,6 @@ public class Hero extends Entity {
     // - 0 slot for the sword
     // - 1 slot for the bow
     // - 2 slot for the armor
-
     List<Spell> listOfSpell = new ArrayList<Spell>();
     Equipment[] inventory = new Equipment[maxSlot];
 
@@ -33,10 +30,89 @@ public class Hero extends Entity {
         this.pos=pos;
         System.out.println("A hero named " + name + " Appeared !");
     }
+
     // Getters
     public int getStrength() {return this.stat.getStrength();}
     public int getDexterity() {return this.stat.getDexterity();}
     public int getLevel() {return this.stat.getLevel();}
+
+    //Methods
+    //Movement
+    //Hero's initialisation in the map
+    public static int[] SpawnHero(Map map){
+        Tile Spawn = Tile.Spawn;
+        int [] pos;
+        //Get the position of the spawn
+        pos = map.PosTile(map,Spawn);
+        System.out.println("Hero spawn at " + Arrays.toString(pos));
+        //Return the position of the spawn
+        return pos;
+    }
+    //Hero's movement on map
+    public Tile MoveHero(Hero hero, Map map){
+        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d)");
+
+        //Get hero's position
+        int [] pos;
+        pos = hero.pos;
+        //x and y are the coordinates of the hero after choices
+        int x = pos[0];
+        int y = pos[1];
+
+        //Tile that we use (position is hero's tile and empty is the tile that be placed after hero cleared a tile)
+        Tile tile = Tile.Position;
+        Tile Empty = Tile.Empty;
+        //Move is used to know if the hero can move or not, can't move if there is a wall
+        boolean move = false;
+        while(!move) {
+            //Scanner to get the choice of the player and change the position of the hero
+            Scanner sc = new Scanner(System.in);
+            String direction = sc.nextLine();
+            switch (direction) {
+                case "up", "z" -> {
+                    move = true;
+                    map.ChangeTile(map, pos, Empty);
+                    y = y - 1;
+                }
+                case "down", "s" -> {
+                    move = true;
+                    map.ChangeTile(map, pos, Empty);
+                    y = y + 1;
+                }
+                case "left", "q" -> {
+                    move = true;
+                    map.ChangeTile(map, pos, Empty);
+                    x = x - 1;
+                }
+                case "right", "d" -> {
+                    move = true;
+                    map.ChangeTile(map, pos, Empty);
+                    x = x + 1;
+                }
+            }
+        }
+        // Hero's new position (tile)
+        Tile New_location = map.GetTileMap(map,x,y);
+        //If the hero is on a wall, he can't go there
+        if (Objects.equals(New_location.GetTile(), "Wall")){
+            System.out.println("You can't go there, it's a wall !");
+            MoveHero(hero,map);
+        }
+        //Everything is fine hero can change his position
+        else {
+            //
+            hero.pos[0] = x;
+            hero.pos[1] = y;
+            //Change tile to position
+            map.ChangeTile(map,pos,tile);
+            //Show map with the new position of the hero
+            map.ShowMap(map);
+            //Return the new location
+            return New_location;
+        }
+        //else return tile
+        return tile;
+    }
     public void changeItem(Equipment item){
         /*
         Add an item to the inventory if player want
@@ -75,7 +151,6 @@ public class Hero extends Entity {
                 System.out.println("You don't have this type of item ! \n\t(Error Item type)");
         }
     }
-
     public boolean chooseToKeepItem(Equipment item){
         /*
         Choose to keep the item or not
@@ -96,8 +171,7 @@ public class Hero extends Entity {
             return false;
         }
     }
-
-    // Setters
+    // C EST PAS UN SET LES SETTERS SONT POUR UNE VARIABLE IL FAUT LA RENAME
     public void setExperience(int xp){
         /*
         Manage the XP of the character and his level
@@ -110,7 +184,6 @@ public class Hero extends Entity {
             this.stat.level+=over_experience;
         }
     }
-
     // Methods for basic
     public String catchAnswer() {
         /*
@@ -120,7 +193,6 @@ public class Hero extends Entity {
         String answer = sc.nextLine();
         return answer;
     }
-
     // Methods for the health
     public void catchHeal(float heal){
         /*
@@ -132,7 +204,6 @@ public class Hero extends Entity {
             this.stat.health=this.stat.maxHealth;
         }
     }
-
     public void catchMana(float mana){
         /*
         Catch the mana of the hero
@@ -143,7 +214,6 @@ public class Hero extends Entity {
             this.stat.mana=this.stat.maxMana;
         }
     }
-
     public void addSpell(Spell spell){
         /*
         Add a spell to the list of spell
@@ -151,7 +221,6 @@ public class Hero extends Entity {
         this.listOfSpell.add(spell);
     }
     // Methods for the inventory
-
     public void getItem(Equipment item){
         /*
         Get a weapon in the inventory
@@ -167,7 +236,6 @@ public class Hero extends Entity {
         }
         this.inventory[0]=item;
     }
-
     public void addEquipment(Equipment equipment, int slot) {
         /*
         Add equipment to the inventory
@@ -195,7 +263,6 @@ public class Hero extends Entity {
             }
         }
     }
-
     // Methods for the fight using Spell
     public boolean displaySpell(){
         /*
@@ -251,7 +318,6 @@ public class Hero extends Entity {
             target.getAttack(spell.getPower());
         }
     }
-
     // Methods for the fight using Equipment
     public Equipment chooseEquipment(){
         /*
@@ -372,82 +438,4 @@ public class Hero extends Entity {
         }
     }
     */
-
-    //Hero's initialisation in the map
-    public static int[] SpawnHero(Map map){
-        Tile Spawn = Tile.Spawn;
-        int [] pos;
-        //Get the position of the spawn
-        pos = map.PosTile(map,Spawn);
-        System.out.println("Hero spawn at " + Arrays.toString(pos));
-        //Return the position of the spawn
-        return pos;
-    }
-
-    //Hero's movement on map
-    public Tile MoveHero(Hero hero, Map map){
-        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d)");
-
-        //Get hero's position
-        int [] pos;
-        pos = hero.pos;
-        //x and y are the coordinates of the hero after choices
-        int x = pos[0];
-        int y = pos[1];
-
-        //Tile that we use (position is hero's tile and empty is the tile that be placed after hero cleared a tile)
-        Tile tile = Tile.Position;
-        Tile Empty = Tile.Empty;
-        //Move is used to know if the hero can move or not, can't move if there is a wall
-        boolean move = false;
-        while(!move) {
-            //Scanner to get the choice of the player and change the position of the hero
-            Scanner sc = new Scanner(System.in);
-            String direction = sc.nextLine();
-            switch (direction) {
-                case "up", "z" -> {
-                    move = true;
-                    map.ChangeTile(map, pos, Empty);
-                    y = y - 1;
-                }
-                case "down", "s" -> {
-                    move = true;
-                    map.ChangeTile(map, pos, Empty);
-                    y = y + 1;
-                }
-                case "left", "q" -> {
-                    move = true;
-                    map.ChangeTile(map, pos, Empty);
-                    x = x - 1;
-                }
-                case "right", "d" -> {
-                    move = true;
-                    map.ChangeTile(map, pos, Empty);
-                    x = x + 1;
-                }
-            }
-        }
-        // Hero's new position (tile)
-        Tile New_location = map.GetTileMap(map,x,y);
-        //If the hero is on a wall, he can't go there
-        if (Objects.equals(New_location.GetTile(), "Wall")){
-            System.out.println("You can't go there, it's a wall !");
-            MoveHero(hero,map);
-        }
-        //Everything is fine hero can change his position
-        else {
-            //
-            hero.pos[0] = x;
-            hero.pos[1] = y;
-            //Change tile to position
-            map.ChangeTile(map,pos,tile);
-            //Show map with the new position of the hero
-            map.ShowMap(map);
-            //Return the new location
-            return New_location;
-        }
-        //else return tile
-        return tile;
-    }
-
 }

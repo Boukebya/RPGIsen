@@ -5,7 +5,8 @@ public class Spell {
     float coolDown = 3F;
     int manaUse = 5;
     int power = 25;
-    String type = "Damage"; // Damage or Heal
+    String type = "Damage"; // Damage or Heal or Effect
+
     // Constructors
     public Spell(String name, float coolDown, int manaUse, int power, String type) {
         this.name = name;
@@ -15,11 +16,22 @@ public class Spell {
         this.type = type;
 
     }
-
     public Spell(){}
 
-    // Method
+    // Getters
+    public String getName() {return name;}
+    public float getCoolDown() {return coolDown;}
+    public int getManaUse() {return manaUse;}
+    public int getPower() {return power;}
+    public String getType() {return type;}
 
+    // Setters
+    public void setName(String name) {this.name = name;}
+    public void setCoolDown(float coolDown) {this.coolDown = coolDown;}
+    public void setManaUse(int manaUse) {this.manaUse = manaUse;}
+    public void setPower(int power) {this.power = power;}
+
+    // Method
     public Spell generateSpell(int level, String type) {
         /*
         Generate a spell with a level
@@ -31,26 +43,10 @@ public class Spell {
         newSpell.type=type;
         return newSpell;
     }
-
-
-
-    // Getters
-    public String getName() {return name;}
-    public float getCoolDown() {return coolDown;}
-    public int getManaUse() {return manaUse;}
-    public int getPower() {return power;}
     public  void getStatus(){
         System.out.println("Name: "+name);
         System.out.println("CoolDown: "+coolDown);
         System.out.println("ManaUse: "+manaUse);
         System.out.println("Damage: "+ power);
     }
-    public String getType() {return type;}
-
-    // Setters
-    public void setName(String name) {this.name = name;}
-    public void setCoolDown(float coolDown) {this.coolDown = coolDown;}
-    public void setManaUse(int manaUse) {this.manaUse = manaUse;}
-    public void setPower(int power) {this.power = power;}
-
 }

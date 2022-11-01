@@ -2,6 +2,7 @@ package Class.Equipments;
 
 public class Armor extends Equipment {
     int defense =5;
+
     // Constructor
     public Armor(int defense,String name){
         super();
@@ -13,10 +14,11 @@ public class Armor extends Equipment {
 
     // Getters
     public int getDefense(){return this.defense;}
+
     // Setters
     public void setDefense(int defense){this.defense = defense;}
 
-
+    // Methods
     public static Armor dropArmor(int rarity){
         Armor item = new Armor();
         item.rarity = rarity;

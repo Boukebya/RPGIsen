@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class.Equipments;
 
 /**
@@ -20,15 +16,18 @@ public class Equipment {
     public int getRarity() {return this.rarity;}
     public String getName() {return this.name;}
 
+
     // setters
     public void setName(String name) {this.name = name;}
-
-    public void getStat(){
-        System.out.println("Name: " + this.name);
-    }
-
     public void setRarity(int i) {
         this.rarity = i;
     }
     public void setType(String type) {this.type = type;}
+
+    //Methods
+    public void getStat(){
+        System.out.println("Name: " + this.name);
+    }
+
+
 }

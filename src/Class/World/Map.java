@@ -13,6 +13,7 @@ public class Map {
         this.weather = weather;
         this.map = map;
     }
+
     //Getters
     public Weather GetWeather(Map map ){
         return map.weather;
@@ -20,10 +21,14 @@ public class Map {
     public Tile[][] GetMap(Map map ){
         return map.map;
     }
-    //Get tile's type from coordinates
-    public Tile GetTileMap(Map map,int x, int y){
-        return map.map[x][y];
+
+    //Setters
+    public void SetWeather(Map map, Weather weather){
+        map.weather = weather;
     }
+
+    //Methods
+
     //Display map
     public void ShowMap(Map map){
         int length = map.GetMap(map).length;
@@ -43,9 +48,19 @@ public class Map {
                 }
             }
             System.out.println();
-            }
         }
-    //Function to get the position of a tile
+    }
+    //Change the tile's type
+    public void ChangeTile(Map map, int[] pos, Tile tile){
+        Tile[][] actualMap;
+        actualMap = map.GetMap(map);
+        actualMap[pos[0]][pos[1]] = tile;
+    }
+    //Return tile's type from coordinates
+    public Tile GetTileMap(Map map,int x, int y){
+        return map.map[x][y];
+    }
+    //Return the first Tile of this type
     public int[] PosTile(Map map,Tile tile) {
         int [] pos = new int[2];
         int length = map.GetMap(map).length;
@@ -63,12 +78,7 @@ public class Map {
         }
     return null;
     }
-    //Change the tile's type
-    public void ChangeTile(Map map, int[] pos, Tile tile){
-        Tile[][] actualMap;
-        actualMap = map.GetMap(map);
-        actualMap[pos[0]][pos[1]] = tile;
-    }
+
 }
 
 

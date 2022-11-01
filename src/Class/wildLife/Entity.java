@@ -1,19 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class.wildLife;
-
-import Class.Equipments.Equipment;
 
 /**
  * @author theap
  */
 public class Entity {
     public Stat stat = new Stat();
-
+    //Constructor
     public Entity(Stat stat) {
         this.stat = stat;
+    }
+
+    //Getters
+    public int getLevel() {
+        return this.stat.level;
+    }
+    public float getHP() {
+        return this.stat.health;
+    }
+    public int getStrength() {
+        return this.stat.strength;
+    }
+    public String getName() {
+        return this.stat.name;
+    }
+
+    //Setters
+    public void setLevel(int level) {
+        this.stat.level = level;
+    }
+    public void setHP(float health) {
+        this.stat.health = health;
+    }
+    public void setStrength(int strength) {
+        this.stat.strength = strength;
+    }
+    public void setName(String name) {
+        this.stat.name = name;
     }
 
     //Methods
@@ -28,14 +50,12 @@ public class Entity {
             System.out.println(this.stat.name + "'s HP = " + this.stat.health);
         }
     }
-
     public void attack(Entity target) {
         /*
         The entity attack another one
        */
         target.getAttack(this.stat.strength);
     }
-
     public void killed() {
         /*
         The entity is dead
@@ -43,32 +63,13 @@ public class Entity {
         this.stat.health = 0;
         System.out.println(this.stat.name + " died!");
     }
-
     public void increaseStrength(int increase) {
         this.stat.strength += increase;
     }
-
-    public int getLevel() {
-        return this.stat.level;
-    }
-
-    public float getHP() {
-        return this.stat.health;
-    }
-
-    public int getStrength() {
-        return this.stat.strength;
-    }
-
     public void addHP(float newAmount) {
         this.stat.health += newAmount;
         if (this.stat.health > this.stat.maxHealth) {
             this.stat.health = this.stat.maxHealth;
         }
     }
-
-    public String getName() {
-        return this.stat.name;
-    }
-
 }

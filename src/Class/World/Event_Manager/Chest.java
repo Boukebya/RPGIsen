@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class Chest extends Type_Events {
     String name_Object;
     String description;
-
-    int [] modifier = new int[5];
+    int [] modifier;
     String[] choices;
     //Consequences array
     String[] consequences;
 
+    //Constructor
     public Chest(Type_Events type_Event, String name_Object, int[] modifier,String description, String[] choices, String[] consequences) {
         super(type_Event.name,type_Event.rarity);
         this.name_Object= name_Object;
@@ -23,8 +23,9 @@ public class Chest extends Type_Events {
         this.consequences = consequences;
     }
 
-    //drop item
-    public Equipment DropItem(Hero hero, Equipment[] weapons){
+    //Methods
+    //Return the item to drop
+    public Equipment DropItem(Hero hero, Equipment[] equipments){
         //get modifier
         int[] modifier = this.modifier;
         //random number
@@ -39,12 +40,12 @@ public class Chest extends Type_Events {
                 //for each weapon, check if it's a tier i weapon
                 while(true) {
                     //System.out.println("seeking weapon");
-                    for (Equipment weapon : weapons) {
-                        if (weapon.getRarity() == rank) {
+                    for (Equipment equipment : equipments) {
+                        if (equipment.getRarity() == rank) {
                             //if it's a tier i weapon 20% chance to drop it
                             if (Math.random() < 0.2) {
-                                System.out.println("You found a " + weapon.getName() + "!");
-                                return weapon;
+                                System.out.println("You found a " + equipment.getName() + "!");
+                                return equipment;
                             }
                         }
                     }
@@ -84,6 +85,4 @@ public class Chest extends Type_Events {
             System.out.println("Wrong input, be serious you're on a duty !");
         }
     }
-
-
 }

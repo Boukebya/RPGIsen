@@ -5,6 +5,7 @@ import Class.wildLife.Hero;
 
 public class Unknown extends Type_Events {
     String name_Object;
+
     //Constructor
     public Unknown(Type_Events type_Event,String name_Object) {
         super(type_Event.name, type_Event.rarity);

@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class.gameMechanics;
-
 import Class.Equipments.Equipment;
 import Class.wildLife.Enemy;
 import Class.wildLife.Entity;
 import Class.wildLife.Hero;
 
-/**
- *
- * @author theap
- */
 public class Fight {
     int turn=0;
     boolean isOver=false; // true if the fight is over
     Entity[] line = new Entity[4];
+
     // Constructor
     public Fight(Hero hero, Enemy enemy){
         beginFight(hero, enemy);
@@ -40,6 +32,11 @@ public class Fight {
         }
     }
 
+    //Getters
+    public boolean isOver(){return this.isOver;}
+    public int getTurn(){return this.turn;}
+
+    // Methods
     // Methods for the fight
     public void beginFight(Hero hero, Enemy enemy){
         /*
@@ -95,7 +92,6 @@ public class Fight {
         //displayField();
         System.out.println("Turn "+turn);
     }
-
     // Display the possibilities of the hero
     public void displayHeroPossibilities(Hero hero, Enemy enemies){
         /*
@@ -135,7 +131,6 @@ public class Fight {
         }
         */
     }
-
     // Method to move entities in the line
     public void moveEntity(Entity entity, int position){
         /*
@@ -248,7 +243,6 @@ public class Fight {
             moveBackward(hero);
         }
     }
-
     // Method to get some position on the line
     public int getDistance(Hero hero, Enemy enemy){
         /*
@@ -266,10 +260,6 @@ public class Fight {
         }
         return Math.abs(heroPosition-enemiesPosition2);
     }
-
-    // Getters and Setters
-    public boolean isOver(){return this.isOver;}
-    public int getTurn(){return this.turn;}
     public boolean isLineEmpty(int position){
         if (line[position]==null){
             return true;
@@ -278,7 +268,4 @@ public class Fight {
             return false;
         }
     }
-
-
-
 }

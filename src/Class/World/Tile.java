@@ -14,11 +14,15 @@ public enum Tile {
 
     private final String Category;
 
+    //Constructor
     Tile(String Category_Tile){
         Category = Category_Tile;
     }
+
+    //Getters
     public String GetTile(){
         return Category;
     }
+
 }
 
