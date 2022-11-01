@@ -1,4 +1,4 @@
-package Class.aroundLife;
+package Class.Equipments;
 
 public class Armor extends Equipment {
     int defense =5;

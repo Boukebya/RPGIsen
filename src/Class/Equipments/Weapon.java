@@ -1,4 +1,4 @@
-package Class.aroundLife;
+package Class.Equipments;
 
 public class Weapon extends Equipment {
     float criticChance=0.1f;

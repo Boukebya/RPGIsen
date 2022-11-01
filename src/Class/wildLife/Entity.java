@@ -4,24 +4,19 @@
  */
 package Class.wildLife;
 
-import Class.aroundLife.Equipment;
+import Class.Equipments.Equipment;
 
 /**
  * @author theap
  */
 public class Entity {
-
     public Stat stat = new Stat();
-    Equipment weapon; // on peut faire un tableau si on ajoute des protection
-    int[][] position;
 
-
-    public Entity(String name, int strength) {
-        stat.health = 10;
-        this.stat.name = name;
-        this.stat.strength = strength;
+    public Entity(Stat stat) {
+        this.stat = stat;
     }
 
+    //Methods
     public void getAttack(float damage) {
         /*
         The entity has been attack

@@ -1,8 +1,8 @@
 package Class.World.Event_Manager;
 
-import Class.aroundLife.Equipment;
+import Class.Equipments.Equipment;
 import Class.wildLife.Hero;
-import Class.aroundLife.Weapon;
+
 import java.util.Objects;
 import java.util.Scanner;
 

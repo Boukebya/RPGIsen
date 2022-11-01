@@ -1,11 +1,17 @@
 import Class.World.*;
 import Class.World.Event_Manager.*;
-import Class.aroundLife.Armor;
-import Class.aroundLife.Equipment;
-import Class.aroundLife.Weapon;
+import Class.Equipments.Armor;
+import Class.Equipments.Equipment;
+import Class.Equipments.Weapon;
+import Class.gameMechanics.Fight;
+import Class.wildLife.Enemy;
+import Class.wildLife.Entity;
 import Class.wildLife.Hero;
+import Class.wildLife.Stat;
+
 import java.util.Objects;
 
+import static Class.wildLife.Enemy.GetEnemy;
 import static Class.wildLife.Hero.SpawnHero;
 
 
@@ -116,11 +122,30 @@ public class Main {
         return chests;
     }
     //Function to initialize enemies
-    public static Enemy_Fight[] InitEnemies(){
+    public static Enemy[] InitEnemies(){
         //Create array of enemies_fight
-        Enemy_Fight[] enemies = new Enemy_Fight[2];
-        //We create a new type of event
-        Type_Events Enemy_Event = new Type_Events("Enemy",1);
+        Enemy[] enemies = new Enemy[4];
+
+        //Create goblin stat
+        Stat goblinStat = new Stat(1,1,0,0,10,10,1,"Goblin");
+        //Create goblin enemies
+        goblinStat.setStrength(3);
+        enemies[0] = new Enemy(goblinStat,"Spear goblin");
+        goblinStat.setStrength(1);
+
+        goblinStat.setDexterity(3);
+        enemies[1] = new Enemy(goblinStat,"Knife goblin");
+        goblinStat.setDexterity(1);
+
+        //Create Skeleton stat
+        Stat skeletonStat = new Stat(5,1,0,0,10,20,2,"Skeleton");
+        //Create Skeleton enemies
+        skeletonStat.setStrength(3);
+        enemies[2] = new Enemy(skeletonStat,"Bag of bones");
+        skeletonStat.setStrength(1);
+
+        enemies[3] = new Enemy(skeletonStat,"Baguette Skeleton");
+
 
         return enemies;
     }
@@ -166,6 +191,7 @@ public class Main {
 
         return equipment;
     }
+
     //Function to get an event from rarity
     public static Type_Events GetEventFromRarity(Type_Events[] events) {
         //Create new random array with same size as events
@@ -200,9 +226,10 @@ public class Main {
 
 
     //Test it
-    public static void Test(Map map, Chest[] chests, Enemy_Fight[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons){
+    public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons){
         //Spawn Hero
-        Hero character = new Hero("Blanc-Louis",3,SpawnHero(map));
+        Stat heroStat = new Stat(1,1,10,10,20,20,1,"Hero");
+        Hero character = new Hero("Blanc-Louis",heroStat,SpawnHero(map));
         //Show Map
         map.ShowMap(map);
 
@@ -220,12 +247,15 @@ public class Main {
                 actualChest.Interact(character,weapons);
 
             }
+
             //Else If new location is an enemy
             else if (Objects.equals(Event_Manager.GetTile(), "Enemy")){
-                System.out.println("You found an enemy !");
-                //Fight enemy
-
+                //Get random enemy with function
+                Enemy actualEnemy = (Enemy) GetEnemy(enemies, character.getLevel());
+                //Create fight
+                Fight fight = new Fight(character,actualEnemy);
             }
+
             //Else If new location is unknown
             else if (Objects.equals(Event_Manager.GetTile(), "Unknown")){
                 System.out.println("You found an unknown tile !");
@@ -233,9 +263,6 @@ public class Main {
 
             }
 
-            //Clear console
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
         }
         //If Class.World.Event_Manager == End, we print the end of the game
         System.out.println("End of map !");

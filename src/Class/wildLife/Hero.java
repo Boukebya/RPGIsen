@@ -4,9 +4,9 @@ import java.util.*;
 
 import Class.World.Map;
 import Class.World.Tile;
-import Class.aroundLife.Armor;
-import Class.aroundLife.Equipment;
-import Class.aroundLife.Weapon;
+import Class.Equipments.Armor;
+import Class.Equipments.Equipment;
+import Class.Equipments.Weapon;
 
 public class Hero extends Entity {
     //Hero's position
@@ -22,9 +22,9 @@ public class Hero extends Entity {
     Equipment[] inventory = new Equipment[maxSlot];
 
     // Constructor
-    public Hero(String name,int strength,int[]pos)
+    public Hero(String name,Stat stat,int[]pos)
     {
-        super(name, strength);
+        super(stat);
         //inventory[0] = new Equipment("Sword", 1, 1, 1);
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
         inventory[0] = new Weapon(2,2,2,"Sword","Sword of the YNAKS");
@@ -36,7 +36,7 @@ public class Hero extends Entity {
     // Getters
     public int getStrength() {return this.stat.getStrength();}
     public int getDexterity() {return this.stat.getDexterity();}
-
+    public int getLevel() {return this.stat.getLevel();}
     public void changeItem(Equipment item){
         /*
         Add an item to the inventory if player want

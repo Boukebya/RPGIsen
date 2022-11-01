@@ -1,6 +1,5 @@
 package Class.World.Event_Manager;
-import Class.aroundLife.Equipment;
-import Class.aroundLife.Weapon;
+import Class.Equipments.Equipment;
 import Class.wildLife.Hero;
 
 //Mother's class for every event

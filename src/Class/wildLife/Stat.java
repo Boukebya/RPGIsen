@@ -23,6 +23,22 @@ public class Stat {
     int level=1;
     String name = "Creature";
 
+    //constructor
+    public Stat(int dexterity, int strength, int maxMana,float mana, float maxHealth,float health, int level, String name) {
+        this.dexterity = dexterity;
+        this.strength = strength;
+        this.maxMana = maxMana;
+        this.mana = mana;
+        this.maxHealth = maxHealth;
+        this.health = health;
+        this.level = level;
+        this.name = name;
+    }
+
+    public Stat() {
+    }
+
+
     // Getters
     public int getDexterity() {return this.dexterity;}
     public int getStrength() {return this.strength;}

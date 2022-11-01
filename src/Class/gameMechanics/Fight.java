@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Class.aroundLife;
+package Class.gameMechanics;
 
-import Class.wildLife.Enemie;
+import Class.Equipments.Equipment;
+import Class.wildLife.Enemy;
 import Class.wildLife.Entity;
 import Class.wildLife.Hero;
 
@@ -17,18 +18,18 @@ public class Fight {
     boolean isOver=false; // true if the fight is over
     Entity[] line = new Entity[4];
     // Constructor
-    public Fight(Hero hero, Enemie enemies){
-        beginFight(hero, enemies);
+    public Fight(Hero hero, Enemy enemy){
+        beginFight(hero, enemy);
         while(!isOver){
             newTurn();
-            displayHeroPossibilities(hero, enemies);
-            if(enemies.getHP()<=0){
+            displayHeroPossibilities(hero, enemy);
+            if(enemy.getHP()<=0){
                 System.out.println("You won!");
                 isOver=true;
-                endFight(hero,enemies);
+                endFight(hero,enemy);
             }
             else {
-                enemies.attack(hero);
+                enemy.attack(hero);
             }
 
             if(hero.getHP()<=0){
@@ -40,12 +41,12 @@ public class Fight {
     }
 
     // Methods for the fight
-    public void beginFight(Hero hero, Enemie enemies){
+    public void beginFight(Hero hero, Enemy enemy){
         /*
         The fight begin
         */
         System.out.println("\nYou are going to fight this monster:");
-        enemies.stat.introduce();
+        enemy.stat.introduce();
         System.out.println("\nYou are at this point: ");
         hero.stat.introduce();
         System.out.println("\nGood luck!\n");
@@ -53,7 +54,7 @@ public class Fight {
         // init the lines
         for(int i=0;i<4;i++){line[i]=null;}
         line[0]=hero;
-        line[3]=enemies;
+        line[3]=enemy;
     }
     private void displayField() {
         /*
@@ -74,7 +75,7 @@ public class Fight {
         }
         System.out.println(" ]\n");
     }
-    public void endFight(Hero hero, Enemie enemy){
+    public void endFight(Hero hero, Enemy enemy){
         /*
         Manage the end of the fight
          */
@@ -96,7 +97,7 @@ public class Fight {
     }
 
     // Display the possibilities of the hero
-    public void displayHeroPossibilities(Hero hero, Enemie enemies){
+    public void displayHeroPossibilities(Hero hero, Enemy enemies){
         /*
         Display Hero's possibilities
         */
@@ -249,7 +250,7 @@ public class Fight {
     }
 
     // Method to get some position on the line
-    public int getDistance(Hero hero, Enemie enemies){
+    public int getDistance(Hero hero, Enemy enemy){
         /*
         Get the distance between two entities
         */
@@ -259,7 +260,7 @@ public class Fight {
             if(line[i]==hero){
                 heroPosition=i;
             }
-            if(line[i]==enemies){
+            if(line[i]==enemy){
                 enemiesPosition2=i;
             }
         }
