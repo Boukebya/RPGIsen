@@ -31,6 +31,6 @@ public class Armor extends Equipment {
 
     public void getStat(){
         System.out.print("Name: " + this.name);
-        System.out.println("Defence: " + this.defence);
+        System.out.println("Defence: " + this.defense);
     }
 }

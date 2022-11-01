@@ -20,11 +20,12 @@ public class Enemie extends Entity{
     
     public Equipment dropItem(){
         /*
-        Drop an Item based on Enemie's level 
+        Drop an Item based on Enemy level
         */
-        int rarity = this.stat.level;
+        int rarity = this.getLevel();
         rarity/=5;
         if(rarity==0){rarity=1;}
+        if(rarity>5){rarity=5;}
         return Weapon.dropWeapon(rarity);
     }
 }

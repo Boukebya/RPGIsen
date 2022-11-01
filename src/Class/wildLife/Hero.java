@@ -187,11 +187,10 @@ public class Hero extends Entity {
         System.out.println("Inventory:");
         for(int i=0;i<maxSlot;i++){
             if(this.inventory[i]!=null){
-                System.out.println("Slot "+i+":");
-                this.inventory[i].getName();
+                System.out.println("Slot "+(i+1)+": "+this.inventory[i].getName());
             }
             else {
-                System.out.println("Slot "+i+": Empty");
+                System.out.println("Slot "+(i+1)+": Empty");
             }
         }
     }
@@ -258,15 +257,20 @@ public class Hero extends Entity {
         Choose equipment to use
         */
         boolean correctInput=false;
-        System.out.println("Which equipment do you want to use?");
         this.displayInventory();
         while(!correctInput){
+            System.out.println("Which equipment do you want to use?");
             try{
                 String answer = this.catchAnswer();
                 int answerInt = Integer.parseInt(answer);
-                if(answerInt>=0 && answerInt<maxSlot){
-                    correctInput=true;
-                    return this.inventory[answerInt];
+                if(answerInt>=1 && answerInt<=maxSlot){
+                    if(this.inventory[answerInt-1].getClass().getSimpleName().equals("Weapon")){
+                        correctInput=true;
+                        return this.inventory[answerInt-1];
+                    }
+                    else{
+                        System.out.println("You can't attack without a weapon!");
+                    }
                 }
                 else{
                     System.out.println("You didn't answer correctly");

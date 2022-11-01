@@ -74,14 +74,16 @@ public class Fight {
         }
         System.out.println(" ]\n");
     }
-    public void endFight(Hero hero, Enemie enemies){
+    public void endFight(Hero hero, Enemie enemy){
         /*
         Manage the end of the fight
          */
         // Give XP to the hero
-        hero.setExperience(enemies.getLevel());
+        hero.setExperience(enemy.getLevel());
         // Drop item to the hero
-        manageItemDrop(hero, enemies);
+        Equipment itemDropped = enemy.dropItem();
+        hero.changeItem(itemDropped);
+        //manageItemDrop(hero, enemy);
         isOver=true;
     }
     public void newTurn(){
@@ -91,47 +93,6 @@ public class Fight {
         turn++;
         //displayField();
         System.out.println("Turn "+turn);
-    }
-
-    // Manage the item drop
-    public Equipment chooseToKeepItem(Hero hero, Enemie enemies){
-        /*
-        Choose to keep the item or not
-        */
-        boolean correctInput=false;
-        Equipment item =enemies.dropItem();
-        System.out.println("You found an Item!");
-        item.getName();
-        System.out.println("Do you want to keep it? (y/n)");
-        while(!correctInput) {
-            try {
-                String answer = hero.catchAnswer();
-                if (answer.equals("y")) {
-                    correctInput = true;
-                    System.out.println("You keep the item");
-                    return item;
-                } else {
-                    correctInput = true;
-                    return null;
-                }
-            } catch (Exception e) {
-                System.out.println("You didn't answer correctly");
-                return null;
-            }
-        }
-        return null;
-    }
-    public void manageItemDrop(Hero hero, Enemie enemies){
-        /*
-        Manage the item drop by the enemies
-        */
-        Equipment item = this.chooseToKeepItem(hero, enemies);
-        if(item!=null){
-            hero.addEquipment(item,0);
-        }
-        else {
-            System.out.println("You didn't keep the item");
-        }
     }
 
     // Display the possibilities of the hero
