@@ -26,8 +26,8 @@ public class Hero extends Entity {
     {
         super(name, strength);
         //inventory[0] = new Equipment("Sword", 1, 1, 1);
-        this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
-        inventory[0] = new Weapon(2,2,2,"Sword","Sword of the YNAKS");
+        this.listOfSpell.add(new Spell("Small FireBall", 3, 5, 4, "Damage"));
+        inventory[0] = new Weapon(2,2,2,"Sword","Sword of Hope");
         inventory[1] = new Weapon(4,2,2,"Bow","Bow of the Hero");
         inventory[2] = new Armor(5,"Armor of the Hero");
         this.pos=pos;
@@ -36,6 +36,7 @@ public class Hero extends Entity {
     // Getters
     public int getStrength() {return this.stat.getStrength();}
     public int getDexterity() {return this.stat.getDexterity();}
+    public float getMana() {return this.stat.getMana();}
 
     public void changeItem(Equipment item){
         /*
@@ -243,12 +244,21 @@ public class Hero extends Entity {
         Use a spell on an Entity
         */
         Spell spell = this.chooseSpell(); // Choose the spell to use
-        // Check type of the spell
-        if(spell.getType().equals("Heal")){
-            this.catchHeal(spell.getPower());
-        }
-        else{
-            target.getAttack(spell.getPower());
+        // Check if hero could use the spell
+        if(spell!=null){
+            if(spell.getManaCost()<=this.getMana()){
+                this.catchMana(-spell.getManaCost()); // Use the mana of the spell
+                // Check type of the spell
+                if(spell.getType().equals("Heal")){
+                    this.catchHeal(spell.getPower());
+                }
+                else{
+                    target.getAttack(spell.getPower());
+                }
+            }
+            else {
+                System.out.println("You don't have enough mana to use this spell");
+            }
         }
     }
 
