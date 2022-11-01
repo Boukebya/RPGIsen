@@ -4,13 +4,12 @@ public class Weapon extends Equipment {
     float criticChance=0.1f;
     int damage=2;
     int rarity=0;// on a range 1 to 5 1 is the lowest and 5 is the highest 0 is for default
-    String type; // bow, sword,
     public Weapon(int damage, int criticChance, int rarity, String type, String name){
         super();
         this.damage = damage;
         this.criticChance = criticChance;
         this.rarity = rarity;
-        this.type = type;
+        this.setType(type);
         this.setName(name);
     }
 
@@ -43,4 +42,10 @@ public class Weapon extends Equipment {
         return item;
     }
 
+    @Override
+    public void getStat() {
+        System.out.print(this.getName()+" have ");
+        System.out.print(" Damage: " + this.damage);
+        System.out.println(" Critic chance: " + this.criticChance);
+    }
 }

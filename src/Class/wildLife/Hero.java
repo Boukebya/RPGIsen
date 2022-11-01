@@ -42,7 +42,8 @@ public class Hero extends Entity {
         Add an item to the inventory if player want
         */
         System.out.println("You found a " + item.getName() + " !");
-        System.out.println("It can be replace by your " + item.getType() + " !");
+        item.getStat();
+        System.out.println("\nIt can be replace by your " + item.getType() + " !");
         if(chooseToKeepItem(item)){
             for(int i=0;i<inventory.length;i++){
                 if(inventory[i].getType().equals(item.getType())){
@@ -59,19 +60,19 @@ public class Hero extends Entity {
          */
         switch (type){
             case "Sword":
-                System.out.println("Sword's stats: ");
-                System.out.print("Damage: " + ((Weapon)inventory[0]).getDamage() + "Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
+                System.out.print("A Sword ("+inventory[0].getName()+"): ");
+                System.out.println("Damage: " + ((Weapon)inventory[0]).getDamage() + " Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
                 break;
             case "Bow":
-                System.out.println("Bow's stats: ");
-                System.out.print("Damage: " + ((Weapon)inventory[0]).getDamage() + "Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
+                System.out.print("A Bow ("+inventory[0].getName()+"): ");
+                System.out.println("Damage: " + ((Weapon)inventory[1]).getDamage() + " Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
                 break;
             case "Armor":
-                System.out.println("Armor's stats: ");
-                System.out.println("Defence: " + ((Armor)inventory[0]).getDefense());
+                System.out.print("An Armor ("+inventory[0].getName()+"): ");
+                System.out.println("Defence: " + ((Armor)inventory[2]).getDefense());
                 break;
             default:
-                System.out.println("You don't have this type of item");
+                System.out.println("You don't have this type of item ! \n\t(Error Item type)");
         }
     }
 

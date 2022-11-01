@@ -16,15 +16,6 @@ public class Equipment {
     String type = "Bow"; // Weapon or Protection
     public String getType() {return this.type;}
 
-    public Equipment(){
-        // Default constructor
-    }
-
-    public Equipment dropEquipment(int rarity){
-        Equipment item = new Equipment();
-        return item;
-    }
-
     // getters
     public int getRarity() {return this.rarity;}
     public String getName() {return this.name;}
@@ -39,4 +30,5 @@ public class Equipment {
     public void setRarity(int i) {
         this.rarity = i;
     }
+    public void setType(String type) {this.type = type;}
 }
