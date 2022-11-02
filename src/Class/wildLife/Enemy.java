@@ -41,12 +41,12 @@ public class Enemy extends Entity{
     }
     //Drop gold
     public int dropGold(){
-        int gold = (int) (Math.random() * this.stat.level*10);
+        int gold = (int) ((Math.random() * this.stat.level*10) + this.stat.level*4);
         return gold;
     }
     //Drop experience
     public int dropExp(){
-        int exp = (int) ((Math.random() * this.stat.level*5) + 2);
+        int exp = (int) ((Math.random() * this.stat.level*5) + this.stat.level);
         return exp;
     }
     //Function to get a random enemy of the same lvl as player
@@ -63,6 +63,22 @@ public class Enemy extends Entity{
                 }
             }
         }
+    }
+    public static Enemy GetBoss(Enemy[] bosses) {
+        while (true) {
+            //if enemy is same level as player
+            for (Enemy boss : bosses) {
+                    if (Math.random() < 0.1) {
+                        return boss;
+                    }
+            }
+        }
+    }
+
+    @Override
+    public void attack(Entity target) {
+
+        target.getHit(this.stat.strength);
     }
 
 }

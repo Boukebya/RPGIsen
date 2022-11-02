@@ -60,8 +60,6 @@ public class Entity {
         int gold = (int) (Math.random() * this.stat.level*10);
         System.out.println(this.stat.name +" dropped " + gold + " gold");
     }
-
-
     public void increaseStrength(int increase) {
         this.stat.strength += increase;
     }

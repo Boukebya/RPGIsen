@@ -10,6 +10,7 @@ public enum Tile {
     Spawn ("Spawn"),
     End ("End"),
     Position ("Position"),
+    Boss ("Boss"),
     Unknown ("Unknown");
 
     private final String Category;

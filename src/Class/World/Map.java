@@ -44,6 +44,7 @@ public class Map {
                     case "End" -> System.out.print("o ");
                     case "Chest" -> System.out.print("▴ ");
                     case "Enemy" -> System.out.print("* ");
+                    case "Boss" -> System.out.print("! ");
                     default -> System.out.print("? ");
                 }
             }

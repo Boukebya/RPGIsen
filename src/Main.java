@@ -9,6 +9,7 @@ import Class.wildLife.Hero;
 import Class.wildLife.Stat;
 import java.util.Objects;
 import static Class.World.Event_Manager.Type_Events.GetEventFromRarity;
+import static Class.wildLife.Enemy.GetBoss;
 import static Class.wildLife.Enemy.GetEnemy;
 import static Class.wildLife.Hero.SpawnHero;
 
@@ -27,6 +28,7 @@ public class Main {
         Tile Spawn = Tile.Spawn;
         Tile End = Tile.End;
         Tile Unknown = Tile.Unknown;
+        Tile Boss = Tile.Boss;
 
         //Here we create map
         Tile[][] intro = new Tile[10][10];
@@ -55,7 +57,7 @@ public class Main {
         intro[5][1] = Enemy;
         intro[4][5] = Enemy;
         intro[8][4] = Enemy;
-        intro[7][7] = Enemy;
+        intro[7][7] = Boss;
         intro[7][5] = Enemy;
         //Create path
         intro[2][2] = Wall;
@@ -147,6 +149,25 @@ public class Main {
 
         return enemies;
     }
+    //Function to initialize bosses
+    public static Enemy[] InitBosses(){
+        //Create array of enemies_fight
+        Enemy[] Bosses = new Enemy[2];
+
+        //Create Ogre stat
+        Stat ogreStat = new Stat(1,8,0,0,100,100,5,"Ogre");
+        //First boss
+        Bosses[0] = new Enemy(ogreStat,"Bratirek");
+
+        //Create Breana stat
+        Stat BreanaStat = new Stat(8,1,10,10,75,75,5,"Human");
+        //Create Breana boss
+        Bosses[1] = new Enemy(BreanaStat,"Breana, the silent");
+
+
+
+        return Bosses;
+    }
     //Function to initialize Unknown
     public static Unknown[] InitUnknowns(){
         //Create array og Unknown
@@ -192,7 +213,7 @@ public class Main {
 
 
     //Test it
-    public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons){
+    public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons,Enemy[] Bosses){
         //Spawn Hero
         Stat heroStat = new Stat(1,1,10,10,20,20,1,"Hero");
         Hero character = new Hero("Blanc-Louis",heroStat,SpawnHero(map));
@@ -221,6 +242,13 @@ public class Main {
                 //Create fight
                 Fight fight = new Fight(character,actualEnemy);
             }
+            //Else If new location is a boss
+            else if (Objects.equals(Event_Manager.GetTile(), "Boss")){
+                //Get random enemy with function
+                Enemy actualBoss = (Enemy) GetBoss(Bosses);
+                //Create fight
+                Fight fight = new Fight(character,actualBoss);
+            }
 
             //Else If new location is unknown
             else if (Objects.equals(Event_Manager.GetTile(), "Unknown")){
@@ -237,6 +265,6 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Begin");
-        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitEquipments());
+        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitEquipments(),InitBosses());
     }
 }
