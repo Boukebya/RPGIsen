@@ -39,10 +39,8 @@ public class Entity {
     }
 
     //Methods
-    public void getAttack(float damage) {
-        /*
-        The entity has been attack
-        */
+    //Target get hit
+    public void getHit(float damage) {
         if (this.stat.health - damage <= 0) {
             this.killed();
         } else {
@@ -50,19 +48,20 @@ public class Entity {
             System.out.println(this.stat.name + "'s HP = " + this.stat.health);
         }
     }
+    //Entity hit a target
     public void attack(Entity target) {
-        /*
-        The entity attack another one
-       */
-        target.getAttack(this.stat.strength);
+        target.getHit(this.stat.strength);
     }
+    //Entity died
     public void killed() {
-        /*
-        The entity is dead
-        */
         this.stat.health = 0;
         System.out.println(this.stat.name + " died!");
+        //random number of gold
+        int gold = (int) (Math.random() * this.stat.level*10);
+        System.out.println(this.stat.name +" dropped " + gold + " gold");
     }
+
+
     public void increaseStrength(int increase) {
         this.stat.strength += increase;
     }
@@ -72,4 +71,5 @@ public class Entity {
             this.stat.health = this.stat.maxHealth;
         }
     }
+
 }

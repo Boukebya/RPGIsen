@@ -10,13 +10,10 @@ public class Hero extends Entity {
     //Hero's position
     private int [] pos;
     int experience;
-    private final int maxSlot = 3; // Max number of slot for the inventory
-    // Inventory of the hero:
-    // - 0 slot for the sword
-    // - 1 slot for the bow
-    // - 2 slot for the armor
+    private final int maxSlot = 3;
     List<Spell> listOfSpell = new ArrayList<Spell>();
     Equipment[] inventory = new Equipment[maxSlot];
+    int gold;
 
     // Constructor
     public Hero(String name,Stat stat,int[]pos)
@@ -26,7 +23,7 @@ public class Hero extends Entity {
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
         inventory[0] = new Weapon(2,2,2,"Sword","Sword of the YNAKS");
         inventory[1] = new Weapon(4,2,2,"Bow","Bow of the Hero");
-        inventory[2] = new Armor(5,"Armor of the Hero");
+        inventory[2] = new Armor(1,"Armor");
         this.pos=pos;
         System.out.println("A hero named " + name + " Appeared !");
     }
@@ -35,6 +32,7 @@ public class Hero extends Entity {
     public int getStrength() {return this.stat.getStrength();}
     public int getDexterity() {return this.stat.getDexterity();}
     public int getLevel() {return this.stat.getLevel();}
+    public Stat getStat() {return this.stat;}
 
     //Methods
     //Movement
@@ -50,7 +48,7 @@ public class Hero extends Entity {
     }
     //Hero's movement on map
     public Tile MoveHero(Hero hero, Map map){
-        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d)");
+        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d), or see your stat by typing : stat");
 
         //Get hero's position
         int [] pos;
@@ -89,6 +87,24 @@ public class Hero extends Entity {
                     map.ChangeTile(map, pos, Empty);
                     x = x + 1;
                 }
+                case "see stat", "stat" -> {
+                    System.out.println("Hero's stat :");
+                    System.out.println("Strength : " + hero.getStrength());
+                    System.out.println("Dexterity : " + hero.getDexterity());
+                    System.out.println("Level : " + hero.getLevel());
+                    System.out.println("Gold : " + hero.gold);
+                    System.out.println("Experience : " + hero.experience);
+                    System.out.println("Inventory :");
+                    for (int i = 0; i < hero.inventory.length; i++) {
+                        if (hero.inventory[i] != null) {
+                            System.out.println(hero.inventory[i].getName());
+                        }
+                    }
+                    System.out.println("Spell :");
+                    for (int i = 0; i < hero.listOfSpell.size(); i++) {
+                        System.out.println(hero.listOfSpell.get(i).getName());
+                    }
+                }
             }
         }
         // Hero's new position (tile)
@@ -96,7 +112,6 @@ public class Hero extends Entity {
         //If the hero is on a wall, he can't go there
         if (Objects.equals(New_location.GetTile(), "Wall")){
             System.out.println("You can't go there, it's a wall !");
-            MoveHero(hero,map);
         }
         //Everything is fine hero can change his position
         else {
@@ -112,6 +127,9 @@ public class Hero extends Entity {
         }
         //else return tile
         return tile;
+    }
+    public void modifyGold(int gold){
+        this.gold+=gold;
     }
     public void changeItem(Equipment item){
         /*
@@ -173,15 +191,62 @@ public class Hero extends Entity {
     }
     // C EST PAS UN SET LES SETTERS SONT POUR UNE VARIABLE IL FAUT LA RENAME
     public void setExperience(int xp){
-        /*
-        Manage the XP of the character and his level
-        */
         int xpToLevelUp = 10;
         this.experience+=xp;
         if(this.experience>=xpToLevelUp){
             int over_experience=this.experience/xpToLevelUp;
             this.experience-=over_experience*xpToLevelUp;
             this.stat.level+=over_experience;
+
+            System.out.println("You leveled up !");
+            System.out.println("You are now level " + (this.stat.level));
+            System.out.println("Choose 2 stats to increase :");
+            //print hero stat
+            System.out.println("Strength : " + this.stat.strength);
+            System.out.println("Dexterity : " + this.stat.dexterity);
+            System.out.println("HP : " + this.stat.maxHealth);
+            System.out.println("Mana : " + this.stat.maxMana);
+
+            //scanner
+            int i=0;
+            while (i!=2) {
+                System.out.println("type 1,2,3 or 4");
+                Scanner sc = new Scanner(System.in);
+                String answer = sc.nextLine();
+                boolean good_answer = false;
+                //Check if answer is 1,2,3 or 4
+                while (!good_answer) {
+                    if (answer.equals("1") || answer.equals("2") || answer.equals("3") || answer.equals("4")) {
+                        good_answer = true;
+                    } else {
+                        System.out.println("Please type 1,2,3 or 4");
+                        answer = sc.nextLine();
+                    }
+                }
+                if(good_answer) {
+                    switch (answer) {
+                        case "1":
+                            this.stat.strength += 1;
+                            break;
+                        case "2":
+                            this.stat.dexterity += 1;
+                            break;
+                        case "3":
+                            this.stat.maxHealth += 15;
+                            this.stat.health += 15;
+                            break;
+                        case "4":
+                            this.stat.maxMana += 10;
+                            this.stat.mana += 10;
+                            break;
+                        default:
+                            System.out.println("You didn't choose a stat");
+                    }
+                    i++;
+                }
+            }
+
+
         }
     }
     // Methods for basic
@@ -315,7 +380,7 @@ public class Hero extends Entity {
             this.catchHeal(spell.getPower());
         }
         else{
-            target.getAttack(spell.getPower());
+            target.getHit(spell.getPower());
         }
     }
     // Methods for the fight using Equipment
@@ -353,19 +418,19 @@ public class Hero extends Entity {
         /*
         Use a long attack on an Entity
         */
-        target.getAttack(bow.getDamage()+this.getDexterity());
+        target.getHit(bow.getDamage()+this.getDexterity());
     }
     public void shortAttack(Entity target, Weapon sword){
         /*
         Use a short attack on an Entity
         */
-        target.getAttack(sword.getDamage()+this.getStrength());
+        target.getHit(sword.getDamage()+this.getStrength());
     }
     public void handAttack(Entity target){
         /*
         Use a hand attack on an Entity
         */
-        target.getAttack(this.getStrength());
+        target.getHit(this.getStrength());
         System.out.println("You hit the "+target.getName()+" with your hand");
     }
     public void useEquipment(Entity target){
@@ -382,7 +447,7 @@ public class Hero extends Entity {
         }
         else{
             System.out.println("God is pleased to know that you are using your hands");
-            target.getAttack(this.getStrength());
+            target.getHit(this.getStrength());
         }
     }
     // Override
@@ -393,7 +458,7 @@ public class Hero extends Entity {
         */
         this.useEquipment(target);
     }
-    public void getAttack(float damage){
+    public void getHit(float damage,Entity hitter){
         /*
         The Hero has been attack, but he could have armor to protect him
         */

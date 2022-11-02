@@ -18,6 +18,10 @@ public class Enemy extends Entity{
     public String getName() {
         return name;
     }
+    //get max health
+    public float getMaxHealth() {
+        return this.stat.maxHealth;
+    }
 
     //Setters
     public void setDropChance(int dropChance) {
@@ -29,15 +33,23 @@ public class Enemy extends Entity{
 
     //Methods
     public Equipment dropItem(){
-        /*
-        Drop an Item based on Enemy level
-        */
         int rarity = this.getLevel();
         rarity/=5;
         if(rarity==0){rarity=1;}
         if(rarity>5){rarity=5;}
         return Weapon.dropWeapon(rarity);
     }
+    //Drop gold
+    public int dropGold(){
+        int gold = (int) (Math.random() * this.stat.level*10);
+        return gold;
+    }
+    //Drop experience
+    public int dropExp(){
+        int exp = (int) ((Math.random() * this.stat.level*5) + 2);
+        return exp;
+    }
+    //Function to get a random enemy of the same lvl as player
     public static Enemy GetEnemy(Enemy[] enemies,int level) {
 
         while (true) {

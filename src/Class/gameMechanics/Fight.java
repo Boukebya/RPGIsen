@@ -18,7 +18,10 @@ public class Fight {
             if(enemy.getHP()<=0){
                 System.out.println("You won!");
                 isOver=true;
+
                 endFight(hero,enemy);
+                //set enemy hp to max hp
+                enemy.setHP(enemy.stat.getMaxHealth());
             }
             else {
                 enemy.attack(hero);
@@ -73,11 +76,16 @@ public class Fight {
         System.out.println(" ]\n");
     }
     public void endFight(Hero hero, Enemy enemy){
-        /*
-        Manage the end of the fight
-         */
-        // Give XP to the hero
-        hero.setExperience(enemy.getLevel());
+
+        //TODO: add gold and exp
+        int gold = enemy.dropGold();
+        System.out.println("You got "+gold+" gold!");
+        hero.modifyGold(gold);
+
+        int exp = enemy.dropExp();
+        System.out.println("You got "+exp+" exp!");
+        hero.setExperience(exp);
+
         // Drop item to the hero
         Equipment itemDropped = enemy.dropItem();
         hero.changeItem(itemDropped);
@@ -85,9 +93,7 @@ public class Fight {
         isOver=true;
     }
     public void newTurn(){
-        /*
-        Manage the new turn
-         */
+        //Manage the new turn
         turn++;
         //displayField();
         System.out.println("Turn "+turn);

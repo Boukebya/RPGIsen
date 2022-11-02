@@ -30,5 +30,37 @@ public class Type_Events {
     public void Interact(Hero hero, Equipment[] weapons) {
         System.out.println("description");
     }
+    //Function to get an event from rarity
+    public static Type_Events GetEventFromRarity(Type_Events[] events) {
+        //Create new random array with same size as events
+        int[] randoms = new int[events.length];
+        //limit is the sum of every rarity
+        int limit = 0;
+        //for every elements, get rarity of events and add it to randoms
+        for (int i = 0; i < events.length; i++) {
+            randoms[i] = (int) events[i].getRarity();
+            //System.out.println(randoms[i]);
+            limit+= randoms[i];
+        }
+        //System.out.println("limit = " + limit);
+
+        //Create random number between 0 and limit
+        int random_number = (int) (Math.random() * limit);
+        //System.out.println("random = "+random_number);
+
+        int count = 0;
+        //for every elements, if random is smaller than the rarity, return the event
+        for (int i = 0; i < events.length; i++) {
+            count +=  (int) events[i].getRarity();
+            if (random_number < count) {
+                //System.out.println("event " + i + " selected");
+                return events[i];
+            }
+        }
+
+        //System.out.println("default event");
+        return events[0];
+    }
+
 
 }

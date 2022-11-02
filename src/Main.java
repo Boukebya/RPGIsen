@@ -7,9 +7,8 @@ import Class.gameMechanics.Fight;
 import Class.wildLife.Enemy;
 import Class.wildLife.Hero;
 import Class.wildLife.Stat;
-
 import java.util.Objects;
-
+import static Class.World.Event_Manager.Type_Events.GetEventFromRarity;
 import static Class.wildLife.Enemy.GetEnemy;
 import static Class.wildLife.Hero.SpawnHero;
 
@@ -191,38 +190,6 @@ public class Main {
         return equipment;
     }
 
-    //Function to get an event from rarity
-    public static Type_Events GetEventFromRarity(Type_Events[] events) {
-        //Create new random array with same size as events
-        int[] randoms = new int[events.length];
-        //limit is the sum of every rarity
-        int limit = 0;
-        //for every elements, get rarity of events and add it to randoms
-        for (int i = 0; i < events.length; i++) {
-            randoms[i] = (int) events[i].getRarity();
-            //System.out.println(randoms[i]);
-            limit+= randoms[i];
-        }
-        //System.out.println("limit = " + limit);
-
-        //Create random number between 0 and limit
-        int random_number = (int) (Math.random() * limit);
-        //System.out.println("random = "+random_number);
-
-        int count = 0;
-        //for every elements, if random is smaller than the rarity, return the event
-        for (int i = 0; i < events.length; i++) {
-            count +=  (int) events[i].getRarity();
-            if (random_number < count) {
-                //System.out.println("event " + i + " selected");
-                return events[i];
-            }
-        }
-
-        //System.out.println("default event");
-        return events[0];
-    }
-
 
     //Test it
     public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons){
@@ -234,8 +201,8 @@ public class Main {
 
         //We create a new Tile to know when we have to manage an event
         Tile Event_Manager = Tile.Position;
-        //While Class.World.Event_Manager != End, we continue to travel through the map
-        while(!Event_Manager.GetTile().equals("End")){
+        //While Class.World.Event_Manager != End, and character hp > 0
+        while(!Event_Manager.GetTile().equals("End") && character.getStat().getHealth() > 0){
             //Move player with scanner parameters and get the tile where he is
             Event_Manager = character.MoveHero(character, map);
             //If new location is a chest
@@ -264,7 +231,7 @@ public class Main {
 
         }
         //If Class.World.Event_Manager == End, we print the end of the game
-        System.out.println("End of map !");
+        System.out.println("The end");
     }
 
 
