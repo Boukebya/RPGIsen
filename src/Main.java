@@ -1,3 +1,4 @@
+import Class.Equipments.Consumable;
 import Class.World.*;
 import Class.World.Event_Manager.*;
 import Class.Equipments.Armor;
@@ -13,7 +14,6 @@ import static Class.World.Event_Manager.Type_Events.GetEventFromRarity;
 import static Class.wildLife.Enemy.GetBoss;
 import static Class.wildLife.Enemy.GetEnemy;
 import static Class.wildLife.Hero.SpawnHero;
-
 
 public class Main {
 
@@ -126,12 +126,13 @@ public class Main {
     //Function to initialize spells
     public static Spell[] InitEnemiesSpells(){
         // initialize array of spell
-        Spell[] enemiesSpells = new Spell[5];
-        enemiesSpells[0] = new Spell("Attack Strength", 0, 0, 1,"Basic", "none",80,"Enemy");
-        enemiesSpells[1] = new Spell("Attack Dexterity", 0, 0, 1,"Basic", "none",80,"Enemy");
+        Spell[] enemiesSpells = new Spell[6];
+        enemiesSpells[0] = new Spell("Attack", 0, 0, 1,"Basic", "none",80,"Enemy");
+        enemiesSpells[1] = new Spell("Attack", 0, 0, 1,"Basic", "none",80,"Enemy");
         enemiesSpells[2] = new Spell("Heal", 0, 5, 10,"Heal", "none",100,"Self");
         enemiesSpells[3] = new Spell("Buff", 0, 5, 2,"Buff", "none",100,"Self");
-        enemiesSpells[4] = new Spell("Strong attack", 1, 2, 2,"Huge", "none",50,"Enemy");
+        enemiesSpells[4] = new Spell("Charge", 1, 2, 2,"Huge", "none",50,"Enemy");
+        enemiesSpells[5] = new Spell("Stab stab stab !", 1, 2, 4,"Multiple", "none",75,"Enemy");
 
         return enemiesSpells;
     }
@@ -141,19 +142,20 @@ public class Main {
         Enemy[] enemies = new Enemy[4];
 
         //Create goblin stat
-        Stat goblinStat = new Stat(1,1,0,0,10,10,1,"Goblin");
+        Stat goblinStat = new Stat(1,1,5,5,10,10,1,"Goblin");
         //Create goblin enemies
-        goblinStat.setStrength(3);
-        Spell[] spearGoblinSpells = new Spell[1];
+        Spell[] spearGoblinSpells = new Spell[2];
         spearGoblinSpells[0] = enemiesSpells[0];
+        spearGoblinSpells[1] = enemiesSpells[4];
         enemies[0] = new Enemy(goblinStat,"Spear goblin",spearGoblinSpells);
-        goblinStat.setStrength(1);
+        enemies[0].setStrength(3);
 
-        goblinStat.setDexterity(3);
-        Spell[] daggerGoblinSpells = new Spell[1];
+
+        Spell[] daggerGoblinSpells = new Spell[2];
         daggerGoblinSpells[0] = enemiesSpells[1];
+        daggerGoblinSpells[1] = enemiesSpells[5];
         enemies[1] = new Enemy(goblinStat,"Knife goblin",daggerGoblinSpells);
-        goblinStat.setDexterity(1);
+        enemies[1].setDexterity(2);
 
         //Create Skeleton stat
         Stat skeletonStat = new Stat(5,1,0,0,10,20,2,"Skeleton");
@@ -218,7 +220,7 @@ public class Main {
     //Function to initialize weapons
     public static Equipment[] InitEquipments(){
         //Create array of weapons
-        Equipment[] equipment = new Equipment[10];
+        Equipment[] equipment = new Equipment[12];
         //We create a new type of event
         equipment[0] = new Weapon(1,0.05f,1,"Club","Broken stick");
         equipment[1] = new Weapon(2,0.1f,2,"Club","Common stick");
@@ -226,16 +228,20 @@ public class Main {
         equipment[3] = new Weapon(4,0.2f,4,"Club","Mythic stick");
         equipment[4] = new Weapon(5,0.3f,5,"Club","Legendary stick");
 
-        equipment[5] = new Armor(5,"Leather armor");
+        equipment[5] = new Armor(2,"Leather armor");
         equipment[5].setRarity(1);
-        equipment[6] = new Armor(10,"Iron armor");
+        equipment[6] = new Armor(4,"Iron armor");
         equipment[6].setRarity(2);
-        equipment[7] = new Armor(20,"plate armor");
+        equipment[7] = new Armor(7,"plate armor");
         equipment[7].setRarity(3);
-        equipment[8] = new Armor(40,"Dragon slayer armor");
+        equipment[8] = new Armor(10,"Dragon slayer armor");
         equipment[8].setRarity(4);
-        equipment[9] = new Armor(90,"Araqiel's armor");
+        equipment[9] = new Armor(12,"Araqiel's armor");
         equipment[9].setRarity(5);
+
+
+        equipment[10] = new Consumable("Potion of health",1,"Health",10);
+        equipment[11] = new Consumable("Potion of mana",1,"Mana",10);
 
         return equipment;
     }

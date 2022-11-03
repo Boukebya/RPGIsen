@@ -33,7 +33,6 @@ public class Spell {
     public int getAccuracy() {return accuracy;}
     public String getTarget() {return target;}
 
-
     // Setters
     public void setName(String name) {this.name = name;}
     public void setCoolDown(int coolDown) {this.coolDown = coolDown;}
@@ -41,28 +40,11 @@ public class Spell {
     public void setPower(int power) {this.power = power;}
     public void setType(String type) {this.type = type;}
 
-
     // Method
-    public Spell generateSpell(int level, String type) {
-        /*
-        Generate a spell with a level
-        */
-        Spell newSpell = new Spell();
-        newSpell.power +=level;
-        newSpell.coolDown+=0.75*level;
-        newSpell.manaUse+=0.5*level;
-        newSpell.type=type;
-        return newSpell;
-    }
-    public void cast(Enemy enemy, Entity target) {
-
-    }
     public  void getStatus(){
         System.out.println("Name: "+name);
         System.out.println("CoolDown: "+coolDown);
         System.out.println("ManaUse: "+manaUse);
         System.out.println("Damage: "+ power);
     }
-
-
 }

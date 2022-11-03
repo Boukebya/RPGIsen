@@ -28,7 +28,6 @@ public class Map {
     }
 
     //Methods
-
     //Display map
     public void ShowMap(Map map){
         int length = map.GetMap(map).length;
@@ -80,7 +79,6 @@ public class Map {
         }
     return null;
     }
-
 }
 
 

@@ -1,5 +1,7 @@
 package Class.wildLife;
 import java.util.*;
+
+import Class.Equipments.Consumable;
 import Class.World.Map;
 import Class.World.Tile;
 import Class.Equipments.Armor;
@@ -13,6 +15,7 @@ public class Hero extends Entity {
     private final int maxSlot = 5;
     List<Spell> listOfSpell = new ArrayList<Spell>();
     Equipment[] inventory = new Equipment[maxSlot];
+    Consumable[] consumableInventory = new Consumable[maxSlot];
     int gold;
     Weapon weapon =  new Weapon(1,2,1,"Sword","Sword of the Hero");;
     Armor armor = new Armor(1,"Hero's armor");
@@ -24,6 +27,7 @@ public class Hero extends Entity {
         //inventory[0] = new Equipment("Sword", 1, 1, 1);
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 5,"Damage", "none",80,"Enemy"));
         this.pos=pos;
+        consumableInventory[0] = new Consumable("Welcome Potion",1,"Health",10);
         System.out.println("A hero named " + name + " Appeared !");
     }
 
@@ -36,7 +40,12 @@ public class Hero extends Entity {
     public int[] getPos() {return this.pos;}
     public int getGold() {return this.gold;}
     //get max hp
-
+    public float getMaxHealth() {return this.stat.getMaxHealth();}
+    //get weapon
+    public Weapon getWeapon() {return this.weapon;}
+    //get armor
+    public Armor getArmor() {return this.armor;}
+    public Consumable[] getConsumableInventory() {return this.consumableInventory;}
 
 
     //setters
@@ -49,6 +58,10 @@ public class Hero extends Entity {
     public void setWeapon(Weapon weapon){
         this.weapon = weapon;
     }
+    public void setConsumableInventory(Consumable[] consumableInventory){
+        this.consumableInventory = consumableInventory;
+    }
+
 
 
     //Methods
@@ -121,6 +134,12 @@ public class Hero extends Entity {
                             System.out.println(hero.inventory[i].getName());
                         }
                     }
+                    System.out.println("Consumable Inventory :");
+                    for (int i = 0; i < hero.consumableInventory.length; i++) {
+                        if (hero.consumableInventory[i] != null) {
+                            System.out.println(hero.consumableInventory[i].getName());
+                        }
+                    }
                     System.out.println("Spell :");
                     for (int i = 0; i < hero.listOfSpell.size(); i++) {
                         System.out.println(hero.listOfSpell.get(i).getName());
@@ -128,6 +147,10 @@ public class Hero extends Entity {
                 }
                 case "equip" -> {
                     changeEquipment();
+                }
+
+                case "consumable" -> {
+                    this.consumableManagement();
                 }
 
             }
@@ -206,6 +229,9 @@ public class Hero extends Entity {
         }
 
         System.out.println("Please choose another action to do (move, see stat or equip something)");
+    }
+    public void useConsumable(Consumable[] potions){
+
     }
 
     public void equipmentManagement(Equipment equipment){
@@ -526,11 +552,48 @@ public class Hero extends Entity {
         return null;
     }
 
-    public void handAttack(Entity target){
-        target.getHit(this.getStrength());
-        System.out.println("You hit the "+target.getName()+" with your hand");
-    }
+    public void consumableManagement() {
+        boolean available = false;
+        for(int i = 0; i < this.consumableInventory.length; i++){
+            if(this.consumableInventory[i] != null){
+                available = true;
+            }
+        }
 
+        if(available) {
+            for (int i = 0; i < this.consumableInventory.length; i++) {
+                if (this.consumableInventory[i] != null) {
+                    System.out.println(this.consumableInventory[i].getName());
+                }
+            }
+            //choose consumable
+            System.out.println("Choose a consumable to use");
+            Scanner sc2 = new Scanner(System.in);
+            String consumableName = sc2.nextLine();
+            //if 1 is chosen, use the consumable
+            if (consumableName.equals("1")) {
+                this.consumableInventory[0].use(this);
+                this.consumableInventory[0] = null;
+            }
+            if (consumableName.equals("2")) {
+                this.consumableInventory[1].use(this);
+                this.consumableInventory[1] = null;
+            }
+            if (consumableName.equals("3")) {
+                this.consumableInventory[2].use(this);
+                this.consumableInventory[2] = null;
+            }
+            if (consumableName.equals("4")) {
+                this.consumableInventory[3].use(this);
+                this.consumableInventory[3] = null;
+            }
+            if (consumableName.equals("5")) {
+                this.consumableInventory[4].use(this);
+                this.consumableInventory[4] = null;
+            }
+
+        }
+    }
 
     @Override
     public void attack(Entity target){
@@ -568,18 +631,16 @@ public class Hero extends Entity {
         }
 
     }
-    public void getHit(float damage,Entity hitter){
-        /*
-        The Hero has been attack, but he could have armor to protect him
-        */
-        // Check if the hero has armor
-        if(inventory[2]!=null){
-            // Use the armor
-            damage-=((Armor)inventory[2]).getDefense();
+    public void getHit(float damage){
+
+            //reduce damage with armor
+            int armor = this.armor.getDefense();
+            damage -= (armor);
+
+
             if(damage<0){
                 damage=0;
             }
-        }
 
         if (this.stat.health - damage <= 0) {
             this.killed();

@@ -1,18 +1,15 @@
 package Class.World.Event_Manager;
 import Class.Equipments.Equipment;
 import Class.wildLife.Hero;
-import Class.wildLife.Stat;
-
 import java.util.Scanner;
 
 public class Merchant extends Type_Events {
-    String name_Object;
-    int rarity;
+    String name_Merchant;
 
     //Constructor
     public Merchant(Type_Events type_event,String name_Object) {
         super(type_event.name,type_event.rarity);
-        this.name_Object= name_Object;
+        this.name_Merchant = name_Object;
     }
 
     @Override
@@ -61,31 +58,35 @@ public class Merchant extends Type_Events {
         System.out.println("You can buy these objects:");
         //create cost list of sold objects
         int[] cost = new int[4];
-        for (int j = 0; j < 4; j++) {
-            //get the rarity of the object
-            int rarity = soldObjects[j].getRarity();
-            //if rarity is 1, cost is 100
-            if(rarity == 1){
-                cost[j] = 10;
-            }
-            //if rarity is 2, cost is 200
-            else if(rarity == 2){
-                cost[j] = 25;
-            }
-            //if rarity is 3, cost is 300
-            else if(rarity == 3){
-                cost[j] = 50;
-            }
-            //if rarity is 4, cost is 400
-            else if(rarity == 4){
-                cost[j] = 80;
-            }
-            //if rarity is 5, cost is 500
-            else if(rarity == 5){
-                cost[j] = 120;
-            }
-        }
+        //if merchant name is "Merchant"
 
+        //create cost
+        for (int j = 0; j < 4; j++) {
+                //get the rarity of the object
+                int rarity = soldObjects[j].getRarity();
+                //if rarity is 1, cost is 100
+                if(rarity == 1){
+                    cost[j] = 10;
+                }
+                //if rarity is 2, cost is 200
+                else if(rarity == 2){
+                    cost[j] = 25;
+                }
+                //if rarity is 3, cost is 300
+                else if(rarity == 3){
+                    cost[j] = 50;
+                }
+                //if rarity is 4, cost is 400
+                else if(rarity == 4){
+                    cost[j] = 80;
+                }
+                //if rarity is 5, cost is 500
+                else if(rarity == 5){
+                    cost[j] = 120;
+                }
+            }
+
+        //display items and cost
         for (int j = 0; j < soldObjects.length; j++) {
             System.out.println((j+1) + ". " + soldObjects[j].getName() + " (" + soldObjects[j].getRarity() + ") for " + cost[j] + " gold");
         }
@@ -159,5 +160,4 @@ public class Merchant extends Type_Events {
             System.out.println("You exit the shop without buying anything.");
         }
     }
-
 }

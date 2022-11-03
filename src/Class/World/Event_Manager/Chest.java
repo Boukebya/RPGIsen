@@ -25,7 +25,7 @@ public class Chest extends Type_Events {
 
     //Methods
     //Return the item to drop
-    public Equipment DropItem(Hero hero, Equipment[] equipments){
+    public Equipment DropItem(Equipment[] equipments){
         //get modifier
         int[] modifier = this.modifier;
         //random number
@@ -77,7 +77,7 @@ public class Chest extends Type_Events {
                     System.out.println(consequences[i]);
                     if (i == 0) {
                         //If we take the object, we add it to the inventory
-                        Equipment item = DropItem(hero,weapons);
+                        Equipment item = DropItem(weapons);
                         hero.equipmentManagement(item);
                     }
                     return;

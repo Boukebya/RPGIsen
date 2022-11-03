@@ -6,17 +6,17 @@ package Class.wildLife;
  */
 public class Stat {
     //All statistic of an Entity
-    int dexterity =1;   // stat for bow
-    int strength=1;     // stat for sword
-    int maxMana = 10;   // stat for magic
-    float mana=10;
+    int dexterity =1;
+    int strength=1;
+    int maxMana = 10;
+    int mana=10;
     float maxHealth = 10F;
     float health=10F;
     int level=1;
     String name = "Creature";
 
     //constructor
-    public Stat(int dexterity, int strength, int maxMana,float mana, float maxHealth,float health, int level, String name) {
+    public Stat(int dexterity, int strength, int maxMana,int mana, float maxHealth,float health, int level, String name) {
         this.dexterity = dexterity;
         this.strength = strength;
         this.maxMana = maxMana;
@@ -56,19 +56,10 @@ public class Stat {
         System.out.println("Level: " + this.level);
         System.out.println("Health: " + this.health + "/" + this.maxHealth);
         System.out.println("Mana: " + this.mana + "/" + this.maxMana);
-        // peut être enlever ces deux lignes d'infos juste en bas
         System.out.println("Strength: " + this.strength);
         System.out.println("Dexterity: " + this.dexterity);
     }
     public void introduce(){
         System.out.println(this.name + " lvl : " + this.level + "\nHP : " + this.health + "/" + (int)this.maxHealth + " Mana : " + this.mana + "/" + this.maxMana);
     }
-    public void increaseDexterity(int increase) {this.dexterity+=increase;}
-    public void increaseStrength(int increase) {this.strength+=increase;}
-    public void increaseMaxMana(int increase) {this.maxMana+=increase;}
-    public void increaseMana(int increase) {this.mana+=increase;}
-    public void increaseMaxHealth(float increase) {this.maxHealth+=increase;}
-    public void increaseHealth(float increase) {this.health+=increase;}
-    public void increaseLevel(int increase) {this.level+=increase;}
-
 }

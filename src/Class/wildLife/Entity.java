@@ -4,7 +4,7 @@ package Class.wildLife;
  * @author theap
  */
 public class Entity {
-    public Stat stat = new Stat();
+    public Stat stat;
     //Constructor
     public Entity(Stat stat) {
         this.stat = stat;
@@ -26,8 +26,7 @@ public class Entity {
     public int getDexterity() {
         return this.stat.dexterity;
     }
-    //get mana
-    public float getMana() {
+    public int getMana() {
         return this.stat.mana;
     }
 
@@ -43,6 +42,13 @@ public class Entity {
     }
     public void setName(String name) {
         this.stat.name = name;
+    }
+    public void setDexterity(int dexterity) {
+        this.stat.dexterity = dexterity;
+    }
+    //set mana
+    public void setMana(int mana) {
+        this.stat.mana = mana;
     }
 
     //Methods
@@ -70,11 +76,4 @@ public class Entity {
     public void increaseDexterity(int increase) {
         this.stat.dexterity += increase;
     }
-    public void addHP(float newAmount) {
-        this.stat.health += newAmount;
-        if (this.stat.health > this.stat.maxHealth) {
-            this.stat.health = this.stat.maxHealth;
-        }
-    }
-
 }

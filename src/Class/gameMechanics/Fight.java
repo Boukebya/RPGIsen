@@ -13,7 +13,7 @@ public class Fight {
         beginFight(hero, enemy);
         while(!isOver){
             newTurn();
-            displayHeroPossibilities(hero, enemy);
+            int choice = displayHeroPossibilities(hero, enemy);
             if(enemy.getHP()<=0){
                 System.out.println("You won!");
                 isOver=true;
@@ -24,6 +24,10 @@ public class Fight {
             }
             else {
                 enemy.spellManager(hero);
+            }
+            //if choice = 1, divide by 2 defense
+            if(choice==1){
+                hero.getArmor().setDefense(hero.getArmor().getDefense()/2);
             }
 
             if(hero.getHP()<=0){
@@ -38,8 +42,8 @@ public class Fight {
     public boolean isOver(){return this.isOver;}
     public int getTurn(){return this.turn;}
 
-    // Methods
-    // Methods for the fight
+
+    //Methods
     public void beginFight(Hero hero, Enemy enemy){
         /*
         The fight begin
@@ -61,15 +65,9 @@ public class Fight {
         System.out.println(enemy.getName() + " dropped "+gold+" gold!");
         hero.modifyGold(gold);
         System.out.println("Hero has " + hero.getGold() + " gold in his purse");
-
         int exp = enemy.dropExp();
         System.out.println("You got "+exp+" exp!");
         hero.modifyExperience(exp);
-
-        // Drop item to the hero
-        //Equipment itemDropped = enemy.dropItem();
-        //hero.changeItem(itemDropped);
-        //manageItemDrop(hero, enemy);
         isOver=true;
     }
     public void newTurn(){
@@ -79,19 +77,20 @@ public class Fight {
         System.out.println("Turn "+turn);
     }
     // Display the possibilities of the hero
-    public void displayHeroPossibilities(Hero hero, Enemy enemies){
+    public int displayHeroPossibilities(Hero hero, Enemy enemies){
         boolean correctInput=false;
         System.out.println("What do you want to do?");
         System.out.println("1. Attack with your weapon");
         System.out.println("2. Use a spell");
-        System.out.println("3. Attack with your hands");
-        //System.out.println("4. Change position");
+        System.out.println("3. Use a consumable");
+        System.out.println("4. Protect yourself");
+
         String answer = hero.catchAnswer();
         int answerInt=0;
         while (!correctInput){
             try {
                 answerInt = Integer.parseInt(answer);
-                if (answerInt>= 1 && answerInt<=3) {
+                if (answerInt>= 1 && answerInt<=4) {
                     correctInput = true;
                 }
             } catch (Exception e) {
@@ -106,12 +105,25 @@ public class Fight {
             hero.useSpell(enemies);
         }
         else if (answerInt==3){
-            hero.handAttack(enemies);
+            hero.consumableManagement();
         }
-        /*
-        else if (answerInt==4){
-            changePosition(hero);
+        else {
+            System.out.println("You protect yourself");
+            //double defense
+            int armor = hero.getArmor().getDefense();
+            armor = armor*2;
+            hero.getArmor().setDefense(armor);
+            return 1;
         }
-        */
+        //Check if mana>maxMana
+        if(hero.getMana()>hero.stat.getMaxMana()){
+            hero.setMana(hero.stat.getMaxMana());
+        }
+        //Check if hp>maxHp
+        if(hero.getHP()>hero.stat.getMaxHealth()){
+            hero.setHP(hero.stat.getMaxHealth());
+        }
+
+        return 0;
     }
 }

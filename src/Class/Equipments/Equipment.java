@@ -1,21 +1,22 @@
 package Class.Equipments;
 
-/**
- * Class for all equipment in the game
- * it could be weapon, or protection
- * @author theap
- */
 public class Equipment {
-    int rarity = 0;
-    String name = "Armor";
+    int rarity = 1;
+    String name = "default";
+    String type = "default"; //Club, sword,bow armor or consumable
+    //constructor
+    public Equipment(int rarity,String type) {
+        this.rarity = rarity;
+        this.type = type;
+    }
+    public Equipment() {
 
-    String type = "Bow"; // Weapon or Protection
-    public String getType() {return this.type;}
+    }
 
     // getters
+    public String getType() {return this.type;}
     public int getRarity() {return this.rarity;}
     public String getName() {return this.name;}
-
 
     // setters
     public void setName(String name) {this.name = name;}
@@ -25,9 +26,8 @@ public class Equipment {
     public void setType(String type) {this.type = type;}
 
     //Methods
+    //Print stat of equipment
     public void getStat(){
         System.out.println("Name: " + this.name);
     }
-
-
 }

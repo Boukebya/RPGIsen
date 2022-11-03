@@ -41,13 +41,6 @@ public class Enemy extends Entity{
     }
 
     //Methods
-    public Equipment dropItem(){
-        int rarity = this.getLevel();
-        rarity/=5;
-        if(rarity==0){rarity=1;}
-        if(rarity>5){rarity=5;}
-        return Weapon.dropWeapon(rarity);
-    }
     //Drop gold
     public int dropGold(){
         int gold = (int) ((Math.random() * this.stat.level*10) + this.stat.level*4);
@@ -97,7 +90,7 @@ public class Enemy extends Entity{
                 break;
             }
         }
-
+        System.out.println(this.getName()+" use "+spell.getName());
         // We deduce the mana cost
         this.stat.mana -= spell.getManaUse();
 
@@ -108,8 +101,19 @@ public class Enemy extends Entity{
             if(this.getDexterity()>stat){
                 stat = this.getDexterity();
             }
+
             //random with accuracy
             accuracyCheck(spell.getAccuracy(),hero,stat);
+        }
+        if(spell.getType() == "Multiple"){
+            //get the higher between strength and dexterity
+            int stat = this.getDexterity();
+
+            //random with accuracy
+            for(int i = 0;i< spell.getPower();i++){
+                accuracyCheck(spell.getAccuracy(),hero,stat);
+            }
+
         }
         if(spell.getType() == "Heal"){
             accuracyCheck(spell.getAccuracy(),this,spell.getPower());
@@ -127,9 +131,12 @@ public class Enemy extends Entity{
             //random with accuracy
             accuracyCheck(spell.getAccuracy(),hero,stat*spell.getPower());
         }
+
+
     }
     //accuracy check
     public void accuracyCheck(int accuracy,Entity target, int damage){
+        System.out.println(damage+ " damage");
         if(Math.random()*100 < accuracy){
             target.getHit(damage);
         }
