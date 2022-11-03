@@ -80,9 +80,6 @@ public class Fight {
     }
     // Display the possibilities of the hero
     public void displayHeroPossibilities(Hero hero, Enemy enemies){
-        /*
-        Display Hero's possibilities
-        */
         boolean correctInput=false;
         System.out.println("What do you want to do?");
         System.out.println("1. Attack with your weapon");

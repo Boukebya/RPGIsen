@@ -77,7 +77,8 @@ public class Chest extends Type_Events {
                     System.out.println(consequences[i]);
                     if (i == 0) {
                         //If we take the object, we add it to the inventory
-                        DropItem(hero,weapons);
+                        Equipment item = DropItem(hero,weapons);
+                        hero.equipmentManagement(item);
                     }
                     return;
                 }

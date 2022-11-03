@@ -262,6 +262,7 @@ public class Main {
                 //Interact with chest
                 actualChest.Interact(character,weapons);
 
+
             }
             // else if new location is a merchant
             else if (Objects.equals(Event_Manager.GetTile(), "Merchant")){

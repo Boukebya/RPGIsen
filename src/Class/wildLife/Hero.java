@@ -113,6 +113,8 @@ public class Hero extends Entity {
                     System.out.println("Level : " + hero.getLevel());
                     System.out.println("Gold : " + hero.gold);
                     System.out.println("Experience : " + hero.experience);
+                    System.out.println("Weapon : " + hero.weapon.getName() + ": "+ hero.weapon.getDamage() + " damage, "+ hero.weapon.getCriticChance() + " crit");
+                    System.out.println("Armor : " + hero.armor.getName()+ ": "+ hero.armor.getDefense() + " defense");
                     System.out.println("Inventory :");
                     for (int i = 0; i < hero.inventory.length; i++) {
                         if (hero.inventory[i] != null) {
@@ -177,7 +179,7 @@ public class Hero extends Entity {
                 //equip the weapon
                 setWeapon((Weapon) equipment);
                 //add the weapon to the inventory
-                this.inventory[choice] = equipment;
+                this.inventory[choice] = lastWeapon;
             }
             else{
                 removeEquipment(choice);
@@ -185,29 +187,71 @@ public class Hero extends Entity {
                 setWeapon((Weapon) equipment);
             }
         }
-
         //if the equipment is an armor
-        else if(equipment instanceof Armor){
-            //if the hero has already an armor
-            if(armor != null) {
-                //add the armor to the inventory
-                addEquipment(armor, choice);
-            }
-                //equip the armor
-                setArmor((Armor) equipment);
-                //remove the armor from the inventory
+        if(equipment instanceof Armor){
+            //if the hero has already a weapon
+            if(this.armor != null){
+                Armor lastArmor = this.armor;
                 removeEquipment(choice);
+                //equip the weapon
+                setArmor((Armor) equipment);
+                //add the weapon to the inventory
+                this.inventory[choice] = lastArmor;
+            }
+            else{
+                removeEquipment(choice);
+                //equip the weapon
+                setArmor((Armor) equipment);
+            }
         }
 
         System.out.println("Please choose another action to do (move, see stat or equip something)");
     }
+
+    public void equipmentManagement(Equipment equipment){
+        //find the first empty slot in the inventory
+        int emptySlot = findEmptySlot();
+        //if there is an empty slot
+        if(emptySlot != -1){
+            //add the equipment to the inventory
+            addEquipment(equipment, emptySlot);
+        }
+        //if there is no empty slot
+        else{
+            //ask the user to choose an equipment to remove
+            displayInventory();
+            System.out.println("Choose an equipment to remove, or type 0 to throw the equipment");
+            //create a scanner
+            Scanner sc = new Scanner(System.in);
+            //get the choice
+            int choice = sc.nextInt();
+            choice -=1;
+            //remove the equipment
+            removeEquipment(choice);
+            //add the equipment to the inventory
+            addEquipment(equipment, choice);
+        }
+
+    }
+    //find empty slot in the inventory
+    public int findEmptySlot(){
+        int emptySlot = 0;
+        for(int i = 0; i < inventory.length; i++){
+            if(inventory[i] == null){
+                emptySlot = i;
+                break;
+            }
+        }
+        return emptySlot;
+    }
+
     public void changeItem(Equipment item){
         /*
         Add an item to the inventory if player want
         */
-        System.out.println("You found a " + item.getName() + " !");
+        //System.out.println("You found a " + item.getName() + " !");
         item.getStat();
-        System.out.println("\nIt can be replace by your " + item.getType() + " !");
+        //System.out.println("\nIt can be replace by your " + item.getType() + " !");
         if(chooseToKeepItem(item)){
             for(int i=0;i<inventory.length;i++){
                 if(inventory[i].getType().equals(item.getType())){
