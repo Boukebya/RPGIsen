@@ -9,3 +9,4 @@ Need to:
 -Input gestion
 -Improve merchant
 -Create chest and manage blood chest
+-Create a way for hero to add spell and create them
