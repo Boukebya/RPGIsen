@@ -5,7 +5,7 @@ public class Weapon extends Equipment {
     int damage=2;
     int rarity=0;// on a range 1 to 5 1 is the lowest and 5 is the highest 0 is for default
     // Constructor
-    public Weapon(int damage, int criticChance, int rarity, String type, String name){
+    public Weapon(int damage, float criticChance, int rarity, String type, String name){
         super();
         this.damage = damage;
         this.criticChance = criticChance;
@@ -34,9 +34,6 @@ public class Weapon extends Equipment {
     }
 
     public int useWeapon(){
-        /*
-        Return the weapon damage and the critical hit chance
-         */
         return this.damage;
     }
 

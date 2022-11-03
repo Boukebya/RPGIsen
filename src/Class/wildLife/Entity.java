@@ -23,6 +23,13 @@ public class Entity {
     public String getName() {
         return this.stat.name;
     }
+    public int getDexterity() {
+        return this.stat.dexterity;
+    }
+    //get mana
+    public float getMana() {
+        return this.stat.mana;
+    }
 
     //Setters
     public void setLevel(int level) {
@@ -55,13 +62,13 @@ public class Entity {
     //Entity died
     public void killed() {
         this.stat.health = 0;
-        System.out.println(this.stat.name + " died!");
-        //random number of gold
-        int gold = (int) (Math.random() * this.stat.level*10);
-        System.out.println(this.stat.name +" dropped " + gold + " gold");
+        System.out.println(" ,and killed It!");
     }
     public void increaseStrength(int increase) {
         this.stat.strength += increase;
+    }
+    public void increaseDexterity(int increase) {
+        this.stat.dexterity += increase;
     }
     public void addHP(float newAmount) {
         this.stat.health += newAmount;

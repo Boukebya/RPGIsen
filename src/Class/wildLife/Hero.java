@@ -10,20 +10,19 @@ public class Hero extends Entity {
     //Hero's position
     private int [] pos;
     int experience;
-    private final int maxSlot = 3;
+    private final int maxSlot = 5;
     List<Spell> listOfSpell = new ArrayList<Spell>();
     Equipment[] inventory = new Equipment[maxSlot];
     int gold;
+    Weapon weapon =  new Weapon(1,2,1,"Sword","Sword of the Hero");;
+    Armor armor = new Armor(1,"Hero's armor");
 
     // Constructor
     public Hero(String name,Stat stat,int[]pos)
     {
         super(stat);
         //inventory[0] = new Equipment("Sword", 1, 1, 1);
-        this.listOfSpell.add(new Spell("FireBall", 3, 5, 25, "Damage"));
-        inventory[0] = new Weapon(2,2,2,"Sword","Sword of the YNAKS");
-        inventory[1] = new Weapon(4,2,2,"Bow","Bow of the Hero");
-        inventory[2] = new Armor(1,"Armor");
+        this.listOfSpell.add(new Spell("FireBall", 3, 5, 5,"Damage", "none",80,"Enemy"));
         this.pos=pos;
         System.out.println("A hero named " + name + " Appeared !");
     }
@@ -33,6 +32,24 @@ public class Hero extends Entity {
     public int getDexterity() {return this.stat.getDexterity();}
     public int getLevel() {return this.stat.getLevel();}
     public Stat getStat() {return this.stat;}
+    public int getExperience() {return this.experience;}
+    public int[] getPos() {return this.pos;}
+    public int getGold() {return this.gold;}
+    //get max hp
+
+
+
+    //setters
+    public void setGold(int gold){
+        this.gold = gold;
+    }
+    public void setArmor(Armor armor){
+        this.armor = armor;
+    }
+    public void setWeapon(Weapon weapon){
+        this.weapon = weapon;
+    }
+
 
     //Methods
     //Movement
@@ -48,7 +65,7 @@ public class Hero extends Entity {
     }
     //Hero's movement on map
     public Tile MoveHero(Hero hero, Map map){
-        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d), or see your stat by typing : stat");
+        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d), or see your stat by typing : stat or equip something by typing equip" );
 
         //Get hero's position
         int [] pos;
@@ -89,6 +106,8 @@ public class Hero extends Entity {
                 }
                 case "see stat", "stat" -> {
                     System.out.println("Hero's stat :");
+                    System.out.println("Health : "+ hero.getHP() + "/" +hero.stat.maxHealth);
+                    System.out.println("Mana : "+ hero.getMana() + "/" +hero.stat.maxMana);
                     System.out.println("Strength : " + hero.getStrength());
                     System.out.println("Dexterity : " + hero.getDexterity());
                     System.out.println("Level : " + hero.getLevel());
@@ -105,6 +124,10 @@ public class Hero extends Entity {
                         System.out.println(hero.listOfSpell.get(i).getName());
                     }
                 }
+                case "equip" -> {
+                    changeEquipment();
+                }
+
             }
         }
         // Hero's new position (tile)
@@ -128,8 +151,55 @@ public class Hero extends Entity {
         //else return tile
         return tile;
     }
+
     public void modifyGold(int gold){
         this.gold+=gold;
+    }
+    public void changeEquipment(){
+        displayInventory();
+        //create a scanner
+        Scanner sc = new Scanner(System.in);
+        //ask the user to choose an equipment
+        System.out.println("Choose an equipment to equip");
+        //get the choice
+        int choice = sc.nextInt();
+        choice -=1;
+        //get equipment at position choice
+        Equipment equipment = inventory[choice];
+        System.out.println("You choose to equip " + equipment.getName());
+
+        //if the equipment is a weapon
+        if(equipment instanceof Weapon){
+            //if the hero has already a weapon
+            if(this.weapon != null){
+                Weapon lastWeapon = this.weapon;
+                removeEquipment(choice);
+                //equip the weapon
+                setWeapon((Weapon) equipment);
+                //add the weapon to the inventory
+                this.inventory[choice] = equipment;
+            }
+            else{
+                removeEquipment(choice);
+                //equip the weapon
+                setWeapon((Weapon) equipment);
+            }
+        }
+
+        //if the equipment is an armor
+        else if(equipment instanceof Armor){
+            //if the hero has already an armor
+            if(armor != null) {
+                //add the armor to the inventory
+                addEquipment(armor, choice);
+            }
+                //equip the armor
+                setArmor((Armor) equipment);
+                //remove the armor from the inventory
+                removeEquipment(choice);
+        }
+
+        System.out.println("Please choose another action to do (move, see stat or equip something)");
     }
     public void changeItem(Equipment item){
         /*
@@ -190,7 +260,7 @@ public class Hero extends Entity {
         }
     }
     // C EST PAS UN SET LES SETTERS SONT POUR UNE VARIABLE IL FAUT LA RENAME
-    public void setExperience(int xp){
+    public void modifyExperience(int xp){
         int xpToLevelUp = 10;
         this.experience+=xp;
         if(this.experience>=xpToLevelUp){
@@ -251,9 +321,6 @@ public class Hero extends Entity {
     }
     // Methods for basic
     public String catchAnswer() {
-        /*
-        Return the answer of the player
-        */
         Scanner sc = new Scanner(System.in);
         String answer = sc.nextLine();
         return answer;
@@ -302,16 +369,15 @@ public class Hero extends Entity {
         this.inventory[0]=item;
     }
     public void addEquipment(Equipment equipment, int slot) {
-        /*
-        Add equipment to the inventory
-        */
-        if (equipment != null) {
-            if (slot > maxSlot) {
-                System.out.println("Slot not available");
-            } else {
-                this.inventory[slot] = equipment;
-            }
-            this.inventory[slot] = equipment;
+        // Add an equipment to the inventory
+        this.inventory[slot] = equipment;
+
+    }
+    public void removeEquipment(int slot){
+        if (slot > maxSlot) {
+            System.out.println("Slot not available");
+        } else {
+            this.inventory[slot] = null;
         }
     }
     public void displayInventory(){
@@ -347,9 +413,6 @@ public class Hero extends Entity {
         }
     }
     public Spell chooseSpell(){
-        /*
-        Choose a spell to use
-        */
         boolean correctInput=false;
         System.out.println("Which spell do you want to use?");
         if(this.displaySpell()) { // check if the hero has any spell
@@ -371,16 +434,20 @@ public class Hero extends Entity {
         return null;
     }
     public void useSpell(Entity target){
-        /*
-        Use a spell on an Entity
-        */
         Spell spell = this.chooseSpell(); // Choose the spell to use
         // Check type of the spell
         if(spell.getType().equals("Heal")){
             this.catchHeal(spell.getPower());
         }
         else{
-            target.getHit(spell.getPower());
+            //verify if the hero has enough mana
+            if(this.stat.mana>=spell.getManaUse()){
+                this.catchMana(-spell.getManaUse());
+                target.getHit(spell.getPower());
+            }
+            else{
+                System.out.println("You don't have enough mana!");
+            }
         }
     }
     // Methods for the fight using Equipment
@@ -414,49 +481,48 @@ public class Hero extends Entity {
         }
         return null;
     }
-    public void longAttack(Entity target, Weapon bow){
-        /*
-        Use a long attack on an Entity
-        */
-        target.getHit(bow.getDamage()+this.getDexterity());
-    }
-    public void shortAttack(Entity target, Weapon sword){
-        /*
-        Use a short attack on an Entity
-        */
-        target.getHit(sword.getDamage()+this.getStrength());
-    }
+
     public void handAttack(Entity target){
-        /*
-        Use a hand attack on an Entity
-        */
         target.getHit(this.getStrength());
         System.out.println("You hit the "+target.getName()+" with your hand");
     }
-    public void useEquipment(Entity target){
-        /*
-        Use equipment on an Entity
-        */
-        Equipment equipment = this.chooseEquipment(); // Choose the equipment to use
-        // Check type of the equipment
-        if(equipment.getType().equals("Bow")){
-            this.longAttack(target, (Weapon) equipment);
-        }
-        else if(equipment.getType().equals("Sword")){
-            this.shortAttack(target, (Weapon) equipment);
-        }
-        else{
-            System.out.println("God is pleased to know that you are using your hands");
-            target.getHit(this.getStrength());
-        }
-    }
-    // Override
+
+
     @Override
     public void attack(Entity target){
-        /*
-        Attack an Entity
-        */
-        this.useEquipment(target);
+        int damage = 0;
+        Weapon weapon = this.weapon;
+        damage = weapon.getDamage();
+        //if type sword
+        if(weapon.getType() == "Sword"){
+            damage += this.getDexterity()+this.getStrength();
+        }
+        else if(weapon.getType() == "Bow"){
+            damage += this.getDexterity()*2;
+        }
+        if(weapon.getType() == "Club"){
+            damage += this.getStrength()*2;
+        }
+
+        boolean isCrit=false;
+        //apply crit chance
+        if(Math.random() >= weapon.getCriticChance()){
+            damage *= 2;
+            isCrit = true;
+        }
+
+        //Apply accuracy
+        if(Math.random() <= (0.8 + (this.getDexterity()/100)*2)){
+            System.out.print("You hit "+target.getName());
+            if(isCrit == true){
+                System.out.println(" (Critical hit!)");
+            }
+            target.getHit(damage);
+        }
+        else{
+            System.out.println("You missed");
+        }
+
     }
     public void getHit(float damage,Entity hitter){
         /*
@@ -478,29 +544,4 @@ public class Hero extends Entity {
             System.out.println(this.stat.name + "'s HP = " + this.stat.health);
         }
     }
-
-    /*public void Attack(Entity target) {
-
-        // Check if the hero has a bow
-        Equipment weapon = this.chooseEquipment();
-        if(weapon!=null){
-            switch (weapon.getType()) {
-                case "Sword":
-                    target.getAttack(this.getStrength() + weapon.getDamage());
-                    break;
-                case "Bow":
-                    target.getAttack(this.getDexterity() + weapon.getDamage());
-                    break;
-                default:
-                    System.out.println("God knows what you have in your hand (Error in Attack)");
-                    target.getAttack(weapon.getDamage()+this.getStrength());
-                    break;
-            }
-        }
-        else{
-            System.out.println("You choose to attack with your bare hands");
-            target.getAttack(this.getStrength());
-        }
-    }
-    */
 }

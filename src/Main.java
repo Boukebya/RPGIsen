@@ -6,6 +6,7 @@ import Class.Equipments.Weapon;
 import Class.gameMechanics.Fight;
 import Class.wildLife.Enemy;
 import Class.wildLife.Hero;
+import Class.wildLife.Spell;
 import Class.wildLife.Stat;
 import java.util.Objects;
 import static Class.World.Event_Manager.Type_Events.GetEventFromRarity;
@@ -29,6 +30,7 @@ public class Main {
         Tile End = Tile.End;
         Tile Unknown = Tile.Unknown;
         Tile Boss = Tile.Boss;
+        Tile Merchant = Tile.Merchant;
 
         //Here we create map
         Tile[][] intro = new Tile[10][10];
@@ -56,7 +58,7 @@ public class Main {
         intro[2][6] = Enemy;
         intro[5][1] = Enemy;
         intro[4][5] = Enemy;
-        intro[8][4] = Enemy;
+        intro[8][4] = Merchant;
         intro[7][7] = Boss;
         intro[7][5] = Enemy;
         //Create path
@@ -87,7 +89,7 @@ public class Main {
         intro[3][3] = Unknown;
         intro[5][5] = Unknown;
         intro[3][1] = Unknown;
-        intro[8][1] = Unknown;
+        intro[8][1] = Merchant;
 
 
         //Create Map object, with its weather and its tiles
@@ -121,8 +123,20 @@ public class Main {
 
         return chests;
     }
+    //Function to initialize spells
+    public static Spell[] InitEnemiesSpells(){
+        // initialize array of spell
+        Spell[] enemiesSpells = new Spell[5];
+        enemiesSpells[0] = new Spell("Attack Strength", 0, 0, 1,"Basic", "none",80,"Enemy");
+        enemiesSpells[1] = new Spell("Attack Dexterity", 0, 0, 1,"Basic", "none",80,"Enemy");
+        enemiesSpells[2] = new Spell("Heal", 0, 5, 10,"Heal", "none",100,"Self");
+        enemiesSpells[3] = new Spell("Buff", 0, 5, 2,"Buff", "none",100,"Self");
+        enemiesSpells[4] = new Spell("Strong attack", 1, 2, 2,"Huge", "none",50,"Enemy");
+
+        return enemiesSpells;
+    }
     //Function to initialize enemies
-    public static Enemy[] InitEnemies(){
+    public static Enemy[] InitEnemies(Spell[] enemiesSpells){
         //Create array of enemies_fight
         Enemy[] enemies = new Enemy[4];
 
@@ -130,22 +144,31 @@ public class Main {
         Stat goblinStat = new Stat(1,1,0,0,10,10,1,"Goblin");
         //Create goblin enemies
         goblinStat.setStrength(3);
-        enemies[0] = new Enemy(goblinStat,"Spear goblin");
+        Spell[] spearGoblinSpells = new Spell[1];
+        spearGoblinSpells[0] = enemiesSpells[0];
+        enemies[0] = new Enemy(goblinStat,"Spear goblin",spearGoblinSpells);
         goblinStat.setStrength(1);
 
         goblinStat.setDexterity(3);
-        enemies[1] = new Enemy(goblinStat,"Knife goblin");
+        Spell[] daggerGoblinSpells = new Spell[1];
+        daggerGoblinSpells[0] = enemiesSpells[1];
+        enemies[1] = new Enemy(goblinStat,"Knife goblin",daggerGoblinSpells);
         goblinStat.setDexterity(1);
 
         //Create Skeleton stat
         Stat skeletonStat = new Stat(5,1,0,0,10,20,2,"Skeleton");
         //Create Skeleton enemies
         skeletonStat.setStrength(3);
-        enemies[2] = new Enemy(skeletonStat,"Bag of bones");
+        Spell[] swordSkeletonSpells = new Spell[1];
+        swordSkeletonSpells[0] = enemiesSpells[0];
+        enemies[2] = new Enemy(skeletonStat,"Bag of bones",swordSkeletonSpells);
         skeletonStat.setStrength(1);
 
-        enemies[3] = new Enemy(skeletonStat,"Baguette Skeleton");
-
+        skeletonStat.setDexterity(3);
+        Spell[] daggerSkeletonSpells = new Spell[1];
+        daggerSkeletonSpells[0] = enemiesSpells[1];
+        enemies[3] = new Enemy(skeletonStat,"Baguette Skeleton",daggerSkeletonSpells);
+        skeletonStat.setDexterity(1);
 
         return enemies;
     }
@@ -157,12 +180,14 @@ public class Main {
         //Create Ogre stat
         Stat ogreStat = new Stat(1,8,0,0,100,100,5,"Ogre");
         //First boss
-        Bosses[0] = new Enemy(ogreStat,"Bratirek");
+        Spell[] ogreSpells = new Spell[1];
+        Bosses[0] = new Enemy(ogreStat,"Bratirek",ogreSpells);
 
         //Create Breana stat
         Stat BreanaStat = new Stat(8,1,10,10,75,75,5,"Human");
         //Create Breana boss
-        Bosses[1] = new Enemy(BreanaStat,"Breana, the silent");
+        Spell[] BreanaSpells = new Spell[1];
+        Bosses[1] = new Enemy(BreanaStat,"Breana, the silent",BreanaSpells);
 
 
 
@@ -181,8 +206,12 @@ public class Main {
     public static Merchant[] InitMerchants(){
         //Create array of merchants
         Merchant[] merchants = new Merchant[2];
-        //We create a new type of event
+        //Create type events merchant
         Type_Events Merchant_Event = new Type_Events("Merchant",1);
+        //We create a new type of event
+        merchants[0] = new Merchant(Merchant_Event,"Merchant");
+        merchants[1] = new Merchant(Merchant_Event,"Potion Merchant");
+
 
         return merchants;
     }
@@ -191,11 +220,11 @@ public class Main {
         //Create array of weapons
         Equipment[] equipment = new Equipment[10];
         //We create a new type of event
-        equipment[0] = new Weapon(1,5,1,"Club","Broken stick");
-        equipment[1] = new Weapon(2,10,2,"Club","Common stick");
-        equipment[2] = new Weapon(3,15,3,"Club","Rare stick");
-        equipment[3] = new Weapon(4,20,4,"Club","Mythic stick");
-        equipment[4] = new Weapon(5,30,5,"Club","Legendary stick");
+        equipment[0] = new Weapon(1,0.05f,1,"Club","Broken stick");
+        equipment[1] = new Weapon(2,0.1f,2,"Club","Common stick");
+        equipment[2] = new Weapon(3,0.15f,3,"Club","Rare stick");
+        equipment[3] = new Weapon(4,0.2f,4,"Club","Mythic stick");
+        equipment[4] = new Weapon(5,0.3f,5,"Club","Legendary stick");
 
         equipment[5] = new Armor(5,"Leather armor");
         equipment[5].setRarity(1);
@@ -234,6 +263,12 @@ public class Main {
                 actualChest.Interact(character,weapons);
 
             }
+            // else if new location is a merchant
+            else if (Objects.equals(Event_Manager.GetTile(), "Merchant")){
+                //Get random merchant with function
+                Merchant actualMerchant = (Merchant) GetEventFromRarity(merchants);
+                actualMerchant.Interact(character,weapons);
+            }
 
             //Else If new location is an enemy
             else if (Objects.equals(Event_Manager.GetTile(), "Enemy")){
@@ -265,6 +300,6 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Begin");
-        Test(InitMap(),InitChests(),InitEnemies(),InitUnknowns(),InitMerchants(),InitEquipments(),InitBosses());
+        Test(InitMap(),InitChests(),InitEnemies(InitEnemiesSpells()),InitUnknowns(),InitMerchants(),InitEquipments(),InitBosses());
     }
 }

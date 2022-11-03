@@ -11,6 +11,7 @@ public enum Tile {
     End ("End"),
     Position ("Position"),
     Boss ("Boss"),
+    Merchant ("Merchant"),
     Unknown ("Unknown");
 
     private final String Category;
