@@ -1,7 +1,6 @@
 package Class.World;
 import java.util.Objects;
 
-// Path: src\Class\World\Map.java
 // Class to manage map, show,create, modify, get tile
 public class Map {
     //Map parameters

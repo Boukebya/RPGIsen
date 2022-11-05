@@ -1,5 +1,6 @@
 package Class.Equipments;
 
+//Class to manage Weapons
 public class Weapon extends Equipment {
     float criticChance;
     int damage;

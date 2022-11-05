@@ -1,11 +1,9 @@
 package Class.Equipments;
-
 import Class.wildLife.Hero;
-
 import java.util.Scanner;
 
+//Class to manage consumable
 public class Consumable extends Equipment{
-
     String name;
     int regenPower;
     //constructor
@@ -27,11 +25,12 @@ public class Consumable extends Equipment{
     public void setType(String type) {this.type = type;}
 
     //Methods
+    //Use a consumable
     public void use(Hero hero){
         System.out.println("You used a "+this.name);
         if(this.type.equals("Health")){
             System.out.println("You regen "+this.regenPower+" HP");
-            hero.setHP(hero.getHP()+this.regenPower);
+            hero.setHP((int) (hero.getHP()+this.regenPower));
 
         }
         else if(this.type.equals("Mana")){
@@ -40,8 +39,9 @@ public class Consumable extends Equipment{
         }
         this.type = "Used";
     }
+    //add a consumable to the inventory
     public void add(Consumable consumable,Hero hero){
-        Consumable[] consumables = hero.getConsumableInventory();
+        Consumable[] consumables = hero.getConsumables();
         for(int i = 0; i < consumables.length; i++){
         //if it's empty
             if(consumables[i] == null){
@@ -62,5 +62,9 @@ public class Consumable extends Equipment{
             }
         }
     }
-
+    //Remove a consumable from the inventory
+    public void remove(int slot,Hero hero){
+        Consumable[] consumables = hero.getConsumables();
+        consumables[slot] = null;
+    }
 }

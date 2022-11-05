@@ -1,6 +1,5 @@
 package Class.wildLife;
 import java.util.*;
-
 import Class.Equipments.Consumable;
 import Class.World.Map;
 import Class.World.Tile;
@@ -9,22 +8,19 @@ import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
 
 public class Hero extends Entity {
-    //Hero's position
     private int [] pos;
     int experience;
     private final int maxSlot = 5;
-    List<Spell> listOfSpell = new ArrayList<Spell>();
+    List<Spell> listOfSpell = new ArrayList<>();
     Equipment[] inventory = new Equipment[maxSlot];
     Consumable[] consumableInventory = new Consumable[maxSlot];
     int gold;
-    Weapon weapon =  new Weapon(1,2,1,"Sword","Sword of the Hero");;
+    Weapon weapon =  new Weapon(1,2,1,"Sword","Sword of the Hero");
     Armor armor = new Armor(1,"Hero's armor");
 
     // Constructor
-    public Hero(String name,Stat stat,int[]pos)
-    {
+    public Hero(String name,Stat stat,int[]pos) {
         super(stat);
-        //inventory[0] = new Equipment("Sword", 1, 1, 1);
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 5,"Damage", "none",80,"Enemy"));
         this.pos=pos;
         consumableInventory[0] = new Consumable("Welcome Potion",1,"Health",10);
@@ -39,14 +35,10 @@ public class Hero extends Entity {
     public int getExperience() {return this.experience;}
     public int[] getPos() {return this.pos;}
     public int getGold() {return this.gold;}
-    //get max hp
     public float getMaxHealth() {return this.stat.getMaxHealth();}
-    //get weapon
     public Weapon getWeapon() {return this.weapon;}
-    //get armor
     public Armor getArmor() {return this.armor;}
-    public Consumable[] getConsumableInventory() {return this.consumableInventory;}
-
+    public Consumable[] getConsumables() {return this.consumableInventory;}
 
     //setters
     public void setGold(int gold){
@@ -62,9 +54,63 @@ public class Hero extends Entity {
         this.consumableInventory = consumableInventory;
     }
 
-
-
     //Methods
+
+    //Gold ans xp modifier
+    public void modifyGold(int gold){
+        this.gold+=gold;
+    }
+    public void modifyExperience(int xp){
+        int xpToLevelUp = 10;
+        this.experience+=xp;
+        if(this.experience>=xpToLevelUp){
+            int over_experience=this.experience/xpToLevelUp;
+            this.experience-=over_experience*xpToLevelUp;
+            this.stat.level+=over_experience;
+
+            System.out.println("You leveled up !");
+            System.out.println("You are now level " + (this.stat.level));
+            System.out.println("Choose 2 stats to increase :");
+            //print hero stat
+            System.out.println("Strength : " + this.stat.strength);
+            System.out.println("Dexterity : " + this.stat.dexterity);
+            System.out.println("HP : " + this.stat.maxHealth);
+            System.out.println("Mana : " + this.stat.maxMana);
+
+            //scanner
+            int i=0;
+            while (i!=2) {
+                System.out.println("type 1,2,3 or 4");
+                Scanner sc = new Scanner(System.in);
+                String answer = sc.nextLine();
+                boolean good_answer = false;
+                //Check if answer is 1,2,3 or 4
+                while (!good_answer) {
+                    if (answer.equals("1") || answer.equals("2") || answer.equals("3") || answer.equals("4")) {
+                        good_answer = true;
+                    } else {
+                        System.out.println("Please type 1,2,3 or 4");
+                        answer = sc.nextLine();
+                    }
+                }
+                switch (answer) {
+                    case "1" -> this.stat.strength += 1;
+                    case "2" -> this.stat.dexterity += 1;
+                    case "3" -> {
+                        this.stat.maxHealth += 15;
+                        this.stat.health += 15;
+                    }
+                    case "4" -> {
+                        this.stat.maxMana += 10;
+                        this.stat.mana += 10;
+                    }
+                    default -> System.out.println("You didn't choose a stat");
+                }
+                i++;
+            }
+        }
+    }
+
     //Movement
     //Hero's initialisation in the map
     public static int[] SpawnHero(Map map){
@@ -145,13 +191,9 @@ public class Hero extends Entity {
                         System.out.println(hero.listOfSpell.get(i).getName());
                     }
                 }
-                case "equip" -> {
-                    changeEquipment();
-                }
+                case "equip" -> changeEquipment();
 
-                case "consumable" -> {
-                    this.consumableManagement();
-                }
+                case "consumable" -> this.useConsumable();
 
             }
         }
@@ -177,9 +219,7 @@ public class Hero extends Entity {
         return tile;
     }
 
-    public void modifyGold(int gold){
-        this.gold+=gold;
-    }
+    //equipment
     public void changeEquipment(){
         displayInventory();
         //create a scanner
@@ -230,10 +270,6 @@ public class Hero extends Entity {
 
         System.out.println("Please choose another action to do (move, see stat or equip something)");
     }
-    public void useConsumable(Consumable[] potions){
-
-    }
-
     public void equipmentManagement(Equipment equipment){
         //find the first empty slot in the inventory
         int emptySlot = findEmptySlot();
@@ -244,7 +280,7 @@ public class Hero extends Entity {
         }
         //if there is no empty slot
         else{
-            //ask the user to choose an equipment to remove
+            //ask the user to choose equipment to remove
             displayInventory();
             System.out.println("Choose an equipment to remove, or type 0 to throw the equipment");
             //create a scanner
@@ -259,7 +295,6 @@ public class Hero extends Entity {
         }
 
     }
-    //find empty slot in the inventory
     public int findEmptySlot(){
         int emptySlot = 0;
         for(int i = 0; i < inventory.length; i++){
@@ -270,14 +305,13 @@ public class Hero extends Entity {
         }
         return emptySlot;
     }
-
     public void changeItem(Equipment item){
         /*
         Add an item to the inventory if player want
         */
         //System.out.println("You found a " + item.getName() + " !");
         item.getStat();
-        //System.out.println("\nIt can be replace by your " + item.getType() + " !");
+        //System.out.println("\nIt can be replaced by your " + item.getType() + " !");
         if(chooseToKeepItem(item)){
             for(int i=0;i<inventory.length;i++){
                 if(inventory[i].getType().equals(item.getType())){
@@ -287,28 +321,7 @@ public class Hero extends Entity {
             }
         }
 
-    }
-    public void getItemStats(String type){
-        /*
-        Display the stats of the item
-         */
-        switch (type){
-            case "Sword":
-                System.out.print("A Sword ("+inventory[0].getName()+"): ");
-                System.out.println("Damage: " + ((Weapon)inventory[0]).getDamage() + " Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
-                break;
-            case "Bow":
-                System.out.print("A Bow ("+inventory[0].getName()+"): ");
-                System.out.println("Damage: " + ((Weapon)inventory[1]).getDamage() + " Crit chance: " + ((Weapon)inventory[0]).getCriticChance());
-                break;
-            case "Armor":
-                System.out.print("An Armor ("+inventory[0].getName()+"): ");
-                System.out.println("Defence: " + ((Armor)inventory[2]).getDefense());
-                break;
-            default:
-                System.out.println("You don't have this type of item ! \n\t(Error Item type)");
-        }
-    }
+    } //not used
     public boolean chooseToKeepItem(Equipment item){
         /*
         Choose to keep the item or not
@@ -319,127 +332,34 @@ public class Hero extends Entity {
         try {
             Scanner sc = new Scanner(System.in);
             String answer = sc.nextLine();
-            if (answer.equals("Y")) {
-                return true;
-            } else {
-                return false;
-            }
+            return answer.equals("Y");
         }catch (Exception e){
             System.out.println("You will not change your item");
             return false;
         }
-    }
-    // C EST PAS UN SET LES SETTERS SONT POUR UNE VARIABLE IL FAUT LA RENAME
-    public void modifyExperience(int xp){
-        int xpToLevelUp = 10;
-        this.experience+=xp;
-        if(this.experience>=xpToLevelUp){
-            int over_experience=this.experience/xpToLevelUp;
-            this.experience-=over_experience*xpToLevelUp;
-            this.stat.level+=over_experience;
-
-            System.out.println("You leveled up !");
-            System.out.println("You are now level " + (this.stat.level));
-            System.out.println("Choose 2 stats to increase :");
-            //print hero stat
-            System.out.println("Strength : " + this.stat.strength);
-            System.out.println("Dexterity : " + this.stat.dexterity);
-            System.out.println("HP : " + this.stat.maxHealth);
-            System.out.println("Mana : " + this.stat.maxMana);
-
-            //scanner
-            int i=0;
-            while (i!=2) {
-                System.out.println("type 1,2,3 or 4");
-                Scanner sc = new Scanner(System.in);
-                String answer = sc.nextLine();
-                boolean good_answer = false;
-                //Check if answer is 1,2,3 or 4
-                while (!good_answer) {
-                    if (answer.equals("1") || answer.equals("2") || answer.equals("3") || answer.equals("4")) {
-                        good_answer = true;
-                    } else {
-                        System.out.println("Please type 1,2,3 or 4");
-                        answer = sc.nextLine();
-                    }
-                }
-                if(good_answer) {
-                    switch (answer) {
-                        case "1":
-                            this.stat.strength += 1;
-                            break;
-                        case "2":
-                            this.stat.dexterity += 1;
-                            break;
-                        case "3":
-                            this.stat.maxHealth += 15;
-                            this.stat.health += 15;
-                            break;
-                        case "4":
-                            this.stat.maxMana += 10;
-                            this.stat.mana += 10;
-                            break;
-                        default:
-                            System.out.println("You didn't choose a stat");
-                    }
-                    i++;
-                }
+    } // not used
+    public void getItemStats(String type){
+        /*
+        Display the stats of the item
+         */
+        switch (type) {
+            case "Sword" -> {
+                System.out.print("A Sword (" + inventory[0].getName() + "): ");
+                System.out.println("Damage: " + ((Weapon) inventory[0]).getDamage() + " Crit chance: " + ((Weapon) inventory[0]).getCriticChance());
             }
-
-
+            case "Bow" -> {
+                System.out.print("A Bow (" + inventory[0].getName() + "): ");
+                System.out.println("Damage: " + ((Weapon) inventory[1]).getDamage() + " Crit chance: " + ((Weapon) inventory[0]).getCriticChance());
+            }
+            case "Armor" -> {
+                System.out.print("An Armor (" + inventory[0].getName() + "): ");
+                System.out.println("Defence: " + ((Armor) inventory[2]).getDefense());
+            }
+            default -> System.out.println("You don't have this type of item ! \n\t(Error Item type)");
         }
-    }
-    // Methods for basic
-    public String catchAnswer() {
-        Scanner sc = new Scanner(System.in);
-        String answer = sc.nextLine();
-        return answer;
-    }
-    // Methods for the health
-    public void catchHeal(float heal){
-        /*
-        Heal the hero
-        */
-        this.stat.health+=heal; // Heal the hero
-        // Check if the hero is not over-healed
-        if(this.stat.health>this.stat.maxHealth){
-            this.stat.health=this.stat.maxHealth;
-        }
-    }
-    public void catchMana(float mana){
-        /*
-        Catch the mana of the hero
-        */
-        this.stat.mana+=mana; // Catch the mana of the hero
-        // Check if the hero is not over-healed
-        if(this.stat.mana>this.stat.maxMana){
-            this.stat.mana=this.stat.maxMana;
-        }
-    }
-    public void addSpell(Spell spell){
-        /*
-        Add a spell to the list of spell
-        */
-        this.listOfSpell.add(spell);
-    }
-    // Methods for the inventory
-    public void getItem(Equipment item){
-        /*
-        Get a weapon in the inventory
-        */
-        if(item.getType().equals("Sword")){
-            this.inventory[0]=item;
-        }
-        else if(item.getType().equals("Bow")){
-            this.inventory[1]=item;
-        }
-        else if(item.getType().equals("Armor")){
-            this.inventory[2]=item;
-        }
-        this.inventory[0]=item;
-    }
+    } //not used for the moment
     public void addEquipment(Equipment equipment, int slot) {
-        // Add an equipment to the inventory
+        // Add equipment to the inventory
         this.inventory[slot] = equipment;
 
     }
@@ -464,7 +384,19 @@ public class Hero extends Entity {
             }
         }
     }
-    // Methods for the fight using Spell
+
+    //Consumable
+    public void useConsumable(Consumable[] potions){
+    //To do
+    }
+
+    //Spells
+    public void addSpell(Spell spell){
+        /*
+        Add a spell to the list of spell
+        */
+        this.listOfSpell.add(spell);
+    }
     public boolean displaySpell(){
         /*
         Display the list of spell of the hero
@@ -503,6 +435,35 @@ public class Hero extends Entity {
         }
         return null;
     }
+
+    // Methods for basic
+    public String catchAnswer() {
+        Scanner sc = new Scanner(System.in);
+        return sc.nextLine();
+    }
+    // Methods for the health
+    public void catchHeal(int heal){
+        /*
+        Heal the hero
+        */
+        this.stat.health+=heal; // Heal the hero
+        // Check if the hero is not over-healed
+        if(this.stat.health>this.stat.maxHealth){
+            this.stat.health=this.stat.maxHealth;
+        }
+    }
+    public void catchMana(int mana){
+        /*
+        Catch the mana of the hero
+        */
+        this.stat.mana+=mana; // Catch the mana of the hero
+        // Check if the hero is not over-healed
+        if(this.stat.mana>this.stat.maxMana){
+            this.stat.mana=this.stat.maxMana;
+        }
+    }
+
+    // Methods used during a fight
     public void useSpell(Entity target){
         Spell spell = this.chooseSpell(); // Choose the spell to use
         // Check type of the spell
@@ -520,50 +481,31 @@ public class Hero extends Entity {
             }
         }
     }
-    // Methods for the fight using Equipment
-    public Equipment chooseEquipment(){
-        /*
-        Choose equipment to use
-        */
-        boolean correctInput=false;
-        this.displayInventory();
-        while(!correctInput){
-            System.out.println("Which equipment do you want to use?");
-            try{
-                String answer = this.catchAnswer();
-                int answerInt = Integer.parseInt(answer);
-                if(answerInt>=1 && answerInt<=maxSlot){
-                    if(this.inventory[answerInt-1].getClass().getSimpleName().equals("Weapon")){
-                        correctInput=true;
-                        return this.inventory[answerInt-1];
-                    }
-                    else{
-                        System.out.println("You can't attack without a weapon!");
-                    }
-                }
-                else{
-                    System.out.println("You didn't answer correctly");
-                }
-            }
-            catch(Exception e){
-                System.out.println("You didn't answer correctly");
-            }
-        }
-        return null;
+    public void defend(){
+        System.out.println("You protect yourself");
+        //double defense
+        int armor = this.getArmor().getDefense();
+        armor = armor*2;
+        this.getArmor().setDefense(armor);
     }
-
-    public void consumableManagement() {
+    public void reduceDefense(){
+        int armor = this.getArmor().getDefense();
+        armor = armor/2;
+        this.getArmor().setDefense(armor);
+    }
+    public void useConsumable() {
         boolean available = false;
-        for(int i = 0; i < this.consumableInventory.length; i++){
-            if(this.consumableInventory[i] != null){
+        for (Consumable value : this.consumableInventory) {
+            if (value != null) {
                 available = true;
+                break;
             }
         }
 
         if(available) {
-            for (int i = 0; i < this.consumableInventory.length; i++) {
-                if (this.consumableInventory[i] != null) {
-                    System.out.println(this.consumableInventory[i].getName());
+            for (Consumable consumable : this.consumableInventory) {
+                if (consumable != null) {
+                    System.out.println(consumable.getName());
                 }
             }
             //choose consumable
@@ -594,20 +536,19 @@ public class Hero extends Entity {
 
         }
     }
-
     @Override
     public void attack(Entity target){
-        int damage = 0;
+        int damage;
         Weapon weapon = this.weapon;
         damage = weapon.getDamage();
         //if type sword
-        if(weapon.getType() == "Sword"){
+        if(Objects.equals(weapon.getType(), "Sword")){
             damage += this.getDexterity()+this.getStrength();
         }
-        else if(weapon.getType() == "Bow"){
+        else if(Objects.equals(weapon.getType(), "Bow")){
             damage += this.getDexterity()*2;
         }
-        if(weapon.getType() == "Club"){
+        if(Objects.equals(weapon.getType(), "Club")){
             damage += this.getStrength()*2;
         }
 
@@ -619,9 +560,9 @@ public class Hero extends Entity {
         }
 
         //Apply accuracy
-        if(Math.random() <= (0.8 + (this.getDexterity()/100)*2)){
+        if(Math.random() <= (0.8 + (this.getDexterity()*2))){
             System.out.print("You hit "+target.getName());
-            if(isCrit == true){
+            if(isCrit){
                 System.out.println(" (Critical hit!)");
             }
             target.getHit(damage);
@@ -629,14 +570,12 @@ public class Hero extends Entity {
         else{
             System.out.println("You missed");
         }
-
     }
+    @Override
     public void getHit(float damage){
-
             //reduce damage with armor
             int armor = this.armor.getDefense();
             damage -= (armor);
-
 
             if(damage<0){
                 damage=0;

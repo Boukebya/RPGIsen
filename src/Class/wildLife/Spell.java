@@ -41,10 +41,15 @@ public class Spell {
     public void setType(String type) {this.type = type;}
 
     // Method
+    //Display name,cd,mana use,power,type,effect,accuracy,target
     public  void getStatus(){
         System.out.println("Name: "+name);
         System.out.println("CoolDown: "+coolDown);
         System.out.println("ManaUse: "+manaUse);
-        System.out.println("Damage: "+ power);
+        System.out.println("Power: "+ power);
+        System.out.println("Type: "+type);
+        System.out.println("Effect: "+effect);
+        System.out.println("Accuracy: "+accuracy);
+        System.out.println("Target: "+target);
     }
 }

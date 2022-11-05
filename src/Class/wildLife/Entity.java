@@ -1,8 +1,5 @@
 package Class.wildLife;
 
-/**
- * @author theap
- */
 public class Entity {
     public Stat stat;
     //Constructor
@@ -34,7 +31,7 @@ public class Entity {
     public void setLevel(int level) {
         this.stat.level = level;
     }
-    public void setHP(float health) {
+    public void setHP(int health) {
         this.stat.health = health;
     }
     public void setStrength(int strength) {

@@ -1,5 +1,6 @@
 package Class.Equipments;
 
+//Class to manage all equipments -> consumable, weapon, armor
 public class Equipment {
     int rarity = 1;
     String name = "default";

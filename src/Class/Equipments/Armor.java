@@ -1,5 +1,6 @@
 package Class.Equipments;
 
+//Class to manage Armors
 public class Armor extends Equipment {
     int defense;
 

@@ -4,9 +4,7 @@ import Class.Equipments.Weapon;
 import Class.wildLife.Spell;
 
 public class Enemy extends Entity{
-    int dropChance;// on a range 0 to 10    
     String name;
-    //Up to five spell for monsters
     Spell[] spell = new Spell[5];
 
     //constructor
@@ -17,30 +15,24 @@ public class Enemy extends Entity{
     }
 
     //Getters
-    public int getDropChance() {
-        return dropChance;
-    }
     public String getName() {
         return name;
     }
-    //get max health
-    public float getMaxHealth() {
+    public int getMaxHealth() {
         return this.stat.maxHealth;
     }
-    //get spell
     public Spell[] getSpell() {
         return spell;
     }
 
     //Setters
-    public void setDropChance(int dropChance) {
-        this.dropChance = dropChance;
-    }
     public void setName(String name) {
         this.name = name;
     }
 
+
     //Methods
+
     //Drop gold
     public int dropGold(){
         int gold = (int) ((Math.random() * this.stat.level*10) + this.stat.level*4);
@@ -52,7 +44,7 @@ public class Enemy extends Entity{
         return exp;
     }
 
-    //Function to get a random enemy of the same lvl as player
+    //Function to get a random enemy of the same lvl as player, and boss with fix level
     public static Enemy GetEnemy(Enemy[] enemies,int level) {
 
         while (true) {
@@ -78,7 +70,14 @@ public class Enemy extends Entity{
         }
     }
 
+    //Function to get a random spell from the enemy
     public void spellManager(Hero hero){
+        //get random spell
+        Spell spell = randomSpell();
+        //We cast spell
+        cast(spell,hero);
+    }
+    public Spell randomSpell(){
         //First we choose the spell
         Spell spell = new Spell();
         Spell[] spells = this.getSpell();
@@ -87,14 +86,16 @@ public class Enemy extends Entity{
             int choice = (int) (Math.random() * spells.length);
             if (spells[choice] != null && spells[choice].getManaUse() <= this.getMana()) {
                 spell = spells[choice];
-                break;
+                return spell;
             }
         }
-        System.out.println(this.getName()+" use "+spell.getName());
+    }
+    //Cast spell and print it
+    public void cast(Spell spell,Entity target){
         // We deduce the mana cost
         this.stat.mana -= spell.getManaUse();
-
-        // cast spell
+        System.out.println(this.getName()+" use "+spell.getName());
+        // cast spell depending on type
         if(spell.getType() == "Basic"){
             //get the higher between strength and dexterity
             int stat = this.getStrength();
@@ -103,7 +104,7 @@ public class Enemy extends Entity{
             }
 
             //random with accuracy
-            accuracyCheck(spell.getAccuracy(),hero,stat);
+            accuracyCheck(spell.getAccuracy(),target,stat);
         }
         if(spell.getType() == "Multiple"){
             //get the higher between strength and dexterity
@@ -111,7 +112,7 @@ public class Enemy extends Entity{
 
             //random with accuracy
             for(int i = 0;i< spell.getPower();i++){
-                accuracyCheck(spell.getAccuracy(),hero,stat);
+                accuracyCheck(spell.getAccuracy(),target,stat);
             }
 
         }
@@ -129,10 +130,8 @@ public class Enemy extends Entity{
                 stat = this.getDexterity();
             }
             //random with accuracy
-            accuracyCheck(spell.getAccuracy(),hero,stat*spell.getPower());
+            accuracyCheck(spell.getAccuracy(),target,stat*spell.getPower());
         }
-
-
     }
     //accuracy check
     public void accuracyCheck(int accuracy,Entity target, int damage){
@@ -145,6 +144,7 @@ public class Enemy extends Entity{
         }
     }
 
+    //Damage management
     @Override
     public void attack(Entity target) {
         target.getHit(this.stat.strength);
@@ -158,5 +158,4 @@ public class Enemy extends Entity{
             System.out.println(" : HP = " + this.stat.health + "/" + this.stat.maxHealth);
         }
     }
-
 }
