@@ -1,9 +1,14 @@
-import Class.Equipments.Consumable;
-import Class.World.*;
-import Class.World.Event_Manager.*;
 import Class.Equipments.Armor;
+import Class.Equipments.Consumable;
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
+import Class.World.Event_Manager.Chest;
+import Class.World.Event_Manager.Merchant;
+import Class.World.Event_Manager.Type_Events;
+import Class.World.Event_Manager.Unknown;
+import Class.World.Map;
+import Class.World.Tile;
+import Class.World.Weather;
 import Class.gameMechanics.Fight;
 import Class.wildLife.Enemy;
 import Class.wildLife.Hero;
@@ -14,6 +19,13 @@ import static Class.World.Event_Manager.Type_Events.GetEventFromRarity;
 import static Class.wildLife.Enemy.GetBoss;
 import static Class.wildLife.Enemy.GetEnemy;
 import static Class.wildLife.Hero.SpawnHero;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import java.io.FileReader;
+import java.util.Iterator;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectWriter;
 
 public class Main {
 
@@ -90,7 +102,6 @@ public class Main {
         intro[5][5] = Unknown;
         intro[3][1] = Unknown;
         intro[8][1] = Merchant;
-
 
         //Create Map object, with its weather and its tiles
         return new Map(mapWeather,intro);
@@ -246,7 +257,6 @@ public class Main {
         return equipment;
     }
 
-
     //Test it
     public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons,Enemy[] Bosses){
         //Spawn Hero
@@ -304,9 +314,34 @@ public class Main {
         System.out.println("The end");
     }
 
+    //This function need to convert the Json file to a map
+    public static void JSONParser(){
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("src/Data.json"));
+            //Get Map
 
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+/*
+Need to:
+-Implement JSON file to read map
+-Do consumable
+-Enhance code and manage class
+-Create enemies, weapons, armors...
+-Input management and errors
+-Improve merchant
+-Create chest and manage blood chest
+-Create a way for hero to add spell and create them
+ */
     public static void main(String[] args) {
         System.out.println("Begin");
         Test(InitMap(),InitChests(),InitEnemies(InitEnemiesSpells()),InitUnknowns(),InitMerchants(),InitEquipments(),InitBosses());
+        //JSONParser();
     }
 }
