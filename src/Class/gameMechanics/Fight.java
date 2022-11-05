@@ -97,7 +97,7 @@ public class Fight {
         //Manage choice
         int action = manageChoice(answerInt, hero, enemies);
         //Check if mana>maxMana
-        limitManager(hero);
+        hero.limitManager(hero);
 
         //return allows the program to set back value to default depending on the choice
         //for example, if the player chose to defend himself, the armor value is divided by 2
@@ -118,19 +118,6 @@ public class Fight {
             hero.defend();
         }
         return answerInt;
-    }
-
-    //hero's limit manager (mana, hp to not exceed max)
-    public void limitManager(Hero hero){
-        //Check if mana>maxMana
-        if(hero.getMana()>hero.stat.getMaxMana()){
-            hero.setMana(hero.stat.getMaxMana());
-        }
-        //Check if hp>maxHp
-        if(hero.getHP()>hero.stat.getMaxHealth()){
-            hero.setHP(hero.stat.getMaxHealth());
-        }
-
     }
 
     //Display the choice of the hero

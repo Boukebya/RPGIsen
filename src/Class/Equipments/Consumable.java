@@ -37,30 +37,31 @@ public class Consumable extends Equipment{
             System.out.println("You regen "+this.regenPower+" MP");
             hero.setMana(hero.getMana()+this.regenPower);
         }
-        this.type = "Used";
+
+
     }
     //add a consumable to the inventory
-    public void add(Consumable consumable,Hero hero){
+    public static void addPot(Consumable consumable, Hero hero){
         Consumable[] consumables = hero.getConsumables();
         for(int i = 0; i < consumables.length; i++){
         //if it's empty
             if(consumables[i] == null){
                 consumables[i] = consumable;
-                break;
-            }
-            else{
-                System.out.println("Your inventory is full, replace a consumable");
-                //display consumable inventory
-                for(int j = 0; j < consumables.length; j++){
-                    System.out.println(j+" "+consumables[j].getName());
-                }
-                //replace consumable
-                Scanner sc = new Scanner(System.in);
-                int choice = sc.nextInt();
-                consumables[choice] = consumable;
-
+                return;
             }
         }
+            System.out.println("Your inventory is full, replace a consumable");
+            //display consumable inventory
+            for(int j = 0; j < consumables.length; j++){
+                System.out.println(consumables[j].getName());
+            }
+            //replace consumable
+            Scanner sc = new Scanner(System.in);
+            int choice = sc.nextInt();
+            consumables[choice-1] = null;
+            consumables[choice-1] = consumable;
+        System.out.println("You replaced a consumable");
+
     }
     //Remove a consumable from the inventory
     public void remove(int slot,Hero hero){

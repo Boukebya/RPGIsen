@@ -331,7 +331,7 @@ public class Main {
 /*
 Need to:
 -Implement JSON file to read map
--Do consumable
+-Do consumable                                                                       DONE
 -Enhance code and manage class
 -Create enemies, weapons, armors...
 -Input management and errors

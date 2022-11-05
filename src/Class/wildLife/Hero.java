@@ -6,6 +6,9 @@ import Class.World.Tile;
 import Class.Equipments.Armor;
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
+import Class.Equipments.Consumable;
+
+import static Class.Equipments.Consumable.addPot;
 
 public class Hero extends Entity {
     private int [] pos;
@@ -24,6 +27,10 @@ public class Hero extends Entity {
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 5,"Damage", "none",80,"Enemy"));
         this.pos=pos;
         consumableInventory[0] = new Consumable("Welcome Potion",1,"Health",10);
+        consumableInventory[1] = new Consumable("Welcome Potion",1,"Health",10);
+        consumableInventory[2] = new Consumable("Welcome Potion",1,"Health",10);
+        consumableInventory[3] = new Consumable("Welcome Potion",1,"Health",10);
+        consumableInventory[4] = new Consumable("Welcome Potion",1,"Health",10);
         System.out.println("A hero named " + name + " Appeared !");
     }
 
@@ -124,7 +131,7 @@ public class Hero extends Entity {
     }
     //Hero's movement on map
     public Tile MoveHero(Hero hero, Map map){
-        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d), or see your stat by typing : stat or equip something by typing equip" );
+        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d),see your stat : stat, equip something by typing equip, use consumable: consumable" );
 
         //Get hero's position
         int [] pos;
@@ -142,6 +149,7 @@ public class Hero extends Entity {
             //Scanner to get the choice of the player and change the position of the hero
             Scanner sc = new Scanner(System.in);
             String direction = sc.nextLine();
+            Consumable pot = new Consumable("feur Potion",1,"Health",10);
             switch (direction) {
                 case "up", "z" -> {
                     move = true;
@@ -192,9 +200,7 @@ public class Hero extends Entity {
                     }
                 }
                 case "equip" -> changeEquipment();
-
                 case "consumable" -> this.useConsumable();
-
             }
         }
         // Hero's new position (tile)
@@ -385,11 +391,6 @@ public class Hero extends Entity {
         }
     }
 
-    //Consumable
-    public void useConsumable(Consumable[] potions){
-    //To do
-    }
-
     //Spells
     public void addSpell(Spell spell){
         /*
@@ -503,39 +504,65 @@ public class Hero extends Entity {
         }
 
         if(available) {
+            //choose consumable
+            System.out.println("Choose a consumable to use (0 to cancel)");
             for (Consumable consumable : this.consumableInventory) {
                 if (consumable != null) {
                     System.out.println(consumable.getName());
                 }
+                else{
+                    System.out.println("Empty");
+                }
             }
-            //choose consumable
-            System.out.println("Choose a consumable to use");
+
             Scanner sc2 = new Scanner(System.in);
             String consumableName = sc2.nextLine();
             //if 1 is chosen, use the consumable
-            if (consumableName.equals("1")) {
+            if (consumableName.equals("1") && this.consumableInventory[0] != null) {
                 this.consumableInventory[0].use(this);
                 this.consumableInventory[0] = null;
             }
-            if (consumableName.equals("2")) {
+            else if (consumableName.equals("2")  && this.consumableInventory[1] != null) {
                 this.consumableInventory[1].use(this);
                 this.consumableInventory[1] = null;
             }
-            if (consumableName.equals("3")) {
+            else if (consumableName.equals("3") && this.consumableInventory[2] != null) {
                 this.consumableInventory[2].use(this);
                 this.consumableInventory[2] = null;
             }
-            if (consumableName.equals("4")) {
+            else if (consumableName.equals("4") && this.consumableInventory[3] != null) {
                 this.consumableInventory[3].use(this);
                 this.consumableInventory[3] = null;
             }
-            if (consumableName.equals("5")) {
+            else if (consumableName.equals("5") && this.consumableInventory[4] != null) {
                 this.consumableInventory[4].use(this);
                 this.consumableInventory[4] = null;
             }
-
+            else{
+                System.out.println("You choose an empty slot");
+            }
+            if (consumableName.equals("0")) {
+                System.out.println("You didn't use any consumable");
+            }
+            limitManager(this);
+        }
+        else{
+            System.out.println("You don't have any consumable");
         }
     }
+    //hero's limit manager (mana, hp to not exceed max)
+    public void limitManager(Hero hero){
+        //Check if mana>maxMana
+        if(hero.getMana()>hero.stat.getMaxMana()){
+            hero.setMana(hero.stat.getMaxMana());
+        }
+        //Check if hp>maxHp
+        if(hero.getHP()>hero.stat.getMaxHealth()){
+            hero.setHP(hero.stat.getMaxHealth());
+        }
+
+    }
+
     @Override
     public void attack(Entity target){
         int damage;
