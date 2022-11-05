@@ -14,5 +14,4 @@ public enum Weather {
     public float GetAcc(){
         return Accuracy;
     }
-
 }

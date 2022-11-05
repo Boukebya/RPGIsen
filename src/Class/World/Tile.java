@@ -10,15 +10,21 @@ public enum Tile {
     Spawn ("Spawn"),
     End ("End"),
     Position ("Position"),
+    Boss ("Boss"),
+    Merchant ("Merchant"),
     Unknown ("Unknown");
 
     private final String Category;
 
+    //Constructor
     Tile(String Category_Tile){
         Category = Category_Tile;
     }
+
+    //Getters
     public String GetTile(){
         return Category;
     }
+
 }
 
