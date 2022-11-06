@@ -17,7 +17,7 @@ public class Hero extends Entity {
     List<Spell> listOfSpell = new ArrayList<>();
     Equipment[] inventory = new Equipment[maxSlot];
     Consumable[] consumableInventory = new Consumable[maxSlot];
-    int gold;
+    int gold =1000;
     Weapon weapon =  new Weapon(1,2,1,"Sword","Sword of the Hero");
     Armor armor = new Armor(1,"Hero's armor");
 
@@ -27,10 +27,6 @@ public class Hero extends Entity {
         this.listOfSpell.add(new Spell("FireBall", 3, 5, 5,"Damage", "none",80,"Enemy"));
         this.pos=pos;
         consumableInventory[0] = new Consumable("Welcome Potion",1,"Health",10);
-        consumableInventory[1] = new Consumable("Welcome Potion",1,"Health",10);
-        consumableInventory[2] = new Consumable("Welcome Potion",1,"Health",10);
-        consumableInventory[3] = new Consumable("Welcome Potion",1,"Health",10);
-        consumableInventory[4] = new Consumable("Welcome Potion",1,"Health",10);
         System.out.println("A hero named " + name + " Appeared !");
     }
 

@@ -110,7 +110,7 @@ public class Main {
     //Function to initialize chests
     public static Chest[] InitChests(){
         //Create array of chests
-        Chest[] chests = new Chest[3];
+        Chest[] chests = new Chest[4];
         //We create a new type of event
         Type_Events Chest_Event = new Type_Events("Chest",1);
 
@@ -121,7 +121,7 @@ public class Main {
         chests[0].setRarity(50);
 
         //We create a bloody chest
-        Chest bloody_Chest = new Chest(Chest_Event,"bloody chest",new int[]{20, 30, 30, 15, 5},"Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Bring your hand closer","Leave fast!"},new String[]{"The chest opens by itself and bites you, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
+        Chest bloody_Chest = new Chest(Chest_Event,"bloody chest",new int[]{20, 30, 30, 15, 5},"Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Open","Leave"},new String[]{"The chest opens by itself, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
         chests[1] = bloody_Chest;
         //modify rarity
         chests[1].setRarity(20);
@@ -130,7 +130,13 @@ public class Main {
         Chest golden_Chest = new Chest(Chest_Event,"golden chest",new int[]{40, 30, 25, 5, 0},".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
         chests[2] = golden_Chest;
         //modify rarity
-        chests[2].setRarity(30);
+        chests[2].setRarity(20);
+
+        //We create a legendary chest
+        Chest legendary_Chest = new Chest(Chest_Event,"legendary chest",new int[]{0, 10, 30, 30, 30},".You found a legendary chest!",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
+        chests[3] = golden_Chest;
+        //modify rarity
+        chests[3].setRarity(10);
 
         return chests;
     }
@@ -150,7 +156,7 @@ public class Main {
     //Function to initialize enemies
     public static Enemy[] InitEnemies(Spell[] enemiesSpells){
         //Create array of enemies_fight
-        Enemy[] enemies = new Enemy[4];
+        Enemy[] enemies = new Enemy[10];
 
         //Create goblin stat
         Stat goblinStat = new Stat(1,1,5,5,10,10,1,"Goblin");
@@ -160,8 +166,6 @@ public class Main {
         spearGoblinSpells[1] = enemiesSpells[4];
         enemies[0] = new Enemy(goblinStat,"Spear goblin",spearGoblinSpells);
         enemies[0].setStrength(3);
-
-
         Spell[] daggerGoblinSpells = new Spell[2];
         daggerGoblinSpells[0] = enemiesSpells[1];
         daggerGoblinSpells[1] = enemiesSpells[5];
@@ -169,38 +173,96 @@ public class Main {
         enemies[1].setDexterity(2);
 
         //Create Skeleton stat
-        Stat skeletonStat = new Stat(5,1,0,0,10,20,2,"Skeleton");
+        Stat skeletonStat = new Stat(5,1,0,0,15,15,2,"Skeleton");
         //Create Skeleton enemies
         skeletonStat.setStrength(3);
         Spell[] swordSkeletonSpells = new Spell[1];
         swordSkeletonSpells[0] = enemiesSpells[0];
         enemies[2] = new Enemy(skeletonStat,"Bag of bones",swordSkeletonSpells);
         skeletonStat.setStrength(1);
-
         skeletonStat.setDexterity(3);
         Spell[] daggerSkeletonSpells = new Spell[1];
         daggerSkeletonSpells[0] = enemiesSpells[1];
         enemies[3] = new Enemy(skeletonStat,"Baguette Skeleton",daggerSkeletonSpells);
         skeletonStat.setDexterity(1);
 
+        //Create human stat
+        Stat humanStat = new Stat(5,5,10,10,20,20,3,"Human");
+        //Create human enemies
+        Spell[] BanditSpells = new Spell[1];
+        BanditSpells[0] = enemiesSpells[0];
+        enemies[4] = new Enemy(humanStat,"Bandit",BanditSpells);
+        Spell[] hoodlumSpells = new Spell[1];
+        enemies[5] = new Enemy(humanStat,"Hoodlum",hoodlumSpells);
+
+        //Create elf stat
+        Stat elfStat = new Stat(5,5,10,10,25,25,4,"Elf");
+        //Create elf enemies
+        Spell[] mageElfSpells = new Spell[1];
+        mageElfSpells[0] = enemiesSpells[0];
+        enemies[6] = new Enemy(elfStat,"Mage elf",mageElfSpells);
+        Spell[] archerElfSpells = new Spell[1];
+        enemies[7] = new Enemy(elfStat,"Archer elf",archerElfSpells);
+
+        //Create orc stat
+        Stat orcStat = new Stat(1,8,10,10,30,30,5,"orc");
+        //Create orc enemies
+        Spell[] OrcSpells = new Spell[1];
+        OrcSpells[0] = enemiesSpells[0];
+        enemies[8] = new Enemy(orcStat,"Orc",OrcSpells);
+        Spell[] assassinOrcSpells = new Spell[1];
+        enemies[9] = new Enemy(orcStat,"Assassin orc",assassinOrcSpells);
+
         return enemies;
     }
     //Function to initialize bosses
     public static Enemy[] InitBosses(){
         //Create array of enemies_fight
-        Enemy[] Bosses = new Enemy[2];
+        Enemy[] Bosses = new Enemy[8];
 
         //Create Ogre stat
         Stat ogreStat = new Stat(1,8,0,0,100,100,5,"Ogre");
         //First boss
         Spell[] ogreSpells = new Spell[1];
         Bosses[0] = new Enemy(ogreStat,"Bratirek",ogreSpells);
-
         //Create Breana stat
-        Stat BreanaStat = new Stat(8,1,10,10,75,75,5,"Human");
+        Stat BreanaStat = new Stat(5,1,10,10,75,75,5,"Human");
         //Create Breana boss
         Spell[] BreanaSpells = new Spell[1];
         Bosses[1] = new Enemy(BreanaStat,"Breana, the silent",BreanaSpells);
+
+        //Create Ogre stat
+        Stat centaurStat = new Stat(1,14,10,10,150,150,10,"Centaur");
+        //First boss
+        Spell[] EupenioSpells = new Spell[1];
+        Bosses[2] = new Enemy(centaurStat,"Eupenio",EupenioSpells);
+        //Create Breana stat
+        Stat OrgothStat = new Stat(8,1,20,20,75,75,10,"Orc");
+        //Create Breana boss
+        Spell[] OrgothSpells = new Spell[1];
+        Bosses[3] = new Enemy(OrgothStat,"Orgoth",OrgothSpells);
+
+        //Create Ogre stat
+        Stat golemStat = new Stat(1,18,10,10,200,200,15,"Golem");
+        //First boss
+        Spell[] golemSpells = new Spell[1];
+        Bosses[4] = new Enemy(golemStat,"Unon",golemSpells);
+        //Create Breana stat
+        Stat CiradylStat = new Stat(8,4,10,10,150,150,15,"Elf");
+        //Create Breana boss
+        Spell[] CiradylSpells = new Spell[1];
+        Bosses[5] = new Enemy(CiradylStat,"Ciradyl",CiradylSpells);
+
+        //Create Ogre stat
+        Stat dragonStat = new Stat(1,20,10,10,300,300,20,"Dragon");
+        //First boss
+        Spell[] dragonSpells = new Spell[1];
+        Bosses[6] = new Enemy(dragonStat,"bralzranth, Eternal Fire",dragonSpells);
+        //Create Breana stat
+        Stat Alvaxoth = new Stat(10,10,20,20,250,250,20,"Demon");
+        //Create Breana boss
+        Spell[] AlvaxothSpells = new Spell[1];
+        Bosses[7] = new Enemy(Alvaxoth,"Alvaxoth",AlvaxothSpells);
 
 
 
@@ -231,34 +293,49 @@ public class Main {
     //Function to initialize weapons
     public static Equipment[] InitEquipments(){
         //Create array of weapons
-        Equipment[] equipment = new Equipment[12];
-        //We create a new type of event
-        equipment[0] = new Weapon(1,0.05f,1,"Club","Broken stick");
-        equipment[1] = new Weapon(2,0.1f,2,"Club","Common stick");
-        equipment[2] = new Weapon(3,0.15f,3,"Club","Rare stick");
-        equipment[3] = new Weapon(4,0.2f,4,"Club","Mythic stick");
-        equipment[4] = new Weapon(5,0.3f,5,"Club","Legendary stick");
+        Equipment[] equipment = new Equipment[26];
 
-        equipment[5] = new Armor(2,"Leather armor");
-        equipment[5].setRarity(1);
-        equipment[6] = new Armor(4,"Iron armor");
-        equipment[6].setRarity(2);
-        equipment[7] = new Armor(7,"plate armor");
-        equipment[7].setRarity(3);
-        equipment[8] = new Armor(10,"Dragon slayer armor");
-        equipment[8].setRarity(4);
-        equipment[9] = new Armor(12,"Araqiel's armor");
-        equipment[9].setRarity(5);
+        equipment[0] = new Weapon(2,0.05f,1,"Club","Broken club");
+        equipment[1] = new Weapon(3,0.1f,2,"Club","Common club");
+        equipment[2] = new Weapon(5,0.15f,3,"Club","Rare club");
+        equipment[3] = new Weapon(8,0.2f,4,"Club","Mythic club");
+        equipment[4] = new Weapon(12,0.3f,5,"Club","Legendary stick");
 
+        equipment[5] = new Weapon(1,0.1f,1,"Sword","Broken sword");
+        equipment[6] = new Weapon(2,0.15f,2,"Sword","Common sword");
+        equipment[7] = new Weapon(5,0.3f,3,"Sword","Rare sword");
+        equipment[8] = new Weapon(7,0.35f,4,"Sword","Mythic sword");
+        equipment[9] = new Weapon(10,0.4f,5,"Sword","Legendary sword");
 
-        equipment[10] = new Consumable("Potion of health",1,"Health",10);
-        equipment[11] = new Consumable("Potion of mana",1,"Mana",10);
+        equipment[10] = new Weapon(2,0.1f,1,"Bow","Broken bow");
+        equipment[11] = new Weapon(3,0.2f,2,"Bow","Common bow");
+        equipment[12] = new Weapon(4,0.4f,3,"Bow","Rare bow");
+        equipment[13] = new Weapon(6,0.5f,4,"Bow","Mythic bow");
+        equipment[14] = new Weapon(8,0.7f,5,"Bow","Legendary bow");
+
+        equipment[15] = new Armor(2,"Leather armor");
+        equipment[15].setRarity(1);
+        equipment[16] = new Armor(4,"Iron armor");
+        equipment[16].setRarity(2);
+        equipment[17] = new Armor(7,"plate armor");
+        equipment[17].setRarity(3);
+        equipment[18] = new Armor(10,"Dragon slayer armor");
+        equipment[18].setRarity(4);
+        equipment[19] = new Armor(12,"Araqiel's armor");
+        equipment[19].setRarity(5);
+        
+        equipment[20] = new Consumable("Potion of health",1,"Health",10);
+        equipment[21] = new Consumable("Potion of mana",1,"Mana",10);
+        equipment[22] = new Consumable("Great potion of health",2,"Health",25);
+        equipment[23] = new Consumable("Great potion of mana",2,"Mana",50);
+        equipment[24] = new Consumable("Legendary potion of health",3,"Health",50);
+        equipment[25] = new Consumable("Legendary potion of mana",3,"Mana",50);
 
         return equipment;
     }
 
     //Test it
-    public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] weapons,Enemy[] Bosses){
+    public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] equipment,Enemy[] Bosses){
         //Spawn Hero
         Stat heroStat = new Stat(1,1,10,10,20,20,1,"Hero");
         Hero character = new Hero("Blanc-Louis",heroStat,SpawnHero(map));
@@ -276,7 +353,7 @@ public class Main {
               //Get random chest with function
                 Chest actualChest = (Chest) GetEventFromRarity(chests);
                 //Interact with chest
-                actualChest.Interact(character,weapons);
+                actualChest.Interact(character,equipment);
 
 
             }
@@ -284,7 +361,7 @@ public class Main {
             else if (Objects.equals(Event_Manager.GetTile(), "Merchant")){
                 //Get random merchant with function
                 Merchant actualMerchant = (Merchant) GetEventFromRarity(merchants);
-                actualMerchant.Interact(character,weapons);
+                actualMerchant.Interact(character,equipment);
             }
 
             //Else If new location is an enemy
@@ -297,7 +374,7 @@ public class Main {
             //Else If new location is a boss
             else if (Objects.equals(Event_Manager.GetTile(), "Boss")){
                 //Get random enemy with function
-                Enemy actualBoss = (Enemy) GetBoss(Bosses);
+                Enemy actualBoss = (Enemy) GetBoss(Bosses, character.getLevel());
                 //Create fight
                 Fight fight = new Fight(character,actualBoss);
             }
@@ -320,9 +397,6 @@ public class Main {
         try {
             Object obj = parser.parse(new FileReader("src/Data.json"));
             //Get Map
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -332,12 +406,14 @@ public class Main {
 Need to:
 -Implement JSON file to read map
 -Do consumable                                                                       DONE
--Enhance code and manage class
--Create enemies, weapons, armors...
--Input management and errors
--Improve merchant
--Create chest and manage blood chest
+-Create enemies, weapons, armors...                                                  DONE
+-Improve merchant                                                                    DONE
+-Create chest and manage blood chest                                                 DONE, aborted blood chest
 -Create a way for hero to add spell and create them
+
+Do this when the project is finished:
+-Input management and errors
+-Enhance code and manage class
  */
     public static void main(String[] args) {
         System.out.println("Begin");

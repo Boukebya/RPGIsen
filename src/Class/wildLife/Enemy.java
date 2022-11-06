@@ -46,8 +46,11 @@ public class Enemy extends Entity{
 
     //Function to get a random enemy of the same lvl as player, and boss with fix level
     public static Enemy GetEnemy(Enemy[] enemies,int level) {
-
         while (true) {
+            if(level > enemies[enemies.length-1].getLevel()){
+                //get enemy with max level
+                return enemies[enemies.length-1];
+            }
             //if enemy is same level as player
             for (Enemy enemy : enemies) {
                 if (enemy.getLevel() == level) {
@@ -59,13 +62,18 @@ public class Enemy extends Entity{
             }
         }
     }
-    public static Enemy GetBoss(Enemy[] bosses) {
+    public static Enemy GetBoss(Enemy[] bosses,int heroLevel) {
         while (true) {
-            //if enemy is same level as player
+
             for (Enemy boss : bosses) {
-                    if (Math.random() < 0.1) {
+                //if boss level is more than 2 times the hero level
+                if (boss.getLevel() < heroLevel*2.5f) {
+                    //random chance to spawn boss
+                    if (Math.random() < 0.2) {
                         return boss;
                     }
+                }
+
             }
         }
     }

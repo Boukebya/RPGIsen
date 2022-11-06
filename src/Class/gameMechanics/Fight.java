@@ -21,6 +21,7 @@ public class Fight {
                 endFight(hero,enemy);
                 //set enemy hp to max hp
                 enemy.setHP(enemy.stat.getMaxHealth());
+                enemy.setMana(enemy.stat.getMaxMana());
             }
             //else it attacks
             else {
