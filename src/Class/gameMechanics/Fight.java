@@ -82,27 +82,26 @@ public class Fight {
         displayChoice();
 
         //Get the choice of the player and check if it's correct
-        String answer = hero.catchAnswer();
         int answerInt=0;
-        while (!correctInput){
-            try {
-                answerInt = Integer.parseInt(answer);
-                if (answerInt>= 1 && answerInt<=4) {
-                    correctInput = true;
+        while (true){
+            String answer = hero.getAnswer("What do you want to do?", new String[]{"1","2","3","4"});
+            if(answer!=null){
+                try{
+                    answerInt =  Integer.parseInt(answer);
+                    //Manage choice
+                    manageChoice(answerInt, hero, enemies);
+                    //Check if mana>maxMana
+                    hero.limitManager(hero);
+                    return answerInt;
                 }
-            } catch (Exception e) {
-                System.out.println("You didn't answer correctly");
-                answer = hero.catchAnswer();
+                catch (NumberFormatException e){
+                    System.out.println("Please enter a number");
+                }
+            }
+            else{
+                System.out.println("Please enter a correct answer");
             }
         }
-        //Manage choice
-        int action = manageChoice(answerInt, hero, enemies);
-        //Check if mana>maxMana
-        hero.limitManager(hero);
-
-        //return allows the program to set back value to default depending on the choice
-        //for example, if the player chose to defend himself, the armor value is divided by 2
-        return action;
     }
     //Manage 4 possibilities
     public int manageChoice(int answerInt, Hero hero, Enemy enemy){
@@ -123,7 +122,6 @@ public class Fight {
 
     //Display the choice of the hero
     public void displayChoice(){
-        System.out.println("What do you want to do?");
         System.out.println("1. Attack with your weapon");
         System.out.println("2. Use a spell");
         System.out.println("3. Use a consumable");

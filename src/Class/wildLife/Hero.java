@@ -7,10 +7,11 @@ import Class.Equipments.Armor;
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
 import Class.Equipments.Consumable;
+import Class.gameMechanics.Interaction;
 
 import static Class.Equipments.Consumable.addPot;
 
-public class Hero extends Entity {
+public class Hero extends Entity implements Interaction {
     private int [] pos;
     int experience;
     private final int maxSlot = 5;
