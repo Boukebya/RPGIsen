@@ -146,7 +146,7 @@ public class Hero extends Entity implements Interaction {
             //Scanner to get the choice of the player and change the position of the hero
             Scanner sc = new Scanner(System.in);
             String direction = sc.nextLine();
-            Consumable pot = new Consumable("feur Potion",1,"Health",10);
+            Consumable pot = new Consumable("Potion",1,"Health",10);
             switch (direction) {
                 case "up", "z" -> {
                     move = true;
@@ -225,13 +225,17 @@ public class Hero extends Entity implements Interaction {
     //equipment
     public void changeEquipment(){
         displayInventory();
+        if (this.inventory[0] !=null && this.inventory[1] !=null&& this.inventory[2] !=null&& this.inventory[3] !=null&& this.inventory[4] !=null){
         //create a scanner
-        Scanner sc = new Scanner(System.in);
-        //ask the user to choose an equipment
-        System.out.println("Choose an equipment to equip");
-        //get the choice
-        int choice = sc.nextInt();
-        choice -=1;
+        String answer = getAnswer("Choose an item to equip",new String[]{"1","2","3","4","5"});
+            System.out.println("on est ici");
+        int choice=0;
+        try{
+            choice = Integer.parseInt(answer);
+        }
+        catch (NumberFormatException e){
+            System.out.println("Please type a correct answer");
+        }
         //get equipment at position choice
         Equipment equipment = inventory[choice];
         System.out.println("You choose to equip " + equipment.getName());
@@ -272,6 +276,10 @@ public class Hero extends Entity implements Interaction {
         }
 
         System.out.println("Please choose another action to do (move, see stat or equip something)");
+        }
+        else{
+            System.out.println("You don't have any equipment in your inventory");
+        }
     }
     public void equipmentManagement(Equipment equipment){
         //find the first empty slot in the inventory
