@@ -1,4 +1,5 @@
 package Class.World.Event_Manager;
+import Class.Equipments.Consumable;
 import Class.Equipments.Equipment;
 import Class.wildLife.Hero;
 import java.util.Scanner;
@@ -85,6 +86,33 @@ public class Merchant extends Type_Events {
         }
         return cost;
     }
+    //Purchase system of an item
+    public void getChoice (int choice, Equipment[] soldObjects,int [] cost,Hero hero){
+        if (choice == 0) return;
+        int item = choice - 1;
+            //if player has enough money, buy the object
+            if (hero.getGold() >= cost[item]) {
+                //remove the money
+                hero.modifyGold(-cost[item]);
+                //add the object to the inventory
+                //if the object is an instance of consumable
+                if (soldObjects[item] instanceof Consumable) {
+                    Consumable.addPot((Consumable) soldObjects[item],hero);
+                }
+                else {
+                    hero.equipmentManagement(soldObjects[item]);
+                }
+                //print that the object has been bought
+                System.out.println("You bought the " + soldObjects[item].getName() + "!");
+                //Remove item from shop
+                soldObjects[item] = null;
+            }
+            //if player doesn't have enough money, print that he doesn't have enough money
+            else {
+                System.out.println("You don't have enough money to buy this object!");
+            }
+
+    }
 
     @Override
     public void Interact(Hero hero, Equipment[] Equipments) {
@@ -97,112 +125,27 @@ public class Merchant extends Type_Events {
 
         String choice = "";
         //if player type 1, buy the first object
-        while(choice.equals("0") != true) {
+        while(!choice.equals("0")) {
             //print the objects
             System.out.println("You can buy these objects:");
             //display items and cost
             for (int j = 0; j < soldObjects.length; j++) {
                 if (soldObjects[j] != null) {
-                    System.out.println((j+1) + ". " + soldObjects[j].getName() + " (" + soldObjects[j].getRarity() + ") for " + cost[j] + " gold");;
+                    System.out.println((j+1) + ". " + soldObjects[j].getName() + " (" + soldObjects[j].getRarity() + ") for " + cost[j] + " gold");
                 }
                 else{
                     System.out.println("Empty");
                 }
-
             }
+
             //Create a scanner
             Scanner scanner = new Scanner(System.in);
+
             //Ask the player which object he wants to buy
             System.out.println("Which object do you want to buy? (1,2,3,4,5) (0 to exit)");
             choice = scanner.nextLine();
-            if (choice.equals("1")) {
-                //if player has enough money, buy the object
-                if (hero.getGold() >= cost[0]) {
-                    //remove the money
-                    hero.modifyGold(-cost[0]);
-                    //add the object to the inventory
-                    hero.equipmentManagement(soldObjects[0]);
-                    //print that the object has been bought
-                    System.out.println("You bought the " + soldObjects[0].getName() + "!");
-                    //Remove item from shop
-                    soldObjects[0] = null;
-                }
-                //if player doesn't have enough money, print that he doesn't have enough money
-                else {
-                    System.out.println("You don't have enough money to buy this object!");
-                }
-            }
-            if (choice.equals("2")) {
-                //if player has enough money, buy the object
-                if (hero.getGold() >= cost[1]) {
-                    //remove the money
-                    hero.modifyGold(-cost[1]);
-                    //add the object to the inventory
-                    hero.equipmentManagement(soldObjects[1]);
-                    //print that the object has been bought
-                    System.out.println("You bought the " + soldObjects[1].getName() + "!");
-                    //remove item from shop
-                    soldObjects[1] = null;
-                }
-                //if player doesn't have enough money, print that he doesn't have enough money
-                else {
-                    System.out.println("You don't have enough money to buy this object!");
-                }
-            }
-            if (choice.equals("3")) {
-                //if player has enough money, buy the object
-                if (hero.getGold() >= cost[2]) {
-                    //remove the money
-                    hero.modifyGold(-cost[2]);
-                    //add the object to the inventory
-                    hero.equipmentManagement(soldObjects[2]);
-                    //print that the object has been bought
-                    System.out.println("You bought the " + soldObjects[2].getName() + "!");
-                    //remove item from shop
-                    soldObjects[2] = null;
-                }
-                //if player doesn't have enough money, print that he doesn't have enough money
-                else {
-                    System.out.println("You don't have enough money to buy this object!");
-                }
-            }
-            if (choice.equals("4")) {
-                //if player has enough money, buy the object
-                if (hero.getGold() >= cost[3]) {
-                    //remove the money
-                    hero.modifyGold(-cost[3]);
-                    //add the object to the inventory
-                    hero.equipmentManagement(soldObjects[3]);
-                    //print that the object has been bought
-                    System.out.println("You bought the " + soldObjects[3].getName() + "!");
-                    //remove item from shop
-                    soldObjects[3] = null;
-                }
-                //if player doesn't have enough money, print that he doesn't have enough money
-                else {
-                    System.out.println("You don't have enough money to buy this object!");
-                }
-            }
-            if (choice.equals("5")) {
-                //if player has enough money, buy the object
-                if (hero.getGold() >= cost[4]) {
-                    //remove the money
-                    hero.modifyGold(-cost[4]);
-                    //add the object to the inventory
-                    hero.equipmentManagement(soldObjects[4]);
-                    //print that the object has been bought
-                    System.out.println("You bought the " + soldObjects[4].getName() + "!");
-                    //remove item from shop
-                    soldObjects[4] = null;
-                }
-                //if player doesn't have enough money, print that he doesn't have enough money
-                else {
-                    System.out.println("You don't have enough money to buy this object!");
-                }
-            }
-            if (choice.equals("0")) {
-                System.out.println("You exit the shop.");
-            }
+            getChoice(Integer.parseInt(choice),soldObjects,cost,hero);
         }
+        System.out.println("You exit the shop.");
     }
 }

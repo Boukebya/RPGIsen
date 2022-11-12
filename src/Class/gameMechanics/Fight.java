@@ -72,6 +72,7 @@ public class Fight {
         int exp = enemy.dropExp();
         System.out.println("You got "+exp+" exp!");
         hero.modifyExperience(exp);
+        hero.setScore(hero.getScore()+exp);
         isOver=true;
     }
 
@@ -119,7 +120,6 @@ public class Fight {
         }
         return answerInt;
     }
-
     //Display the choice of the hero
     public void displayChoice(){
         System.out.println("1. Attack with your weapon");

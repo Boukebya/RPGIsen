@@ -12,6 +12,7 @@ public class Map {
         this.weather = weather;
         this.map = map;
     }
+    public Map(){}
 
     //Getters
     public Weather GetWeather(Map map ){

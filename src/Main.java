@@ -14,6 +14,7 @@ import Class.wildLife.Enemy;
 import Class.wildLife.Hero;
 import Class.wildLife.Spell;
 import Class.wildLife.Stat;
+import java.io.*;
 import java.util.Objects;
 import static Class.World.Event_Manager.Type_Events.GetEventFromRarity;
 import static Class.wildLife.Enemy.GetBoss;
@@ -22,91 +23,12 @@ import static Class.wildLife.Hero.SpawnHero;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import java.io.FileReader;
-import java.util.Iterator;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.fasterxml.jackson.databind.ObjectWriter;
+import java.util.Scanner;
+import org.json.JSONException;
+import org.json.simple.parser.ParseException;
 
 public class Main {
 
-    //Function to initialize the map
-    public static Map InitMap(){
-        //We create weather
-        Weather mapWeather = Weather.FOGGY;
-        //We declare all tiles to create map after
-        Tile Chest = Tile.Chest;
-        Tile Enemy = Tile.Enemy;
-        Tile Wall = Tile.Wall;
-        Tile Empty = Tile.Empty;
-        Tile Spawn = Tile.Spawn;
-        Tile End = Tile.End;
-        Tile Unknown = Tile.Unknown;
-        Tile Boss = Tile.Boss;
-        Tile Merchant = Tile.Merchant;
-
-        //Here we create map
-        Tile[][] intro = new Tile[10][10];
-        //Create walls
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
-                if (y == 0 || y == 9 || x == 0 || x == 9) {
-                    intro[y][x] = Wall;
-                } else {
-                    intro[y][x] = Empty;
-                }
-            }
-        }
-        //Create spawn
-        intro[1][1] = Spawn;
-        //Create end
-        intro[8][8] = End;
-        //Create chest
-        intro[1][8] = Chest;
-        intro[8][6] = Chest;
-        intro[5][8] = Chest;
-        //Create enemy
-        intro[1][7] = Enemy;
-        intro[6][2] = Enemy;
-        intro[2][6] = Enemy;
-        intro[5][1] = Enemy;
-        intro[4][5] = Enemy;
-        intro[8][4] = Merchant;
-        intro[7][7] = Boss;
-        intro[7][5] = Enemy;
-        //Create path
-        intro[2][2] = Wall;
-        intro[2][3] = Wall;
-        intro[2][4] = Wall;
-        intro[2][5] = Wall;
-        intro[2][7] = Wall;
-        intro[2][8] = Wall;
-        intro[3][2] = Wall;
-        intro[4][2] = Wall;
-        intro[5][2] = Wall;
-        intro[7][2] = Wall;
-        intro[8][2] = Wall;
-        intro[8][5] = Wall;
-        intro[7][4] = Wall;
-        intro[6][4] = Wall;
-        intro[5][4] = Wall;
-        intro[4][4] = Wall;
-        intro[4][6] = Wall;
-        intro[4][7] = Wall;
-        intro[4][8] = Wall;
-        intro[6][6] = Wall;
-        intro[7][6] = Wall;
-        intro[6][8] = Wall;
-        intro[7][8] = Wall;
-        //Create unknown
-        intro[3][3] = Unknown;
-        intro[5][5] = Unknown;
-        intro[3][1] = Unknown;
-        intro[8][1] = Merchant;
-
-        //Create Map object, with its weather and its tiles
-        return new Map(mapWeather,intro);
-
-    }
     //Function to initialize chests
     public static Chest[] InitChests(){
         //Create array of chests
@@ -324,23 +246,30 @@ public class Main {
         equipment[19] = new Armor(12,"Araqiel's armor");
         equipment[19].setRarity(5);
         
-        equipment[20] = new Consumable("Potion of health",1,"Health",10);
-        equipment[21] = new Consumable("Potion of mana",1,"Mana",10);
-        equipment[22] = new Consumable("Great potion of health",2,"Health",25);
-        equipment[23] = new Consumable("Great potion of mana",2,"Mana",50);
-        equipment[24] = new Consumable("Legendary potion of health",3,"Health",50);
-        equipment[25] = new Consumable("Legendary potion of mana",3,"Mana",50);
+        equipment[20] = new Consumable("Potion of health",2,"Health",10);
+        equipment[21] = new Consumable("Potion of mana",2,"Mana",10);
+        equipment[22] = new Consumable("Great potion of health",3,"Health",25);
+        equipment[23] = new Consumable("Great potion of mana",3,"Mana",50);
+        equipment[24] = new Consumable("Legendary potion of health",4,"Health",50);
+        equipment[25] = new Consumable("Legendary potion of mana",4,"Mana",50);
 
         return equipment;
     }
 
     //Test it
-    public static void Test(Map map, Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] equipment,Enemy[] Bosses){
+    public static void Test(Chest[] chests, Enemy[] enemies, Unknown[] unknowns, Merchant[] merchants, Equipment[] equipment,Enemy[] Bosses){
+
+        //Get the choice of the player
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Choose your name");
+        String name = sc.nextLine();
+
         //Spawn Hero
-        Stat heroStat = new Stat(1,1,10,10,20,20,1,"Hero");
-        Hero character = new Hero("Blanc-Louis",heroStat,SpawnHero(map));
-        //Show Map
-        map.ShowMap(map);
+        Stat heroStat = new Stat(1,1,10,10,20,20,1,name);
+
+        Map map = readMap();
+        Hero character = new Hero(name,heroStat,SpawnHero(map));
+
 
         //We create a new Tile to know when we have to manage an event
         Tile Event_Manager = Tile.Position;
@@ -389,22 +318,232 @@ public class Main {
         }
         //If Class.World.Event_Manager == End, we print the end of the game
         System.out.println("The end");
+
+        writeFile(character.getScore(),character.getName());
+        displayScore();
     }
 
-    //This function need to convert the Json file to a map
-    public static void JSONParser(){
-        JSONParser parser = new JSONParser();
+    //Write scores in a file
+    public static void writeFile(int score, String name){
+        String path = "src/Data.json";
+
+        JSONObject array = new JSONObject();
         try {
-            Object obj = parser.parse(new FileReader("src/Data.json"));
-            //Get Map
-        } catch (Exception e) {
-            e.printStackTrace();
+            FileReader reader = new FileReader(path);
+            JSONObject jsonObj = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            jsonArray = (JSONArray) new JSONParser().parse(reader);
+
+            //get leaderboard element
+            JSONObject leaderboard = (JSONObject) jsonArray.get(0);
+            //get leaderboard array
+            JSONArray leaderboardArray = (JSONArray) leaderboard.get("Scores");
+            //System.out.println(leaderboardArray);
+
+            String scoreString = name + " : " + score;
+            //add scoreString to leaderboard array
+            JSONObject newScore = new JSONObject();
+            newScore.put("Scores", scoreString);
+
+            //System.out.println(scoreString);
+            //add to leaderboard array
+            leaderboardArray.add(scoreString);
+
+            //write to file
+            FileWriter file = new FileWriter(path);
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            file.close();
+
+
+
         }
+        catch (JSONException | FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+    //Display scores of players
+    public static void displayScore(){
+        String path = "src/Data.json";
+
+        JSONObject array = new JSONObject();
+        try {
+            FileReader reader = new FileReader(path);
+            JSONObject jsonObj = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            jsonArray = (JSONArray) new JSONParser().parse(reader);
+
+            //get leaderboard element
+            JSONObject leaderboard = (JSONObject) jsonArray.get(0);
+            //get leaderboard array
+            JSONArray leaderboardArray = (JSONArray) leaderboard.get("Scores");
+            //print leaderboard elements
+            System.out.println("Leaderboard :");
+            String[][] leaderboardMatrix = new String[0][];
+            //Create a matrix of leaderboarsarray size
+            leaderboardMatrix = new String[leaderboardArray.size()][2];
+            for (int i = 0; i < leaderboardArray.size(); i++) {
+
+                //Get the string of the leaderboard array
+                leaderboardMatrix[i][0] = (String) leaderboardArray.get(i);
+                //Split the string to get the name and the score
+                leaderboardMatrix[i] = leaderboardMatrix[i][0].split(" : ");
+                //Print the leaderboard
+
+            }
+            //Sort the leaderboard by higher score
+            for (int i = 0; i < leaderboardArray.size(); i++) {
+                for (int j = 0; j < leaderboardArray.size(); j++) {
+                    if (Integer.parseInt(leaderboardMatrix[i][1]) > Integer.parseInt(leaderboardMatrix[j][1])){
+                        String[] temp = leaderboardMatrix[i];
+                        leaderboardMatrix[i] = leaderboardMatrix[j];
+                        leaderboardMatrix[j] = temp;
+                    }
+                }
+            }
+            //Print the leaderboard
+            for (int i = 0; i < leaderboardArray.size(); i++) {
+                System.out.println(leaderboardMatrix[i][0] + " : " + leaderboardMatrix[i][1]);
+            }
+
+
+
+        }
+        catch (JSONException | FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //Read map from JSON
+    public static Map readMap(){
+        Map map;
+        //read map from files
+        String path = "src/Data.json";
+        JSONObject array = new JSONObject();
+        try { FileReader reader = new FileReader(path);
+            JSONObject jsonObj = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            jsonArray = (JSONArray) new JSONParser().parse(reader);
+
+            //get leaderboard element
+            JSONObject tilesMap = (JSONObject) jsonArray.get(1);
+            //get leaderboard array
+            JSONArray tilesArray = (JSONArray) tilesMap.get("Map_tiles");
+
+            //print leaderboard elements
+            //System.out.println(tilesArray);
+
+            //tilesArray to string
+            String tilesString = tilesArray.toString();
+
+            //array size of the map
+            //while , count the number of , in the string
+            //get mapTiles
+            String[] mapTile = tilesString.split(",");
+
+
+            // for every ■, size ++
+            int size = 0;
+            for (int i = 0; i < mapTile[0].length(); i++) {
+                char c = mapTile[0].charAt(i);
+                if (c == '■'){
+                    size++;
+                }
+            }
+
+            // keep only the ■,□,▲,?,*,&,$
+            String[][] mapTile2 = new String[size][size];
+            int j = 0;
+            //get real map character
+            System.out.println(mapTile.length);
+            int nb;
+            for(j = 0; j < mapTile.length; j++){
+                nb=0;
+                for (int i = 0; i < mapTile[j].length(); i++) {
+                    char c = mapTile[j].charAt(i);
+                    if (c == '■' || c == '□' || c == '▴' || c == '?' || c == '*' || c == '&' || c == '$'|| c == '!'|| c == 'o'){
+                        mapTile2[j][nb] = String.valueOf(c);
+                        nb++;
+                    }
+                }
+            }
+
+
+            Tile[][] mapTiles = new Tile[size][size];
+
+             for(j = 0 ; j < mapTiles.length; j++) {
+                for (int i = 0; i < mapTiles.length; i++) {
+                    //Get char at [j][i]
+                    char c = mapTile2[j][i].charAt(0);
+
+                    // if char = ■ create a wall
+                    if (c == '■') {
+                        mapTiles[j][i] = Tile.Wall;
+                    }
+                    // if char = □ create a floor
+                    else if (c == '□') {
+                        mapTiles[j][i] = Tile.Empty;
+                    }
+                    // if char = ▲ create a chest
+                    else if (c == '▴') {
+                        mapTiles[j][i] = Tile.Chest;
+                    }
+                    // if char = ? create an unknown
+                    else if (c == '?') {
+                        mapTiles[j][i] = Tile.Unknown;
+                    }
+                    // if char = E create an enemy
+                    else if (c == '*') {
+                        mapTiles[j][i] = Tile.Enemy;
+                    }
+                    // if char = P create a player
+                    else if (c == '&') {
+                        mapTiles[j][i] = Tile.Spawn;
+                    }
+                    // if char = C create a chest
+                    else if (c == '$') {
+                        mapTiles[j][i] = Tile.Merchant;
+                    }
+                    // if char = C create a boss
+                    else if (c == '!') {
+                        mapTiles[j][i] = Tile.Boss;
+                    }
+                    // if char = C create a chest
+                    else if (c == 'o') {
+                        mapTiles[j][i] = Tile.End;
+                    }
+                }
+            }
+            System.out.println("Get map...");
+
+            map = new Map(Weather.SUNNY,mapTiles);
+            map.ShowMap(map);
+            return map;
+
+        }
+        catch (JSONException | FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
 /*
 Need to:
--Implement JSON file to read map
+-Implement JSON file to read map                                                     DONE
 -Do consumable                                                                       DONE
 -Create enemies, weapons, armors...                                                  DONE
 -Improve merchant                                                                    DONE
@@ -417,7 +556,7 @@ Do this when the project is finished:
  */
     public static void main(String[] args) {
         System.out.println("Begin");
-        Test(InitMap(),InitChests(),InitEnemies(InitEnemiesSpells()),InitUnknowns(),InitMerchants(),InitEquipments(),InitBosses());
-        //JSONParser();
+        Test(InitChests(),InitEnemies(InitEnemiesSpells()),InitUnknowns(),InitMerchants(),InitEquipments(),InitBosses());
+
     }
 }

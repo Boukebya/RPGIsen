@@ -18,9 +18,10 @@ public class Hero extends Entity implements Interaction {
     List<Spell> listOfSpell = new ArrayList<>();
     Equipment[] inventory = new Equipment[maxSlot];
     Consumable[] consumableInventory = new Consumable[maxSlot];
-    int gold =1000;
+    int gold;
     Weapon weapon =  new Weapon(1,2,1,"Sword","Sword of the Hero");
     Armor armor = new Armor(1,"Hero's armor");
+    int score = 0;
 
     // Constructor
     public Hero(String name,Stat stat,int[]pos) {
@@ -43,6 +44,7 @@ public class Hero extends Entity implements Interaction {
     public Weapon getWeapon() {return this.weapon;}
     public Armor getArmor() {return this.armor;}
     public Consumable[] getConsumables() {return this.consumableInventory;}
+    public int getScore() {return this.score;}
 
     //setters
     public void setGold(int gold){
@@ -57,7 +59,9 @@ public class Hero extends Entity implements Interaction {
     public void setConsumableInventory(Consumable[] consumableInventory){
         this.consumableInventory = consumableInventory;
     }
-
+    public void setScore(int score){
+        this.score = score;
+    }
     //Methods
 
     //Gold ans xp modifier
@@ -307,7 +311,7 @@ public class Hero extends Entity implements Interaction {
 
     }
     public int findEmptySlot(){
-        int emptySlot = 0;
+        int emptySlot = -1;
         for(int i = 0; i < inventory.length; i++){
             if(inventory[i] == null){
                 emptySlot = i;
