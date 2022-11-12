@@ -1,18 +1,23 @@
 <component name="libraryTable">
   <library name="json-simple-1.1.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/OneDrive/Bureau/json-simple-1.1.1.jar!/" />
       <root url="jar://$USER_HOME$/Downloads/jar_files.zip!/" />
-      <root url="jar://$USER_HOME$/OneDrive/Bureau/json-20220924.jar!/" />
       <root url="file://$USER_HOME$/OneDrive/Bureau" />
       <root url="file://$USER_HOME$/OneDrive/Bureau" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="file://$USER_HOME$/OneDrive/Bureau/M1/Java/Td2exo1/src/main/java" />
       <root url="file://$USER_HOME$/OneDrive/Bureau/M1/Java/Td2exo2/src/main/java" />
       <root url="file://$USER_HOME$/OneDrive/Bureau/M1/Java/Td3exo1/src/main/java" />
+      <root url="file://$PROJECT_DIR$/src" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$" recursive="false" />
     <jarDirectory url="file://$USER_HOME$/OneDrive/Bureau" recursive="false" />
   </library>
 </component>
