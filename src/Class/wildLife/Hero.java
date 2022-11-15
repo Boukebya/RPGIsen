@@ -6,16 +6,15 @@ import Class.World.Tile;
 import Class.Equipments.Armor;
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
-import Class.Equipments.Consumable;
 import Class.gameMechanics.Interaction;
 
-import static Class.Equipments.Consumable.addPot;
+import static Class.wildLife.Spell.cast;
 
 public class Hero extends Entity implements Interaction {
-    private int [] pos;
+    private final int [] pos;
     int experience;
     private final int maxSlot = 5;
-    List<Spell> listOfSpell = new ArrayList<>();
+    Spell[] spells = new Spell[maxSlot];
     Equipment[] inventory = new Equipment[maxSlot];
     Consumable[] consumableInventory = new Consumable[maxSlot];
     int gold;
@@ -26,7 +25,7 @@ public class Hero extends Entity implements Interaction {
     // Constructor
     public Hero(String name,Stat stat,int[]pos) {
         super(stat);
-        this.listOfSpell.add(new Spell("FireBall", 3, 5, 5,"Damage", "none",80,"Enemy"));
+        spells[0] = new Spell("FireBall", 0, 3, 5,"Damage", "none",80,"Enemy");
         this.pos=pos;
         consumableInventory[0] = new Consumable("Welcome Potion",1,"Health",10);
         System.out.println("A hero named " + name + " Appeared !");
@@ -45,6 +44,7 @@ public class Hero extends Entity implements Interaction {
     public Armor getArmor() {return this.armor;}
     public Consumable[] getConsumables() {return this.consumableInventory;}
     public int getScore() {return this.score;}
+    public Spell[] getSpells() {return this.spells;}
 
     //setters
     public void setGold(int gold){
@@ -132,7 +132,8 @@ public class Hero extends Entity implements Interaction {
     }
     //Hero's movement on map
     public Tile MoveHero(Hero hero, Map map){
-        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d),see your stat : stat, equip something by typing equip, use consumable: consumable" );
+        System.out.println("Choose a direction by typing : up, down, left or right (or z,q,s,d),see your stat : stat, equip something by typing equip, use consumable: consumable");
+        System.out.println("info : get info about the tiles");
 
         //Get hero's position
         int [] pos;
@@ -150,7 +151,6 @@ public class Hero extends Entity implements Interaction {
             //Scanner to get the choice of the player and change the position of the hero
             Scanner sc = new Scanner(System.in);
             String direction = sc.nextLine();
-            Consumable pot = new Consumable("Potion",1,"Health",10);
             switch (direction) {
                 case "up", "z" -> {
                     move = true;
@@ -196,12 +196,15 @@ public class Hero extends Entity implements Interaction {
                         }
                     }
                     System.out.println("Spell :");
-                    for (int i = 0; i < hero.listOfSpell.size(); i++) {
-                        System.out.println(hero.listOfSpell.get(i).getName());
+                    for (int i = 0; i < hero.spells.length; i++) {
+                        if (hero.spells[i] != null) {
+                            System.out.println(hero.spells[i].getName());
+                        }
                     }
                 }
                 case "equip" -> changeEquipment();
                 case "consumable" -> this.useConsumable();
+                case "info" -> Map.Info();
             }
         }
         // Hero's new position (tile)
@@ -229,19 +232,26 @@ public class Hero extends Entity implements Interaction {
     //equipment
     public void changeEquipment(){
         displayInventory();
-        if (this.inventory[0] !=null && this.inventory[1] !=null&& this.inventory[2] !=null&& this.inventory[3] !=null&& this.inventory[4] !=null){
+        if (this.inventory[0] !=null || this.inventory[1] !=null || this.inventory[2] !=null || this.inventory[3] !=null || this.inventory[4] !=null){
         //create a scanner
         String answer = getAnswer("Choose an item to equip",new String[]{"1","2","3","4","5"});
-            System.out.println("on est ici");
         int choice=0;
         try{
-            choice = Integer.parseInt(answer);
+            choice = Integer.parseInt(answer) - 1;
         }
         catch (NumberFormatException e){
             System.out.println("Please type a correct answer");
         }
+
+        Equipment equipment;
         //get equipment at position choice
-        Equipment equipment = inventory[choice];
+            if(inventory[choice] != null) {
+                equipment = inventory[choice];
+            }
+            else{
+                System.out.println("You don't have any item at this position");
+                return;
+            }
         System.out.println("You choose to equip " + equipment.getName());
 
         //if the equipment is a weapon
@@ -336,7 +346,7 @@ public class Hero extends Entity implements Interaction {
             }
         }
 
-    } //not used
+    }
     public boolean chooseToKeepItem(Equipment item){
         /*
         Choose to keep the item or not
@@ -352,7 +362,7 @@ public class Hero extends Entity implements Interaction {
             System.out.println("You will not change your item");
             return false;
         }
-    } // not used
+    }
     public void getItemStats(String type){
         /*
         Display the stats of the item
@@ -372,7 +382,7 @@ public class Hero extends Entity implements Interaction {
             }
             default -> System.out.println("You don't have this type of item ! \n\t(Error Item type)");
         }
-    } //not used for the moment
+    }
     public void addEquipment(Equipment equipment, int slot) {
         // Add equipment to the inventory
         this.inventory[slot] = equipment;
@@ -401,49 +411,51 @@ public class Hero extends Entity implements Interaction {
     }
 
     //Spells
-    public void addSpell(Spell spell){
-        /*
-        Add a spell to the list of spell
-        */
-        this.listOfSpell.add(spell);
-    }
     public boolean displaySpell(){
         /*
         Display the list of spell of the hero
         */
-        if(this.listOfSpell.size()==0){
+        if(this.spells.length==0){
             System.out.println("You don't have any spell sorry");
             return false;
         }
         else {
             System.out.println("List of spell:");
-            for (int i = 0; i < this.listOfSpell.size(); i++) {
-                System.out.println("Spell " + i + ":");
-                this.listOfSpell.get(i).getStatus();
+            for (int i = 0; i < this.spells.length; i++) {
+                //if the spell is not null
+                if (this.spells[i] != null) {
+                    System.out.println("Spell " + i + ":");
+                    this.spells[i].getStatus();
+                }
             }
             return true;
         }
     }
     public Spell chooseSpell(){
-        boolean correctInput=false;
         System.out.println("Which spell do you want to use?");
         if(this.displaySpell()) { // check if the hero has any spell
-            while (!correctInput) {
+            while (true) {
                 try {
                     String answer = this.catchAnswer();
                     int answerInt = Integer.parseInt(answer);
-                    if (answerInt >= 0 && answerInt < this.listOfSpell.size()) {
-                        correctInput = true;
-                        return this.listOfSpell.get(answerInt);
-                    } else {
-                        System.out.println("You didn't answer correctly");
+                    if (answerInt >= 0 && answerInt < this.spells.length && this.spells[answerInt] != null) {
+                        return this.spells[answerInt];
                     }
                 } catch (Exception e) {
-                    System.out.println("You didn't answer correctly");
+                    System.out.println("You didn't answer correctly!");
                 }
             }
         }
         return null;
+    }
+    public void addSpell(Spell spell){
+        for(int i=0;i<this.spells.length;i++){
+            if(this.spells[i]==null){
+                this.spells[i]=spell;
+                return;
+            }
+        }
+            System.out.println("You can't learn more spells...");
     }
 
     // Methods for basic
@@ -476,21 +488,16 @@ public class Hero extends Entity implements Interaction {
     // Methods used during a fight
     public void useSpell(Entity target){
         Spell spell = this.chooseSpell(); // Choose the spell to use
-        // Check type of the spell
-        if(spell.getType().equals("Heal")){
-            this.catchHeal(spell.getPower());
-        }
-        else{
+
             //verify if the hero has enough mana
             if(this.stat.mana>=spell.getManaUse()){
-                this.catchMana(-spell.getManaUse());
-                target.getHit(spell.getPower());
+                cast(spell,target,this);
             }
             else{
                 System.out.println("You don't have enough mana!");
             }
         }
-    }
+
     public void defend(){
         System.out.println("You protect yourself");
         //double defense
@@ -597,10 +604,13 @@ public class Hero extends Entity implements Interaction {
 
         //Apply accuracy
         if(Math.random() <= (0.8 + (this.getDexterity()*2))){
-            System.out.print("You hit "+target.getName());
             if(isCrit){
-                System.out.println(" (Critical hit!)");
+                System.out.println("You hit " + target.getName() + " with a critical hit for " + damage + " damage");
             }
+            else{
+                System.out.println("You hit " + target.getName() + " for " + damage + " damage");
+            }
+
             target.getHit(damage);
         }
         else{
@@ -621,7 +631,6 @@ public class Hero extends Entity implements Interaction {
             this.killed();
         } else {
             this.stat.health -= damage;
-            System.out.println(this.stat.name + "'s HP = " + this.stat.health);
         }
     }
 }

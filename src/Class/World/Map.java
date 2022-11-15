@@ -79,6 +79,10 @@ public class Map {
         }
     return null;
     }
+    public static void Info() {
+        System.out.println("□ Empty, ■ Wall, & Player, o End, ▴ Chest, * Enemy, ! Boss, $ Merchant, ? Unknown");
+    }
+
 }
 
 

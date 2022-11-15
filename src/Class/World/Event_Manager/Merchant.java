@@ -1,26 +1,47 @@
 package Class.World.Event_Manager;
+import Class.Equipments.Armor;
 import Class.Equipments.Consumable;
 import Class.Equipments.Equipment;
+import Class.Equipments.Weapon;
 import Class.wildLife.Hero;
 import java.util.Scanner;
 
 public class Merchant extends Type_Events {
     String name_Merchant;
-
+    int rarity;
+    String type;
     //Constructor
-    public Merchant(Type_Events type_event,String name_Object) {
+    public Merchant(Type_Events type_event,String name_Object,int rarity,String type) {
         super(type_event.name,type_event.rarity);
         this.name_Merchant = name_Object;
+        this.rarity = rarity;
+        this.type = type;
     }
 
     //Methods
     //get random items for shop
-    public static Equipment[] getShop(Equipment[] Equipments){
+    public static Equipment[] getShop(Equipment[] Equipments, String type){
         Equipment[] soldObjects = new Equipment[5];
         int i =0;
+
         while(i != 5){
-            int random = (int) (Math.random() * Equipments.length);
-            soldObjects[i] = Equipments[random];
+            //redo until soldObject is not null
+            while(soldObjects[i] == null){
+                int random = (int) (Math.random() * Equipments.length);
+            //If type is "Potions", keep only potions
+            if(type.equals("Potions")){
+                if(Equipments[random] instanceof Consumable){
+                    soldObjects[i] = Equipments[random];
+                }
+            }
+            //if type is "Goods" keep only equipments
+            else if(type.equals("Goods")){
+                if(Equipments[random] instanceof Weapon || Equipments[random] instanceof Armor){
+                    soldObjects[i] = Equipments[random];
+                }
+            }
+        }
+
             //get the rarity of the object
             int rarity = soldObjects[i].getRarity();
             //if rarity is 1, 35% chance to get it
@@ -118,15 +139,17 @@ public class Merchant extends Type_Events {
     public void Interact(Hero hero, Equipment[] Equipments) {
         // get 5 objects to sell to the player
         System.out.println("After travelling through the dungeon, you find a man who offers you to buy some of his objects.");
+        System.out.println("His name is " + name_Merchant + "."+ "Say hi.");
 
         //get 5 random equipments and their costs
-        Equipment[] soldObjects = getShop(Equipments);
+        Equipment[] soldObjects = getShop(Equipments,this.type);
         int[] cost = getCost(soldObjects);
 
         String choice = "";
         //if player type 1, buy the first object
         while(!choice.equals("0")) {
             //print the objects
+            System.out.println("You got " + hero.getGold() + " gold");
             System.out.println("You can buy these objects:");
             //display items and cost
             for (int j = 0; j < soldObjects.length; j++) {

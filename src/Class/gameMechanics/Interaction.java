@@ -13,8 +13,8 @@ public interface Interaction {
         // Get the answer
         String answer = sc.nextLine();
         // Check if the answer is available
-        for(int i = 0; i < availableAnswers.length; i++){
-            if(answer.equals(availableAnswers[i])){
+        for (String availableAnswer : availableAnswers) {
+            if (answer.equals(availableAnswer)) {
                 return answer;
             }
         }

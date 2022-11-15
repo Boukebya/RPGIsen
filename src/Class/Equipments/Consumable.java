@@ -52,9 +52,9 @@ public class Consumable extends Equipment{
         }
             System.out.println("Your inventory is full, replace a consumable");
             //display consumable inventory
-            for(int j = 0; j < consumables.length; j++){
-                System.out.println(consumables[j].getName());
-            }
+        for (Consumable value : consumables) {
+            System.out.println(value.getName());
+        }
             //replace consumable
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();

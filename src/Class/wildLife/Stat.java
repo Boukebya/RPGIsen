@@ -2,14 +2,14 @@ package Class.wildLife;
 
 public class Stat {
     //All statistic of an Entity
-    int dexterity =1;
-    int strength=1;
-    int maxMana = 10;
-    int mana=10;
-    int maxHealth = 10;
-    int health=10;
-    int level=1;
-    String name = "Creature";
+    int dexterity;
+    int strength;
+    int maxMana;
+    int mana;
+    int maxHealth;
+    int health;
+    int level;
+    String name;
 
     //constructor
     public Stat(int dexterity, int strength, int maxMana,int mana, int maxHealth,int health, int level, String name) {
@@ -55,6 +55,6 @@ public class Stat {
     }
     //display in one line name,lvl,health,mana
     public void introduce(){
-        System.out.println(this.name + " lvl : " + this.level + "\nHP : " + this.health + "/" + (int)this.maxHealth + " Mana : " + this.mana + "/" + this.maxMana);
+        System.out.println(this.name + " lvl : " + this.level + "\nHP : " + this.health + "/" + this.maxHealth + " Mana : " + this.mana + "/" + this.maxMana);
     }
 }

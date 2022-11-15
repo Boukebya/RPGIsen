@@ -2,15 +2,22 @@ package Class.gameMechanics;
 import Class.wildLife.Enemy;
 import Class.wildLife.Hero;
 
+import static Class.wildLife.Spell.spellManager;
+
 public class Fight {
     int turn=0;
     boolean isOver=false; // true if the fight is over
 
     // Constructor
     public Fight(Hero hero, Enemy enemy){
-        beginFight(hero, enemy);
         while(!isOver){
             newTurn();
+
+            hero.stat.introduce();
+            //Display enemy stats
+            System.out.println(enemy.getName()+" lvl : "+enemy.getLevel());
+            System.out.println("HP : "+ enemy.getHP() + "/" + enemy.getMaxHealth() + " Mana : " + enemy.getMana() + "/" + enemy.getMaxMana() );
+
             int choice = displayHeroPossibilities(hero, enemy);
 
             //if enemy is dead, end fight
@@ -25,7 +32,7 @@ public class Fight {
             }
             //else it attacks
             else {
-                enemy.spellManager(hero);
+               spellManager(enemy,hero);
             }
 
             //if choice = 1, divide by 2 defense (player defend himself so set back his armor to normal)
@@ -54,15 +61,7 @@ public class Fight {
         //displayField();
         System.out.println("Turn "+turn);
     }
-    //Begin fight by displaying hero and enemy stats
-    public void beginFight(Hero hero, Enemy enemy){
-        //Display player and enemy stats
-        System.out.println("\nYou are going to fight this monster:");
-        enemy.stat.introduce();
-        System.out.println("\nYou are at this point: ");
-        hero.stat.introduce();
-        System.out.println("\nGood luck!\n");
-    }
+
     //End fight by managing xp and gold drop, display xp and gold drop
     public void endFight(Hero hero, Enemy enemy){
         int gold = enemy.dropGold();
@@ -78,12 +77,11 @@ public class Fight {
 
     // Display the possibilities of the hero
     public int displayHeroPossibilities(Hero hero, Enemy enemies){
-        boolean correctInput=false;
         //Display possibilities
         displayChoice();
 
         //Get the choice of the player and check if it's correct
-        int answerInt=0;
+        int answerInt;
         while (true){
             String answer = hero.getAnswer("What do you want to do?", new String[]{"1","2","3","4"});
             if(answer!=null){
@@ -105,7 +103,7 @@ public class Fight {
         }
     }
     //Manage 4 possibilities
-    public int manageChoice(int answerInt, Hero hero, Enemy enemy){
+    public void manageChoice(int answerInt, Hero hero, Enemy enemy){
         if (answerInt==1){
             hero.attack(enemy);
         }
@@ -118,7 +116,6 @@ public class Fight {
         else if (answerInt==4){
             hero.defend();
         }
-        return answerInt;
     }
     //Display the choice of the hero
     public void displayChoice(){

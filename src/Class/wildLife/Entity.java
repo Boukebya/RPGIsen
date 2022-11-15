@@ -26,6 +26,9 @@ public class Entity {
     public int getMana() {
         return this.stat.mana;
     }
+    public int getMaxMana() {
+        return this.stat.getMaxMana();
+    }
 
     //Setters
     public void setLevel(int level) {
@@ -72,5 +75,9 @@ public class Entity {
     }
     public void increaseDexterity(int increase) {
         this.stat.dexterity += increase;
+    }
+
+    public Spell[] getSpell() {
+        return null;
     }
 }
