@@ -1,7 +1,7 @@
 package Class.Equipments;
 
 //Class to manage all equipments -> consumable, weapon, armor
-public class Equipment {
+public abstract class Equipment {
     int rarity = 1;
     String name = "default";
     String type = "default"; //Club, sword,bow armor or consumable

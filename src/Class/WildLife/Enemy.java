@@ -68,6 +68,10 @@ public class Enemy extends Entity{
                         return boss;
                     }
                 }
+                //else return the last boss
+                else if(heroLevel > bosses[bosses.length-1].getLevel()){
+                    return bosses[bosses.length-1];
+                }
             }
 
         }

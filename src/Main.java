@@ -33,7 +33,7 @@ public class Main {
         map.showMap(map);
 
         //Spawn Hero
-        Stat heroStat = new Stat(1,1,10,10,20,20,1,name);
+        Stat heroStat = new Stat(1,10,10,10,200,200,100,name);
         Hero character = new Hero(name,heroStat,SpawnHero(map));
         System.out.println("Your role is to kill the boss of the dungeon and get out alive");
 

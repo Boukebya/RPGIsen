@@ -1,6 +1,6 @@
 package Class.WildLife;
 
-public class Entity {
+public abstract class Entity {
     public Stat stat;
     //Constructor
     public Entity(Stat stat) {

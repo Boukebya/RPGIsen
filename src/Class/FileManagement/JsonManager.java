@@ -12,7 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class JsonManager {
+public abstract class JsonManager {
     //Write scores in a file
     public static void writeFile(int score, String name){
         String path = "src/Data.json";

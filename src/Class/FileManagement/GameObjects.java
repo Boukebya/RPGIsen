@@ -11,7 +11,7 @@ import Class.WildLife.Enemy;
 import Class.WildLife.Spell;
 import Class.WildLife.Stat;
 
-public class GameObjects {
+public abstract class GameObjects {
     //Function to initialize chests
     public static Chest[] InitChests(){
         //Create array of chests
