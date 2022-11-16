@@ -1,4 +1,4 @@
-package Class.wildLife;
+package Class.WildLife;
 import java.util.*;
 import Class.Equipments.Consumable;
 import Class.World.Map;
@@ -8,7 +8,7 @@ import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
 import Class.gameMechanics.Interaction;
 
-import static Class.wildLife.Spell.cast;
+import static Class.WildLife.Spell.cast;
 
 public class Hero extends Entity implements Interaction {
     private final int [] pos;
@@ -91,11 +91,11 @@ public class Hero extends Entity implements Interaction {
                 System.out.println("type 1,2,3 or 4");
                 Scanner sc = new Scanner(System.in);
                 String answer = sc.nextLine();
-                boolean good_answer = false;
+                boolean goodAnswer = false;
                 //Check if answer is 1,2,3 or 4
-                while (!good_answer) {
+                while (!goodAnswer) {
                     if (answer.equals("1") || answer.equals("2") || answer.equals("3") || answer.equals("4")) {
-                        good_answer = true;
+                        goodAnswer = true;
                     } else {
                         System.out.println("Please type 1,2,3 or 4");
                         answer = sc.nextLine();
@@ -122,13 +122,13 @@ public class Hero extends Entity implements Interaction {
     //Movement
     //Hero's initialisation in the map
     public static int[] SpawnHero(Map map){
-        Tile Spawn = Tile.Spawn;
-        int [] pos;
+        Tile spawn = Tile.Spawn;
+        int [] position;
         //Get the position of the spawn
-        pos = map.PosTile(map,Spawn);
-        System.out.println("Hero spawn at " + Arrays.toString(pos));
+        position = map.positionTile(map,spawn);
+        System.out.println("Hero spawn at " + Arrays.toString(position));
         //Return the position of the spawn
-        return pos;
+        return position;
     }
     //Hero's movement on map
     public Tile MoveHero(Hero hero, Map map){
@@ -136,15 +136,15 @@ public class Hero extends Entity implements Interaction {
         System.out.println("info : get info about the tiles");
 
         //Get hero's position
-        int [] pos;
-        pos = hero.pos;
+        int [] position;
+        position = hero.pos;
         //x and y are the coordinates of the hero after choices
-        int x = pos[0];
-        int y = pos[1];
+        int x = position[0];
+        int y = position[1];
 
         //Tile that we use (position is hero's tile and empty is the tile that be placed after hero cleared a tile)
         Tile tile = Tile.Position;
-        Tile Empty = Tile.Empty;
+        Tile empty = Tile.Empty;
         //Move is used to know if the hero can move or not, can't move if there is a wall
         boolean move = false;
         while(!move) {
@@ -154,22 +154,22 @@ public class Hero extends Entity implements Interaction {
             switch (direction) {
                 case "up", "z" -> {
                     move = true;
-                    map.ChangeTile(map, pos, Empty);
+                    map.changeTile(map, position, empty);
                     y = y - 1;
                 }
                 case "down", "s" -> {
                     move = true;
-                    map.ChangeTile(map, pos, Empty);
+                    map.changeTile(map, position, empty);
                     y = y + 1;
                 }
                 case "left", "q" -> {
                     move = true;
-                    map.ChangeTile(map, pos, Empty);
+                    map.changeTile(map, position, empty);
                     x = x - 1;
                 }
                 case "right", "d" -> {
                     move = true;
-                    map.ChangeTile(map, pos, Empty);
+                    map.changeTile(map, position, empty);
                     x = x + 1;
                 }
                 case "see stat", "stat" -> {
@@ -208,9 +208,9 @@ public class Hero extends Entity implements Interaction {
             }
         }
         // Hero's new position (tile)
-        Tile New_location = map.GetTileMap(map,x,y);
+        Tile newLocation = map.getTileMap(map,x,y);
         //If the hero is on a wall, he can't go there
-        if (Objects.equals(New_location.GetTile(), "Wall")){
+        if (Objects.equals(newLocation.getTile(), "Wall")){
             System.out.println("You can't go there, it's a wall !");
         }
         //Everything is fine hero can change his position
@@ -219,11 +219,11 @@ public class Hero extends Entity implements Interaction {
             hero.pos[0] = x;
             hero.pos[1] = y;
             //Change tile to position
-            map.ChangeTile(map,pos,tile);
+            map.changeTile(map,position,tile);
             //Show map with the new position of the hero
-            map.ShowMap(map);
+            map.showMap(map);
             //Return the new location
-            return New_location;
+            return newLocation;
         }
         //else return tile
         return tile;

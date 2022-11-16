@@ -1,18 +1,18 @@
-package Class.World.Event_Manager;
-import Class.wildLife.Hero;
-import Class.wildLife.Spell;
+package Class.World.EventManager;
+import Class.WildLife.Hero;
+import Class.WildLife.Spell;
 
-public class Unknown extends Type_Events {
+public class Unknown extends TypeEvents {
     String name_Object;
 
     //Constructor
-    public Unknown(Type_Events type_Event,String name_Object) {
+    public Unknown(TypeEvents type_Event,String name_Object) {
         super(type_Event.name, type_Event.rarity);
         this.name_Object= name_Object;
     }
 
 
-    public void Interact(Hero hero, Spell [] spells) {
+    public void interact(Hero hero, Spell [] spells) {
         //get a random action between 0 and 2
         int random_action = (int) (Math.random() * 4);
         //if random action is 0, nothing happens

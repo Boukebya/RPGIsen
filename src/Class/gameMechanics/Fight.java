@@ -1,8 +1,8 @@
 package Class.gameMechanics;
-import Class.wildLife.Enemy;
-import Class.wildLife.Hero;
+import Class.WildLife.Enemy;
+import Class.WildLife.Hero;
 
-import static Class.wildLife.Spell.spellManager;
+import static Class.WildLife.Spell.spellManager;
 
 public class Fight {
     int turn=0;

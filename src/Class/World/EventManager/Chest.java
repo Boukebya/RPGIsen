@@ -1,11 +1,11 @@
-package Class.World.Event_Manager;
+package Class.World.EventManager;
 import Class.Equipments.Equipment;
-import Class.wildLife.Hero;
+import Class.WildLife.Hero;
 
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Chest extends Type_Events {
+public class Chest extends TypeEvents {
     String name_Object;
     String description;
     int [] modifier;
@@ -14,7 +14,7 @@ public class Chest extends Type_Events {
     String[] consequences;
 
     //Constructor
-    public Chest(Type_Events type_Event, String name_Object, int[] modifier,String description, String[] choices, String[] consequences) {
+    public Chest(TypeEvents type_Event, String name_Object, int[] modifier, String description, String[] choices, String[] consequences) {
         super(type_Event.name,type_Event.rarity);
         this.name_Object= name_Object;
         this.modifier = modifier;
@@ -25,7 +25,7 @@ public class Chest extends Type_Events {
 
     //Methods
     //Return the item to drop
-    public Equipment DropItem(Equipment[] equipments){
+    public Equipment dropItem(Equipment[] equipments){
         //get modifier
         int[] modifier = this.modifier;
         //random number
@@ -56,7 +56,7 @@ public class Chest extends Type_Events {
     }
 
     @Override
-    public void Interact(Hero hero, Equipment [] weapons) {
+    public void interact(Hero hero, Equipment [] weapons) {
         //Print that we find a chest named name_object
         System.out.println(description);
         System.out.println("You find a " + name_Object + " !");
@@ -77,7 +77,7 @@ public class Chest extends Type_Events {
                     System.out.println(consequences[i]);
                     if (i == 0) {
                         //If we take the object, we add it to the inventory
-                        Equipment item = DropItem(weapons);
+                        Equipment item = dropItem(weapons);
                         hero.equipmentManagement(item);
                     }
                     return;

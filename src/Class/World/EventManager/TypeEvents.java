@@ -1,16 +1,16 @@
-package Class.World.Event_Manager;
+package Class.World.EventManager;
 import Class.Equipments.Equipment;
-import Class.wildLife.Hero;
+import Class.WildLife.Hero;
 
 //Mother's class for every event, define the basic function of an event and what kind it is
-public class Type_Events {
+public class TypeEvents {
     //name of the event
     String name;
     //rarity of the event
     int rarity;
 
     //Constructor
-    public Type_Events(String name, int rarity){
+    public TypeEvents(String name, int rarity){
         this.name = name;
         this.rarity = rarity;
     }
@@ -27,7 +27,7 @@ public class Type_Events {
 
     //Methods
     //Function to get an event from rarity
-    public static Type_Events GetEventFromRarity(Type_Events[] events) {
+    public static TypeEvents getEventFromRarity(TypeEvents[] events) {
         //Create new random array with same size as events
         int[] randoms = new int[events.length];
         //limit is the sum of every rarity
@@ -43,7 +43,7 @@ public class Type_Events {
         //System.out.println("random = "+random_number);
         int count = 0;
         //for every element, if random is smaller than the rarity, return the event
-        for (Type_Events event : events) {
+        for (TypeEvents event : events) {
             count += (int) event.getRarity();
             if (random_number < count) {
                 //System.out.println("event " + i + " selected");
@@ -54,7 +54,7 @@ public class Type_Events {
         return events[0];
     }
     //By default, print interact, else, it's override by the child class
-    public void Interact(Hero hero, Equipment[] weapons) {
+    public void interact(Hero hero, Equipment[] weapons) {
         System.out.println("interact with "+ this.name);
     }
 }

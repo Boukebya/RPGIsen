@@ -29,14 +29,14 @@ public class Map {
 
     //Methods
     //Display map
-    public void ShowMap(Map map){
+    public void showMap(Map map){
         int length = map.GetMap(map).length;
         //Double for to display map
         for (int y = 0; y < length;y++) {
             for (int x = 0; x < length; x++) {
-                Tile tile = (map.GetTileMap(map,x,y));
+                Tile tile = (map.getTileMap(map,x,y));
                 //Create a switch for every tiles
-                switch (tile.GetTile()) {
+                switch (tile.getTile()) {
                     case "Empty" -> System.out.print("□ ");
                     case "Wall" -> System.out.print("■ ");
                     case "Spawn", "Position" -> System.out.print("& ");
@@ -52,24 +52,24 @@ public class Map {
         }
     }
     //Change the tile's type
-    public void ChangeTile(Map map, int[] pos, Tile tile){
+    public void changeTile(Map map, int[] pos, Tile tile){
         Tile[][] actualMap;
         actualMap = map.GetMap(map);
         actualMap[pos[0]][pos[1]] = tile;
     }
     //Return tile's type from coordinates
-    public Tile GetTileMap(Map map,int x, int y){
+    public Tile getTileMap(Map map, int x, int y){
         return map.map[x][y];
     }
     //Return the first Tile of this type
-    public int[] PosTile(Map map,Tile tile) {
+    public int[] positionTile(Map map, Tile tile) {
         int [] pos = new int[2];
         int length = map.GetMap(map).length;
-        String category = tile.GetTile();
+        String category = tile.getTile();
         for (int y = 0; y < length;y++) {
             for (int x = 0; x < length; x++) {
-                Tile TileSeek = map.GetTileMap(map,x,y);
-                String categorySeek = TileSeek.GetTile();
+                Tile TileSeek = map.getTileMap(map,x,y);
+                String categorySeek = TileSeek.getTile();
                 if (Objects.equals(categorySeek, category)) {
                     pos[0] = x;
                     pos[1] = y;

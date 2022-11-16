@@ -1,4 +1,4 @@
-package Class.wildLife;
+package Class.WildLife;
 
 public class Enemy extends Entity{
     String name;

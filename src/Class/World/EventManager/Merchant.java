@@ -1,17 +1,17 @@
-package Class.World.Event_Manager;
+package Class.World.EventManager;
 import Class.Equipments.Armor;
 import Class.Equipments.Consumable;
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
-import Class.wildLife.Hero;
+import Class.WildLife.Hero;
 import java.util.Scanner;
 
-public class Merchant extends Type_Events {
+public class Merchant extends TypeEvents {
     String name_Merchant;
     int rarity;
     String type;
     //Constructor
-    public Merchant(Type_Events type_event,String name_Object,int rarity,String type) {
+    public Merchant(TypeEvents type_event,String name_Object,int rarity,String type) {
         super(type_event.name,type_event.rarity);
         this.name_Merchant = name_Object;
         this.rarity = rarity;
@@ -136,7 +136,7 @@ public class Merchant extends Type_Events {
     }
 
     @Override
-    public void Interact(Hero hero, Equipment[] Equipments) {
+    public void interact(Hero hero, Equipment[] Equipments) {
         // get 5 objects to sell to the player
         System.out.println("After travelling through the dungeon, you find a man who offers you to buy some of his objects.");
         System.out.println("His name is " + name_Merchant + "."+ "Say hi.");

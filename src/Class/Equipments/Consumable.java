@@ -1,5 +1,5 @@
 package Class.Equipments;
-import Class.wildLife.Hero;
+import Class.WildLife.Hero;
 import java.util.Scanner;
 
 //Class to manage consumable
@@ -28,11 +28,13 @@ public class Consumable extends Equipment{
     //Use a consumable
     public void use(Hero hero){
         System.out.println("You used a "+this.name);
+        //heal the hero
         if(this.type.equals("Health")){
             System.out.println("You regen "+this.regenPower+" HP");
             hero.setHP((int) (hero.getHP()+this.regenPower));
 
         }
+        //restore the hero mana
         else if(this.type.equals("Mana")){
             System.out.println("You regen "+this.regenPower+" MP");
             hero.setMana(hero.getMana()+this.regenPower);

@@ -11,7 +11,7 @@ public enum Weather {
     Weather(float Accuracy_Weather){
         Accuracy = Accuracy_Weather;
     }
-    public float GetAcc(){
+    public float getAccuracy(){
         return Accuracy;
     }
 }

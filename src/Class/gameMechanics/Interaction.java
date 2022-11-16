@@ -1,5 +1,4 @@
 package Class.gameMechanics;
-
 import java.util.Scanner;
 
 public interface Interaction {

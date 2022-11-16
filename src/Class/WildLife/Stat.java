@@ -1,4 +1,4 @@
-package Class.wildLife;
+package Class.WildLife;
 
 public class Stat {
     //All statistic of an Entity

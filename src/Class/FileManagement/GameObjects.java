@@ -1,45 +1,45 @@
-package Class.fileManagement;
+package Class.FileManagement;
 
 import Class.Equipments.Armor;
 import Class.Equipments.Consumable;
 import Class.Equipments.Equipment;
 import Class.Equipments.Weapon;
-import Class.World.Event_Manager.Chest;
-import Class.World.Event_Manager.Merchant;
-import Class.World.Event_Manager.Type_Events;
-import Class.wildLife.Enemy;
-import Class.wildLife.Spell;
-import Class.wildLife.Stat;
+import Class.World.EventManager.Chest;
+import Class.World.EventManager.Merchant;
+import Class.World.EventManager.TypeEvents;
+import Class.WildLife.Enemy;
+import Class.WildLife.Spell;
+import Class.WildLife.Stat;
 
-public class gameObjects {
+public class GameObjects {
     //Function to initialize chests
     public static Chest[] InitChests(){
         //Create array of chests
         Chest[] chests = new Chest[4];
         //We create a new type of event
-        Type_Events Chest_Event = new Type_Events("Chest",1);
+        TypeEvents chestEvent = new TypeEvents("Chest",1);
 
         //We create a wooden chest
-        Chest wooden_Chest = new Chest(Chest_Event,"Wooden chest", new int[]{75, 10, 10, 5, 0},"You enter a small cave, it seems that somebody left quickly..\nAfter some research, you find something interesting..",new String[]{"Open it","Leave it"},new String[]{"You found an item !","You left it"});
-        chests[0] = wooden_Chest;
+        Chest woodenChest = new Chest(chestEvent,"Wooden chest", new int[]{75, 10, 10, 5, 0},"You enter a small cave, it seems that somebody left quickly..\nAfter some research, you find something interesting..",new String[]{"Open it","Leave it"},new String[]{"You found an item !","You left it"});
+        chests[0] = woodenChest;
         //modify rarity
         chests[0].setRarity(50);
 
         //We create a bloody chest
-        Chest bloody_Chest = new Chest(Chest_Event,"bloody chest",new int[]{20, 30, 30, 15, 5},"Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Open","Leave"},new String[]{"The chest opens by itself, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
-        chests[1] = bloody_Chest;
+        Chest bloodyChest = new Chest(chestEvent,"bloody chest",new int[]{20, 30, 30, 15, 5},"Lost in ruins, you find a corpse of an adventurer just like you.\nThe trail of blood left behind seems to lead somewhere..\nYou decide to follow it and after a moment you you come across a red chest.\nyou don't know why, but you instinctively understand what the chest wants..\nshivers run through your body.",new String[]{"Open","Leave"},new String[]{"The chest opens by itself, after a few seconds, it vomits an object...","as you walk away, grunts echo through the ruins"});
+        chests[1] = bloodyChest;
         //modify rarity
         chests[1].setRarity(20);
 
         //We create a golden chest
-        Chest golden_Chest = new Chest(Chest_Event,"golden chest",new int[]{40, 30, 25, 5, 0},".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
-        chests[2] = golden_Chest;
+        Chest goldenChest = new Chest(chestEvent,"golden chest",new int[]{40, 30, 25, 5, 0},".You found a golden chest...",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
+        chests[2] = goldenChest;
         //modify rarity
         chests[2].setRarity(20);
 
         //We create a legendary chest
-        Chest legendary_Chest = new Chest(Chest_Event,"legendary chest",new int[]{0, 15, 40, 25, 20},".You found a legendary chest!",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
-        chests[3] = legendary_Chest;
+        Chest legendaryChest = new Chest(chestEvent,"legendary chest",new int[]{0, 15, 40, 25, 20},".You found a legendary chest!",new String[]{"Open","Leave"},new String[]{"You found an item!","You left it"});
+        chests[3] = legendaryChest;
         //modify rarity
         chests[3].setRarity(10);
 
@@ -106,10 +106,10 @@ public class gameObjects {
         //Create human stat
         Stat humanStat = new Stat(7,7,6,6,22,22,3,"Human");
         //Create human enemies
-        Spell[] BanditSpells = new Spell[2];
-        BanditSpells[0] = enemiesSpells[0];
-        BanditSpells[1] = enemiesSpells[4];
-        enemies[4] = new Enemy(humanStat,"Bandit",BanditSpells);
+        Spell[] banditSpells = new Spell[2];
+        banditSpells[0] = enemiesSpells[0];
+        banditSpells[1] = enemiesSpells[4];
+        enemies[4] = new Enemy(humanStat,"Bandit",banditSpells);
         Spell[] hoodlumSpells = new Spell[2];
         hoodlumSpells[0] = enemiesSpells[0];
         hoodlumSpells[1] = enemiesSpells[1];
@@ -130,10 +130,10 @@ public class gameObjects {
         //Create orc stat
         Stat orcStat = new Stat(10,10,10,10,35,35,5,"orc");
         //Create orc enemies
-        Spell[] OrcSpells = new Spell[2];
-        OrcSpells[0] = enemiesSpells[0];
-        OrcSpells[1] = enemiesSpells[3];
-        enemies[8] = new Enemy(orcStat,"Orc",OrcSpells);
+        Spell[] orcSpells = new Spell[2];
+        orcSpells[0] = enemiesSpells[0];
+        orcSpells[1] = enemiesSpells[3];
+        enemies[8] = new Enemy(orcStat,"Orc",orcSpells);
         Spell[] assassinOrcSpells = new Spell[2];
         assassinOrcSpells[0] = enemiesSpells[0];
         assassinOrcSpells[1] = enemiesSpells[4];
@@ -144,7 +144,7 @@ public class gameObjects {
     //Function to initialize bosses
     public static Enemy[] InitBosses(Spell[] enemiesSpells){
         //Create array of enemies_fight
-        Enemy[] Bosses = new Enemy[8];
+        Enemy[] bosses = new Enemy[8];
 
         //Create Ogre stat
         Stat ogreStat = new Stat(1,6,10,10,35,35,3,"Ogre");
@@ -152,111 +152,110 @@ public class gameObjects {
         Spell[] ogreSpells = new Spell[2];
         ogreSpells[0] = new Spell("Smash", 0, 2, 2,"Huge", "none",60,"Enemy");
         ogreSpells[1] = enemiesSpells[0];
-        Bosses[0] = new Enemy(ogreStat,"Bratirek",ogreSpells);
+        bosses[0] = new Enemy(ogreStat,"Bratirek",ogreSpells);
         //Create Breana stat
-        Stat BreanaStat = new Stat(5,1,10,10,30,30,3,"Human");
+        Stat breanaStat = new Stat(5,1,10,10,30,30,3,"Human");
         //Create Breana boss
-        Spell[] BreanaSpells = new Spell[1];
-        BreanaSpells[0] = enemiesSpells[0];
-        Bosses[1] = new Enemy(BreanaStat,"Breana, the silent",BreanaSpells);
+        Spell[] breanaSpells = new Spell[1];
+        breanaSpells[0] = enemiesSpells[0];
+        bosses[1] = new Enemy(breanaStat,"Breana, the silent",breanaSpells);
 
         //Create Ogre stat
         Stat centaurStat = new Stat(1,8,10,10,50,50,5,"Centaur");
         //First boss
-        Spell[] EupenioSpells = new Spell[1];
-        EupenioSpells[0] = enemiesSpells[0];
-        Bosses[2] = new Enemy(centaurStat,"Eupenio",EupenioSpells);
+        Spell[] eupenioSpells = new Spell[1];
+        eupenioSpells[0] = enemiesSpells[0];
+        bosses[2] = new Enemy(centaurStat,"Eupenio",eupenioSpells);
         //Create Breana stat
-        Stat OrgothStat = new Stat(8,1,20,20,50,50,5,"Orc");
+        Stat orgothStat = new Stat(8,1,20,20,50,50,5,"Orc");
         //Create Breana boss
-        Spell[] OrgothSpells = new Spell[1];
-        OrgothSpells[0] = enemiesSpells[0];
-        Bosses[3] = new Enemy(OrgothStat,"Orgoth",OrgothSpells);
+        Spell[] orgothSpells = new Spell[1];
+        orgothSpells[0] = enemiesSpells[0];
+        bosses[3] = new Enemy(orgothStat,"Orgoth",orgothSpells);
 
         //Create Ogre stat
         Stat golemStat = new Stat(1,9,10,10,75,75,7,"Golem");
         //First boss
         Spell[] golemSpells = new Spell[1];
         golemSpells[0] = enemiesSpells[0];
-        Bosses[4] = new Enemy(golemStat,"Unon",golemSpells);
+        bosses[4] = new Enemy(golemStat,"Unon",golemSpells);
         //Create Breana stat
-        Stat CiradylStat = new Stat(8,4,10,10,65,65,7,"Elf");
+        Stat ciradylStat = new Stat(8,4,10,10,65,65,7,"Elf");
         //Create Breana boss
-        Spell[] CiradylSpells = new Spell[1];
-        CiradylSpells[0] = enemiesSpells[0];
-        Bosses[5] = new Enemy(CiradylStat,"Ciradyl",CiradylSpells);
+        Spell[] ciradylSpells = new Spell[1];
+        ciradylSpells[0] = enemiesSpells[0];
+        bosses[5] = new Enemy(ciradylStat,"Ciradyl",ciradylSpells);
 
         //Create Ogre stat
         Stat dragonStat = new Stat(1,14,10,10,100,100,9,"Dragon");
         //First boss
         Spell[] dragonSpells = new Spell[1];
         dragonSpells[0] = enemiesSpells[0];
-        Bosses[6] = new Enemy(dragonStat,"bralzranth, Eternal Fire",dragonSpells);
+        bosses[6] = new Enemy(dragonStat,"bralzranth, Eternal Fire",dragonSpells);
         //Create Breana stat
-        Stat Alvaxoth = new Stat(10,10,20,20,90,90,9,"Demon");
+        Stat alvaxoth = new Stat(10,10,20,20,90,90,9,"Demon");
         //Create Breana boss
-        Spell[] AlvaxothSpells = new Spell[1];
-        AlvaxothSpells[0] = enemiesSpells[0];
-        Bosses[7] = new Enemy(Alvaxoth,"Alvaxoth",AlvaxothSpells);
+        Spell[] alvaxothSpells = new Spell[1];
+        alvaxothSpells[0] = enemiesSpells[0];
+        bosses[7] = new Enemy(alvaxoth,"Alvaxoth",alvaxothSpells);
 
 
 
-        return Bosses;
+        return bosses;
     }
     //Function to initialize merchants
     public static Merchant[] InitMerchants(){
         //Create array of merchants
         Merchant[] merchants = new Merchant[2];
         //Create type events merchant
-        Type_Events Merchant_Event = new Type_Events("Merchant",1);
+        TypeEvents merchantEvent = new TypeEvents("Merchant",1);
         //We create a new type of event
-        merchants[0] = new Merchant(Merchant_Event,"Andre, the smith",1,"Goods");
-        merchants[1] = new Merchant(Merchant_Event,"Jean-Pierre, the potion merchant",1,"Potions");
-
+        merchants[0] = new Merchant(merchantEvent,"Andre, the smith",1,"Goods");
+        merchants[1] = new Merchant(merchantEvent,"Jean-Pierre, the potion merchant",1,"Potions");
 
         return merchants;
     }
     //Function to initialize weapons
     public static Equipment[] InitEquipments(){
         //Create array of weapons
-        Equipment[] equipment = new Equipment[26];
+        Equipment[] equipments = new Equipment[26];
 
-        equipment[0] = new Weapon(2,0.05f,1,"Club","Broken club");
-        equipment[1] = new Weapon(3,0.1f,2,"Club","Common club");
-        equipment[2] = new Weapon(5,0.15f,3,"Club","Rare club");
-        equipment[3] = new Weapon(8,0.2f,4,"Club","Mythic club");
-        equipment[4] = new Weapon(12,0.3f,5,"Club","Legendary stick");
+        equipments[0] = new Weapon(2,0.05f,1,"Club","Broken club");
+        equipments[1] = new Weapon(3,0.1f,2,"Club","Common club");
+        equipments[2] = new Weapon(5,0.15f,3,"Club","Rare club");
+        equipments[3] = new Weapon(8,0.2f,4,"Club","Mythic club");
+        equipments[4] = new Weapon(12,0.3f,5,"Club","Legendary stick");
 
-        equipment[5] = new Weapon(1,0.1f,1,"Sword","Broken sword");
-        equipment[6] = new Weapon(2,0.15f,2,"Sword","Common sword");
-        equipment[7] = new Weapon(5,0.3f,3,"Sword","Rare sword");
-        equipment[8] = new Weapon(7,0.35f,4,"Sword","Mythic sword");
-        equipment[9] = new Weapon(10,0.4f,5,"Sword","Legendary sword");
+        equipments[5] = new Weapon(1,0.1f,1,"Sword","Broken sword");
+        equipments[6] = new Weapon(2,0.15f,2,"Sword","Common sword");
+        equipments[7] = new Weapon(5,0.3f,3,"Sword","Rare sword");
+        equipments[8] = new Weapon(7,0.35f,4,"Sword","Mythic sword");
+        equipments[9] = new Weapon(10,0.4f,5,"Sword","Legendary sword");
 
-        equipment[10] = new Weapon(2,0.1f,1,"Bow","Broken bow");
-        equipment[11] = new Weapon(3,0.2f,2,"Bow","Common bow");
-        equipment[12] = new Weapon(4,0.4f,3,"Bow","Rare bow");
-        equipment[13] = new Weapon(6,0.5f,4,"Bow","Mythic bow");
-        equipment[14] = new Weapon(8,0.7f,5,"Bow","Legendary bow");
+        equipments[10] = new Weapon(2,0.1f,1,"Bow","Broken bow");
+        equipments[11] = new Weapon(3,0.2f,2,"Bow","Common bow");
+        equipments[12] = new Weapon(4,0.4f,3,"Bow","Rare bow");
+        equipments[13] = new Weapon(6,0.5f,4,"Bow","Mythic bow");
+        equipments[14] = new Weapon(8,0.7f,5,"Bow","Legendary bow");
 
-        equipment[15] = new Armor(1,"Leather armor");
-        equipment[15].setRarity(1);
-        equipment[16] = new Armor(2,"Iron armor");
-        equipment[16].setRarity(2);
-        equipment[17] = new Armor(4,"plate armor");
-        equipment[17].setRarity(3);
-        equipment[18] = new Armor(6,"Dragon slayer armor");
-        equipment[18].setRarity(4);
-        equipment[19] = new Armor(8,"Araqiel's armor");
-        equipment[19].setRarity(5);
+        equipments[15] = new Armor(1,"Leather armor");
+        equipments[15].setRarity(1);
+        equipments[16] = new Armor(2,"Iron armor");
+        equipments[16].setRarity(2);
+        equipments[17] = new Armor(4,"plate armor");
+        equipments[17].setRarity(3);
+        equipments[18] = new Armor(6,"Dragon slayer armor");
+        equipments[18].setRarity(4);
+        equipments[19] = new Armor(8,"Araqiel's armor");
+        equipments[19].setRarity(5);
 
-        equipment[20] = new Consumable("Potion of health",1,"Health",10);
-        equipment[21] = new Consumable("Potion of mana",1,"Mana",10);
-        equipment[22] = new Consumable("Great potion of health",2,"Health",25);
-        equipment[23] = new Consumable("Great potion of mana",2,"Mana",50);
-        equipment[24] = new Consumable("Legendary potion of health",3,"Health",50);
-        equipment[25] = new Consumable("Legendary potion of mana",3,"Mana",50);
+        equipments[20] = new Consumable("Potion of health",1,"Health",10);
+        equipments[21] = new Consumable("Potion of mana",1,"Mana",10);
+        equipments[22] = new Consumable("Great potion of health",2,"Health",25);
+        equipments[23] = new Consumable("Great potion of mana",2,"Mana",50);
+        equipments[24] = new Consumable("Legendary potion of health",3,"Health",50);
+        equipments[25] = new Consumable("Legendary potion of mana",3,"Mana",50);
 
-        return equipment;
+        return equipments;
     }
 }

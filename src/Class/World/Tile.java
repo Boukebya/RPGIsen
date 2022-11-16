@@ -22,7 +22,7 @@ public enum Tile {
     }
 
     //Getters
-    public String GetTile(){
+    public String getTile(){
         return Category;
     }
 

@@ -1,4 +1,4 @@
-package Class.fileManagement;
+package Class.FileManagement;
 import Class.World.Map;
 import Class.World.Tile;
 import Class.World.Weather;
@@ -12,7 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class jsonManager {
+public class JsonManager {
     //Write scores in a file
     public static void writeFile(int score, String name){
         String path = "src/Data.json";
@@ -25,14 +25,11 @@ public class jsonManager {
             JSONObject leaderboard = (JSONObject) jsonArray.get(0);
             //get leaderboard array
             JSONArray leaderboardArray = (JSONArray) leaderboard.get("Scores");
-            //System.out.println(leaderboardArray);
-
             String scoreString = name + " : " + score;
             //add scoreString to leaderboard array
             JSONObject newScore = new JSONObject();
             newScore.put("Scores", scoreString);
 
-            //System.out.println(scoreString);
             //add to leaderboard array
             leaderboardArray.add(scoreString);
 
@@ -41,9 +38,6 @@ public class jsonManager {
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
-
-
-
         }
         catch (JSONException | FileNotFoundException e) {
             e.printStackTrace();
@@ -121,9 +115,6 @@ public class jsonManager {
             //get leaderboard array
             JSONArray tilesArray = (JSONArray) tilesMap.get("Map_tiles");
 
-            //print leaderboard elements
-            //System.out.println(tilesArray);
-
             //tilesArray to string
             String tilesString = tilesArray.toString();
 
@@ -131,7 +122,6 @@ public class jsonManager {
             //while , count the number of , in the string
             //get mapTiles
             String[] mapTile = tilesString.split(",");
-
 
             // for every ■, size ++
             int size = 0;
@@ -143,7 +133,7 @@ public class jsonManager {
             }
 
             // keep only the ■,□,▲,?,*,&,$
-            String[][] mapTile2 = new String[size][size];
+            String[][] mapToConvert = new String[size][size];
             int j;
             //get real map character
             System.out.println(mapTile.length);
@@ -153,19 +143,17 @@ public class jsonManager {
                 for (int i = 0; i < mapTile[j].length(); i++) {
                     char c = mapTile[j].charAt(i);
                     if (c == '■' || c == '□' || c == '▴' || c == '?' || c == '*' || c == '&' || c == '$'|| c == '!'|| c == 'o'){
-                        mapTile2[nb][j] = String.valueOf(c);
+                        mapToConvert[nb][j] = String.valueOf(c);
                         nb++;
                     }
                 }
             }
 
-
             Tile[][] mapTiles = new Tile[size][size];
-
             for(j = 0 ; j < mapTiles.length; j++) {
                 for (int i = 0; i < mapTiles.length; i++) {
                     //Get char at [j][i]
-                    char c = mapTile2[j][i].charAt(0);
+                    char c = mapToConvert[j][i].charAt(0);
 
                     // if char = ■ create a wall
                     if (c == '■') {
