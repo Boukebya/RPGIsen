@@ -1,11 +1,12 @@
 package Class.gameMechanics;
+
 import java.util.Scanner;
 
 public interface Interaction {
     /**
      * Method to interact with a player
      */
-    default String getAnswer(String question, String[] availableAnswers){
+    default String getAnswer(String question, String[] availableAnswers) {
         // Display question
         System.out.println(question);
         Scanner sc = new Scanner(System.in);

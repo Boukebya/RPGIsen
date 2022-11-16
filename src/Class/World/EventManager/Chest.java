@@ -1,4 +1,5 @@
 package Class.World.EventManager;
+
 import Class.Equipments.Equipment;
 import Class.WildLife.Hero;
 
@@ -8,15 +9,15 @@ import java.util.Scanner;
 public class Chest extends TypeEvents {
     String name_Object;
     String description;
-    int [] modifier;
+    int[] modifier;
     String[] choices;
     //Consequences array
     String[] consequences;
 
     //Constructor
     public Chest(TypeEvents type_Event, String name_Object, int[] modifier, String description, String[] choices, String[] consequences) {
-        super(type_Event.name,type_Event.rarity);
-        this.name_Object= name_Object;
+        super(type_Event.name, type_Event.rarity);
+        this.name_Object = name_Object;
         this.modifier = modifier;
         this.description = description;
         this.choices = choices;
@@ -25,7 +26,7 @@ public class Chest extends TypeEvents {
 
     //Methods
     //Return the item to drop
-    public Equipment dropItem(Equipment[] equipments){
+    public Equipment dropItem(Equipment[] equipments) {
         //get modifier
         int[] modifier = this.modifier;
         //random number
@@ -36,9 +37,9 @@ public class Chest extends TypeEvents {
             count += modifier[i];
             if (random_number < count) {
                 //System.out.println("You found a tier " + (i+1) + " item!");
-                int rank = i+1;
+                int rank = i + 1;
                 //for each weapon, check if it's a tier i weapon
-                while(true) {
+                while (true) {
                     //System.out.println("seeking weapon");
                     for (Equipment equipment : equipments) {
                         if (equipment.getRarity() == rank) {
@@ -56,7 +57,7 @@ public class Chest extends TypeEvents {
     }
 
     @Override
-    public void interact(Hero hero, Equipment [] weapons) {
+    public void interact(Hero hero, Equipment[] weapons) {
         //Print that we find a chest named name_object
         System.out.println(description);
         System.out.println("You find a " + name_Object + " !");

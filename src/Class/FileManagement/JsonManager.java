@@ -1,4 +1,5 @@
 package Class.FileManagement;
+
 import Class.World.Map;
 import Class.World.Tile;
 import Class.World.Weather;
@@ -7,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,7 +16,7 @@ import java.io.IOException;
 
 public abstract class JsonManager {
     //Write scores in a file
-    public static void writeFile(int score, String name){
+    public static void writeFile(int score, String name) {
         String path = "src/Data.json";
         try {
             FileReader reader = new FileReader(path);
@@ -38,8 +40,7 @@ public abstract class JsonManager {
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
-        }
-        catch (JSONException | FileNotFoundException e) {
+        } catch (JSONException | FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
@@ -47,8 +48,9 @@ public abstract class JsonManager {
 
 
     }
+
     //Display scores of players
-    public static void displayScore(){
+    public static void displayScore() {
         String path = "src/Data.json";
 
         try {
@@ -77,7 +79,7 @@ public abstract class JsonManager {
             //Sort the leaderboard by higher score
             for (int i = 0; i < leaderboardArray.size(); i++) {
                 for (int j = 0; j < leaderboardArray.size(); j++) {
-                    if (Integer.parseInt(leaderboardMatrix[i][1]) > Integer.parseInt(leaderboardMatrix[j][1])){
+                    if (Integer.parseInt(leaderboardMatrix[i][1]) > Integer.parseInt(leaderboardMatrix[j][1])) {
                         String[] temp = leaderboardMatrix[i];
                         leaderboardMatrix[i] = leaderboardMatrix[j];
                         leaderboardMatrix[j] = temp;
@@ -86,27 +88,27 @@ public abstract class JsonManager {
             }
             //Print the top 5 leaderboard
             for (int i = 0; i < 5; i++) {
-                if (i < leaderboardArray.size()){
+                if (i < leaderboardArray.size()) {
                     System.out.println(leaderboardMatrix[i][0] + ":" + leaderboardMatrix[i][1]);
-                }
-                else{
+                } else {
                     break;
                 }
             }
 
-        }
-        catch (JSONException | FileNotFoundException e) {
+        } catch (JSONException | FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
+
     //Read map from JSON
-    public static Map readMap(){
+    public static Map readMap() {
         Map map;
         //read map from files
         String path = "src/Data.json";
-        try { FileReader reader = new FileReader(path);
+        try {
+            FileReader reader = new FileReader(path);
             JSONArray jsonArray;
             jsonArray = (JSONArray) new JSONParser().parse(reader);
 
@@ -127,7 +129,7 @@ public abstract class JsonManager {
             int size = 0;
             for (int i = 0; i < mapTile[0].length(); i++) {
                 char c = mapTile[0].charAt(i);
-                if (c == '■'){
+                if (c == '■') {
                     size++;
                 }
             }
@@ -138,11 +140,11 @@ public abstract class JsonManager {
             //get real map character
             System.out.println(mapTile.length);
             int nb;
-            for(j = 0; j < mapTile.length; j++){
-                nb=0;
+            for (j = 0; j < mapTile.length; j++) {
+                nb = 0;
                 for (int i = 0; i < mapTile[j].length(); i++) {
                     char c = mapTile[j].charAt(i);
-                    if (c == '■' || c == '□' || c == '▴' || c == '?' || c == '*' || c == '&' || c == '$'|| c == '!'|| c == 'o'){
+                    if (c == '■' || c == '□' || c == '▴' || c == '?' || c == '*' || c == '&' || c == '$' || c == '!' || c == 'o') {
                         mapToConvert[nb][j] = String.valueOf(c);
                         nb++;
                     }
@@ -150,7 +152,7 @@ public abstract class JsonManager {
             }
 
             Tile[][] mapTiles = new Tile[size][size];
-            for(j = 0 ; j < mapTiles.length; j++) {
+            for (j = 0; j < mapTiles.length; j++) {
                 for (int i = 0; i < mapTiles.length; i++) {
                     //Get char at [j][i]
                     char c = mapToConvert[j][i].charAt(0);
@@ -195,11 +197,10 @@ public abstract class JsonManager {
             }
             System.out.println("Get map...");
 
-            map = new Map(Weather.SUNNY,mapTiles);
+            map = new Map(Weather.SUNNY, mapTiles);
             return map;
 
-        }
-        catch (JSONException | FileNotFoundException e) {
+        } catch (JSONException | FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);

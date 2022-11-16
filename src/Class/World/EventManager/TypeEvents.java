@@ -1,4 +1,5 @@
 package Class.World.EventManager;
+
 import Class.Equipments.Equipment;
 import Class.WildLife.Hero;
 
@@ -10,18 +11,8 @@ public class TypeEvents {
     int rarity;
 
     //Constructor
-    public TypeEvents(String name, int rarity){
+    public TypeEvents(String name, int rarity) {
         this.name = name;
-        this.rarity = rarity;
-    }
-
-    //Getters
-    public float getRarity() {
-        return rarity;
-    }
-
-    //Setters
-    public void setRarity(int rarity) {
         this.rarity = rarity;
     }
 
@@ -36,7 +27,7 @@ public class TypeEvents {
         for (int i = 0; i < events.length; i++) {
             randoms[i] = (int) events[i].getRarity();
             //System.out.println(randoms[i]);
-            limit+= randoms[i];
+            limit += randoms[i];
         }
         //Create random number between 0 and limit
         int random_number = (int) (Math.random() * limit);
@@ -53,8 +44,19 @@ public class TypeEvents {
         //System.out.println("default event");
         return events[0];
     }
+
+    //Getters
+    public float getRarity() {
+        return rarity;
+    }
+
+    //Setters
+    public void setRarity(int rarity) {
+        this.rarity = rarity;
+    }
+
     //By default, print interact, else, it's override by the child class
     public void interact(Hero hero, Equipment[] weapons) {
-        System.out.println("interact with "+ this.name);
+        System.out.println("interact with " + this.name);
     }
 }
