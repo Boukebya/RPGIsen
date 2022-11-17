@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RPGIsen:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RPGIsen_jar</output-path>
+    <root id="archive" name="RPGIsen.jar">
+      <element id="module-output" name="RPGIsen" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/jar_files.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/Libraries/json-20220924.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/Libraries/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/OneDrive/Bureau/json-20220924.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/OneDrive/Bureau/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/OneDrive/Bureau/l2-dashboard-drillatech.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.7.10/kotlin-stdlib-jdk8-1.7.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.7.10/kotlin-stdlib-1.7.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.10/kotlin-stdlib-common-1.7.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.7.10/kotlin-stdlib-jdk7-1.7.10.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+rpgIsen.Class.Main-rpgIsen.Class: rpgIsen.Class.Main
+
