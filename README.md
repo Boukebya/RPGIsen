@@ -43,6 +43,8 @@ joueur doit choisir son action l’ennemie jouera son
 tour. 
 On peut également voir diverses cases 
 correspondantes chacune à divers évènements. 
+<img src="console.PNG">
+<img src="map.PNG">
 
 ## Fonctionnement du jeu -Organisation
 Le diagramme de classe est disponible en annexe mais nous allons malgré tout discuter de 
